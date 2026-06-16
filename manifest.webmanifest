@@ -1,0 +1,41 @@
+{
+  "name": "STEADYWRK Dispatch",
+  "short_name": "STEADYWRK",
+  "description": "Dispatcher operations hub — training, playbooks, call scripts, and sourcing guides.",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "theme_color": "#0A0A0A",
+  "background_color": "#0A0A0A",
+  "start_url": ".",
+  "scope": ".",
+  "lang": "en",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["productivity", "business"],
+  "shortcuts": [
+    {
+      "name": "Training Deck",
+      "short_name": "Training",
+      "url": "dispatch-training.html",
+      "description": "Launch onboarding training deck"
+    },
+    {
+      "name": "Call Script",
+      "short_name": "Call",
+      "url": "official-docs/call-script.html",
+      "description": "Tech-securing call script"
+    },
+    {
+      "name": "Sourcing Playbook",
+      "short_name": "Sourcing",
+      "url": "official-docs/sourcing-guide.html",
+      "description": "Technician sourcing playbook"
+    }
+  ]
+}
