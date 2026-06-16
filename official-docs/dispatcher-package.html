@@ -1,0 +1,1763 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STEADYWRK — Dispatcher Package</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════════════════════
+   STEADYWRK — DESIGN SYSTEM TOKENS
+   ═══════════════════════════════════════════════════════════════ */
+:root {
+  --bg: #0A0A0A;
+  --surface: #121211;
+  --surface-elevated: #1A1A18;
+  --surface-glass: rgba(18, 18, 17, 0.72);
+  --accent: #E58A0F;
+  --accent-dim: rgba(229, 138, 15, 0.15);
+  --accent-glow: rgba(229, 138, 15, 0.35);
+  --accent-bright: #F5A623;
+  --text: #E8E8E6;
+  --text-dim: #8A8A86;
+  --text-muted: #5A5A57;
+  --danger: #E53E3E;
+  --danger-dim: rgba(229, 62, 62, 0.12);
+  --danger-glow: rgba(229, 62, 62, 0.25);
+  --success: #38A169;
+  --success-dim: rgba(56, 161, 105, 0.12);
+  --border: rgba(255, 255, 255, 0.06);
+  --border-accent: rgba(229, 138, 15, 0.25);
+  --font-heading: 'Outfit', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --radius: 16px;
+  --radius-sm: 10px;
+  --radius-xs: 6px;
+  --shadow-card: 0 4px 24px rgba(0,0,0,0.4), 0 1px 3px rgba(0,0,0,0.3);
+  --shadow-glow: 0 0 40px rgba(229,138,15,0.08);
+  --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESET & BASE
+   ═══════════════════════════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent) var(--surface);
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+  font-size: 15px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 4px; }
+
+/* ═══════════════════════════════════════════════════════════════
+   BACKGROUND GRID & PARTICLES
+   ═══════════════════════════════════════════════════════════════ */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(229,138,15,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(229,138,15,0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(ellipse at 30% 20%, rgba(229,138,15,0.04) 0%, transparent 50%),
+              radial-gradient(ellipse at 70% 80%, rgba(229,138,15,0.03) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+  animation: ambientDrift 20s ease-in-out infinite alternate;
+}
+
+@keyframes ambientDrift {
+  0% { transform: translate(0, 0) rotate(0deg); }
+  100% { transform: translate(-3%, 2%) rotate(1deg); }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   LAYOUT
+   ═══════════════════════════════════════════════════════════════ */
+.page-wrapper {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  min-height: 100vh;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SIDEBAR NAVIGATION
+   ═══════════════════════════════════════════════════════════════ */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 280px;
+  height: 100vh;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  padding: 28px 0;
+  overflow-y: auto;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-brand {
+  padding: 0 24px 24px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 16px;
+}
+
+.sidebar-logo {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 18px;
+  letter-spacing: 3px;
+  color: var(--accent);
+  text-transform: uppercase;
+}
+
+.sidebar-logo span {
+  color: var(--text-dim);
+  font-weight: 400;
+  font-size: 10px;
+  letter-spacing: 2px;
+  display: block;
+  margin-top: 4px;
+}
+
+.sidebar-label {
+  padding: 12px 24px 8px;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.sidebar nav { flex: 1; }
+
+.sidebar nav a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 24px;
+  color: var(--text-dim);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 500;
+  transition: var(--transition);
+  border-left: 3px solid transparent;
+  position: relative;
+}
+
+.sidebar nav a:hover,
+.sidebar nav a.active {
+  color: var(--text);
+  background: var(--accent-dim);
+  border-left-color: var(--accent);
+}
+
+.sidebar nav a .nav-num {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--accent);
+  min-width: 22px;
+  opacity: 0.7;
+}
+
+.sidebar-footer {
+  padding: 20px 24px;
+  border-top: 1px solid var(--border);
+  margin-top: auto;
+}
+
+.sidebar-footer p {
+  font-size: 9px;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  line-height: 1.6;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   MAIN CONTENT
+   ═══════════════════════════════════════════════════════════════ */
+.main-content {
+  margin-left: 280px;
+  flex: 1;
+  max-width: 960px;
+  padding: 48px 56px 120px;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   DOCUMENT HEADER
+   ═══════════════════════════════════════════════════════════════ */
+.doc-header {
+  margin-bottom: 64px;
+  position: relative;
+}
+
+.doc-header::after {
+  content: '';
+  position: absolute;
+  bottom: -32px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, var(--accent), transparent 80%);
+}
+
+.header-badges {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 14px;
+  border-radius: 100px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+.badge--internal {
+  background: var(--accent-dim);
+  color: var(--accent);
+  border: 1px solid var(--border-accent);
+}
+
+.badge--confidential {
+  background: var(--danger-dim);
+  color: var(--danger);
+  border: 1px solid rgba(229, 62, 62, 0.2);
+}
+
+.badge--version {
+  background: rgba(255,255,255,0.04);
+  color: var(--text-dim);
+  border: 1px solid var(--border);
+}
+
+.header-title {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 52px;
+  line-height: 1.05;
+  letter-spacing: -1.5px;
+  margin-bottom: 8px;
+  background: linear-gradient(135deg, var(--text), var(--text-dim));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.header-title .accent {
+  background: linear-gradient(135deg, var(--accent), var(--accent-bright));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.header-subtitle {
+  font-family: var(--font-heading);
+  font-weight: 400;
+  font-size: 20px;
+  color: var(--text-dim);
+  letter-spacing: 0.5px;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   HERO QUOTE
+   ═══════════════════════════════════════════════════════════════ */
+.hero-quote {
+  background: linear-gradient(135deg, var(--surface), var(--surface-elevated));
+  border: 1px solid var(--border-accent);
+  border-radius: var(--radius);
+  padding: 40px 48px;
+  margin-bottom: 64px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow-glow);
+}
+
+.hero-quote::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+}
+
+.hero-quote::after {
+  content: '"';
+  position: absolute;
+  top: -10px;
+  left: 24px;
+  font-family: var(--font-heading);
+  font-size: 120px;
+  font-weight: 900;
+  color: var(--accent);
+  opacity: 0.08;
+  line-height: 1;
+}
+
+.hero-quote blockquote {
+  font-family: var(--font-heading);
+  font-size: 22px;
+  font-weight: 500;
+  line-height: 1.5;
+  color: var(--text);
+  letter-spacing: 0.2px;
+  position: relative;
+  z-index: 1;
+}
+
+.hero-quote blockquote em {
+  color: var(--accent);
+  font-style: normal;
+  font-weight: 700;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SECTION CARDS
+   ═══════════════════════════════════════════════════════════════ */
+.section-card {
+  background: var(--surface-glass);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 48px;
+  margin-bottom: 32px;
+  box-shadow: var(--shadow-card);
+  position: relative;
+  overflow: hidden;
+  transition: var(--transition);
+  opacity: 0;
+  transform: translateY(24px);
+}
+
+.section-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.section-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border-accent), transparent);
+}
+
+.section-card:hover {
+  border-color: var(--border-accent);
+  box-shadow: var(--shadow-card), var(--shadow-glow);
+}
+
+/* Danger variant for OPSEC/Warning sections */
+.section-card--danger {
+  border-color: rgba(229, 62, 62, 0.15);
+  background: linear-gradient(135deg, var(--surface-glass), rgba(229, 62, 62, 0.03));
+}
+
+.section-card--danger::before {
+  background: linear-gradient(90deg, transparent, var(--danger), transparent);
+}
+
+.section-card--danger:hover {
+  border-color: rgba(229, 62, 62, 0.3);
+  box-shadow: var(--shadow-card), 0 0 40px rgba(229, 62, 62, 0.06);
+}
+
+/* Accent highlight variant */
+.section-card--highlight {
+  border-color: var(--border-accent);
+  background: linear-gradient(135deg, var(--surface-glass), var(--accent-dim));
+}
+
+.section-card--highlight::before {
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  height: 2px;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SECTION HEADERS
+   ═══════════════════════════════════════════════════════════════ */
+.section-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  margin-bottom: 32px;
+}
+
+.section-number {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 12px;
+  color: var(--accent);
+  background: var(--accent-dim);
+  border: 1px solid var(--border-accent);
+  border-radius: var(--radius-xs);
+  padding: 6px 12px;
+  letter-spacing: 1px;
+  white-space: nowrap;
+  min-width: 38px;
+  text-align: center;
+  margin-top: 4px;
+}
+
+.section-title {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 1.2;
+  letter-spacing: -0.5px;
+  color: var(--text);
+}
+
+.section-title .dim {
+  color: var(--text-dim);
+  font-weight: 400;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   TYPOGRAPHY
+   ═══════════════════════════════════════════════════════════════ */
+.section-card p {
+  color: var(--text);
+  margin-bottom: 16px;
+  font-size: 15px;
+  line-height: 1.75;
+}
+
+.section-card p:last-child { margin-bottom: 0; }
+
+.section-card strong { color: var(--accent); font-weight: 600; }
+
+.text-dim { color: var(--text-dim); }
+.text-accent { color: var(--accent); }
+.text-danger { color: var(--danger); }
+
+.lead {
+  font-size: 17px;
+  color: var(--text);
+  line-height: 1.8;
+}
+
+.small-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+  display: block;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   ORDERED & UNORDERED LISTS
+   ═══════════════════════════════════════════════════════════════ */
+.step-list {
+  list-style: none;
+  counter-reset: steps;
+  margin: 24px 0;
+}
+
+.step-list li {
+  counter-increment: steps;
+  position: relative;
+  padding: 14px 0 14px 52px;
+  border-bottom: 1px solid var(--border);
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+.step-list li:last-child { border-bottom: none; }
+
+.step-list li::before {
+  content: counter(steps);
+  position: absolute;
+  left: 0;
+  top: 14px;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--accent-dim);
+  border: 1px solid var(--border-accent);
+  border-radius: var(--radius-xs);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.bullet-list {
+  list-style: none;
+  margin: 16px 0;
+}
+
+.bullet-list li {
+  position: relative;
+  padding: 8px 0 8px 28px;
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+.bullet-list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 16px;
+  width: 8px;
+  height: 8px;
+  background: var(--accent);
+  border-radius: 2px;
+  transform: rotate(45deg);
+}
+
+.bullet-list li.yes::before { background: var(--success); }
+.bullet-list li.no::before { background: var(--danger); }
+
+/* ═══════════════════════════════════════════════════════════════
+   TERMINAL / CODE BLOCKS
+   ═══════════════════════════════════════════════════════════════ */
+.terminal {
+  background: #0D0D0C;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  margin: 24px 0;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.7;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.4);
+}
+
+.terminal-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: rgba(255,255,255,0.03);
+  border-bottom: 1px solid var(--border);
+}
+
+.terminal-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.terminal-dot:nth-child(1) { background: #E53E3E; }
+.terminal-dot:nth-child(2) { background: #ECC94B; }
+.terminal-dot:nth-child(3) { background: #38A169; }
+
+.terminal-title {
+  margin-left: 12px;
+  font-size: 11px;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.terminal-body {
+  padding: 20px 24px;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+  color: var(--text-dim);
+}
+
+.terminal-body .hl { color: var(--accent); }
+.terminal-body .hl-green { color: var(--success); }
+.terminal-body .hl-red { color: var(--danger); }
+.terminal-body .hl-dim { color: var(--text-muted); }
+.terminal-body .hl-bright { color: var(--text); }
+
+/* ═══════════════════════════════════════════════════════════════
+   CALL SCRIPT BLOCKS
+   ═══════════════════════════════════════════════════════════════ */
+.script-block {
+  background: linear-gradient(135deg, var(--surface-elevated), rgba(229,138,15,0.04));
+  border-left: 3px solid var(--accent);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  padding: 24px 28px;
+  margin: 20px 0;
+  position: relative;
+}
+
+.script-block .script-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 10px;
+  display: block;
+  font-weight: 600;
+}
+
+.script-block .script-text {
+  font-family: var(--font-body);
+  font-size: 15px;
+  color: var(--text);
+  font-style: italic;
+  line-height: 1.7;
+}
+
+.script-block .script-text .bracket {
+  color: var(--accent);
+  font-style: normal;
+  font-weight: 600;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   WARNING / CALLOUT BOXES
+   ═══════════════════════════════════════════════════════════════ */
+.callout {
+  border-radius: var(--radius-sm);
+  padding: 24px 28px;
+  margin: 24px 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.callout::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 3px;
+  height: 100%;
+}
+
+.callout--danger {
+  background: linear-gradient(135deg, rgba(229,62,62,0.08), rgba(229,62,62,0.03));
+  border: 1px solid rgba(229, 62, 62, 0.15);
+}
+
+.callout--danger::before { background: var(--danger); }
+
+.callout--warning {
+  background: linear-gradient(135deg, rgba(229,138,15,0.08), rgba(229,138,15,0.03));
+  border: 1px solid rgba(229, 138, 15, 0.15);
+}
+
+.callout--warning::before { background: var(--accent); }
+
+.callout--success {
+  background: linear-gradient(135deg, rgba(56,161,105,0.08), rgba(56,161,105,0.03));
+  border: 1px solid rgba(56, 161, 105, 0.15);
+}
+
+.callout--success::before { background: var(--success); }
+
+.callout-title {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.callout--danger .callout-title { color: var(--danger); }
+.callout--warning .callout-title { color: var(--accent); }
+.callout--success .callout-title { color: var(--success); }
+
+.callout p, .callout li {
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   GOAL / METRIC BADGE
+   ═══════════════════════════════════════════════════════════════ */
+.goal-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--accent-dim);
+  border: 1px solid var(--border-accent);
+  border-radius: var(--radius-sm);
+  padding: 16px 24px;
+  margin: 20px 0;
+  box-shadow: 0 0 30px rgba(229,138,15,0.06);
+}
+
+.goal-badge .goal-icon {
+  font-size: 28px;
+}
+
+.goal-badge .goal-text {
+  font-family: var(--font-heading);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.goal-badge .goal-text span {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--text-dim);
+  margin-top: 2px;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   HORIZONTAL RULE / DIVIDER
+   ═══════════════════════════════════════════════════════════════ */
+.divider {
+  border: none;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border-accent), transparent);
+  margin: 48px 0;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   DATA TABLE
+   ═══════════════════════════════════════════════════════════════ */
+.data-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin: 24px 0;
+  font-size: 14px;
+}
+
+.data-table th {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  text-align: left;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.data-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+}
+
+.data-table tr:last-child td { border-bottom: none; }
+
+.data-table tr:hover td { background: rgba(229,138,15,0.03); }
+
+/* ═══════════════════════════════════════════════════════════════
+   CHECKLIST
+   ═══════════════════════════════════════════════════════════════ */
+.checklist {
+  list-style: none;
+  margin: 24px 0;
+}
+
+.checklist li {
+  position: relative;
+  padding: 12px 0 12px 40px;
+  border-bottom: 1px solid var(--border);
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+.checklist li:last-child { border-bottom: none; }
+
+.checklist li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 14px;
+  width: 22px;
+  height: 22px;
+  border: 2px solid var(--accent);
+  border-radius: 4px;
+  background: var(--accent-dim);
+}
+
+.checklist li::after {
+  content: '';
+  position: absolute;
+  left: 5px;
+  top: 19px;
+  width: 12px;
+  height: 6px;
+  border-left: 2px solid var(--accent);
+  border-bottom: 2px solid var(--accent);
+  transform: rotate(-45deg);
+  opacity: 0;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   CHEAT SHEET
+   ═══════════════════════════════════════════════════════════════ */
+.cheat-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin: 24px 0;
+}
+
+.cheat-item {
+  background: var(--surface-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 20px 22px;
+  transition: var(--transition);
+}
+
+.cheat-item:hover {
+  border-color: var(--border-accent);
+}
+
+.cheat-item .cheat-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.cheat-item p {
+  font-size: 14px;
+  color: var(--text-dim);
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SOURCE RANK LIST
+   ═══════════════════════════════════════════════════════════════ */
+.source-list {
+  list-style: none;
+  counter-reset: sources;
+  margin: 24px 0;
+}
+
+.source-list li {
+  counter-increment: sources;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.source-list li:last-child { border-bottom: none; }
+
+.source-list li::before {
+  content: counter(sources);
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--accent-dim);
+  border: 1px solid var(--border-accent);
+  border-radius: 50%;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.source-list .source-name {
+  font-weight: 600;
+  color: var(--text);
+  min-width: 120px;
+}
+
+.source-list .source-desc {
+  color: var(--text-dim);
+  font-size: 14px;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   FOOTER
+   ═══════════════════════════════════════════════════════════════ */
+.doc-footer {
+  margin-top: 80px;
+  padding-top: 40px;
+  border-top: 1px solid var(--border);
+  text-align: center;
+}
+
+.footer-logo {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 20px;
+  letter-spacing: 4px;
+  color: var(--accent);
+  margin-bottom: 16px;
+}
+
+.footer-text {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-muted);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  line-height: 2;
+}
+
+.footer-cta {
+  margin-top: 48px;
+  padding: 40px;
+  background: linear-gradient(135deg, var(--accent-dim), rgba(229,138,15,0.04));
+  border: 1px solid var(--border-accent);
+  border-radius: var(--radius);
+  box-shadow: 0 0 60px rgba(229,138,15,0.06);
+}
+
+.footer-cta p {
+  font-family: var(--font-heading);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.5;
+}
+
+.footer-cta p .accent { color: var(--accent); }
+
+/* ═══════════════════════════════════════════════════════════════
+   MOBILE NAV TOGGLE
+   ═══════════════════════════════════════════════════════════════ */
+.mobile-nav-toggle {
+  display: none;
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 200;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--bg);
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(229,138,15,0.4);
+  transition: var(--transition);
+}
+
+.mobile-nav-toggle:hover { transform: scale(1.1); }
+
+/* ═══════════════════════════════════════════════════════════════
+   WO INLINE FIELD HIGHLIGHTS
+   ═══════════════════════════════════════════════════════════════ */
+.field-tag {
+  display: inline-block;
+  background: var(--accent-dim);
+  border: 1px solid var(--border-accent);
+  border-radius: var(--radius-xs);
+  padding: 2px 8px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--accent);
+  vertical-align: baseline;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════════════════════════════ */
+@media (max-width: 1100px) {
+  .sidebar { transform: translateX(-100%); transition: var(--transition); }
+  .sidebar.open { transform: translateX(0); box-shadow: 4px 0 40px rgba(0,0,0,0.5); }
+  .main-content { margin-left: 0; padding: 32px 24px 100px; }
+  .mobile-nav-toggle { display: flex; align-items: center; justify-content: center; }
+  .header-title { font-size: 36px; }
+  .section-card { padding: 32px 24px; }
+  .cheat-grid { grid-template-columns: 1fr; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   PRINT STYLES
+   ═══════════════════════════════════════════════════════════════ */
+@media print {
+  body { background: #fff; color: #111; font-size: 11pt; }
+  body::before, body::after { display: none; }
+  .sidebar, .mobile-nav-toggle { display: none !important; }
+  .main-content { margin-left: 0; max-width: 100%; padding: 0; }
+  .section-card {
+    background: none;
+    backdrop-filter: none;
+    border: 1px solid #ddd;
+    box-shadow: none;
+    padding: 24px;
+    page-break-inside: avoid;
+    opacity: 1;
+    transform: none;
+  }
+  .section-card--danger { border-color: #E53E3E; }
+  .header-title {
+    color: #111;
+    -webkit-text-fill-color: #111;
+    font-size: 32pt;
+  }
+  .header-title .accent {
+    color: #E58A0F;
+    -webkit-text-fill-color: #E58A0F;
+  }
+  .section-title { color: #111; }
+  .section-number { border: 1px solid #E58A0F; color: #E58A0F; background: #FFF5E6; }
+  .hero-quote { background: #FFF5E6; border-color: #E58A0F; box-shadow: none; }
+  .hero-quote blockquote { color: #111; -webkit-text-fill-color: #111; }
+  .terminal { background: #f5f5f5; border: 1px solid #ddd; }
+  .terminal-bar { display: none; }
+  .terminal-body { color: #333; }
+  .terminal-body .hl { color: #E58A0F; }
+  .terminal-body .hl-green { color: #38A169; }
+  .terminal-body .hl-red { color: #E53E3E; }
+  .script-block { background: #FFF5E6; border-left-color: #E58A0F; }
+  .callout--danger { background: #FFF5F5; border-color: #E53E3E; }
+  .callout--warning { background: #FFF5E6; border-color: #E58A0F; }
+  .badge { border: 1px solid #ccc; }
+  .badge--internal { color: #E58A0F; background: #FFF5E6; }
+  .badge--confidential { color: #E53E3E; background: #FFF5F5; }
+  a { color: #E58A0F; text-decoration: none; }
+  .step-list li::before { background: #FFF5E6; border-color: #E58A0F; }
+  .goal-badge { background: #FFF5E6; border-color: #E58A0F; }
+  .footer-cta { background: #FFF5E6; border-color: #E58A0F; }
+  p, li, td { color: #222; }
+  strong { color: #E58A0F; }
+  .text-dim { color: #666; }
+  .doc-header::after { background: #E58A0F; }
+  .divider { background: #ddd; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   ANIMATIONS
+   ═══════════════════════════════════════════════════════════════ */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.doc-header { animation: fadeInUp 0.8s ease-out forwards; }
+.hero-quote { animation: fadeInUp 0.8s 0.2s ease-out both; }
+
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 20px rgba(229,138,15,0.1); }
+  50% { box-shadow: 0 0 40px rgba(229,138,15,0.2); }
+}
+
+.section-card--highlight { animation: pulseGlow 4s ease-in-out infinite; }
+
+@keyframes accentLine {
+  from { width: 0; }
+  to { width: 100%; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SIDEBAR NAVIGATION
+     ═══════════════════════════════════════════════════════════════ -->
+<div class="page-wrapper">
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <div class="sidebar-logo">
+      STEADYWRK
+      <span>Facilities Network</span>
+    </div>
+    <div style="margin-top: 12px;">
+      <a href="../index.html" style="display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px; border: 1px dashed var(--border-accent); border-radius: 4px; font-family: var(--font-mono); font-size: 10px; font-weight: 600; text-transform: uppercase; color: var(--accent); text-decoration: none; letter-spacing: 1px; transition: all 0.2s; background: rgba(229, 138, 15, 0.03);" onmouseover="this.style.background='var(--accent-dim)';" onmouseout="this.style.background='rgba(229, 138, 15, 0.03)';">← Back to Portal</a>
+    </div>
+  </div>
+
+  <div class="sidebar-label">Dispatcher Package</div>
+
+  <nav>
+    <a href="#section-1"><span class="nav-num">01</span> The Model</a>
+    <a href="#section-2"><span class="nav-num">02</span> Your Daily Loop</a>
+    <a href="#section-3"><span class="nav-num">03</span> Reading a Work Order</a>
+    <a href="#section-4"><span class="nav-num">04</span> The Call Script</a>
+    <a href="#section-5"><span class="nav-num">05</span> Vetting Standards</a>
+    <a href="#section-6"><span class="nav-num">06</span> Securing the Tech</a>
+    <a href="#section-7"><span class="nav-num">07</span> The Tech Brief</a>
+    <a href="#section-8"><span class="nav-num">08</span> Reporting</a>
+    <a href="#section-9"><span class="nav-num">09</span> Tech Sources</a>
+    <a href="#section-10"><span class="nav-num">10</span> How You're Scored</a>
+    <a href="#section-11"><span class="nav-num">11</span> OPSEC Standards</a>
+    <a href="#section-12"><span class="nav-num">12</span> Cheat Sheet</a>
+    <a href="#section-13"><span class="nav-num">13</span> Day-1 Checklist</a>
+  </nav>
+
+  <div class="sidebar-footer">
+    <p>Confidential &amp; Proprietary<br>STEADYWRK Operations<br>Rev 4.0 — June 2026</p>
+  </div>
+</aside>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     MOBILE NAV TOGGLE
+     ═══════════════════════════════════════════════════════════════ -->
+<button class="mobile-nav-toggle" id="navToggle" aria-label="Toggle navigation">☰</button>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     MAIN CONTENT
+     ═══════════════════════════════════════════════════════════════ -->
+<main class="main-content">
+
+  <!-- DOCUMENT HEADER -->
+  <header class="doc-header">
+    <div class="header-badges">
+      <span class="badge badge--internal">⚙ Internal Operations Document</span>
+      <span class="badge badge--confidential">🔒 Confidential</span>
+      <span class="badge badge--version">v4.0 — June 2026</span>
+    </div>
+    <h1 class="header-title"><span class="accent">STEADYWRK</span><br>Dispatcher Package</h1>
+    <p class="header-subtitle">New Dispatcher Onboarding &amp; Operations Manual</p>
+  </header>
+
+  <!-- HERO QUOTE -->
+  <div class="hero-quote">
+    <blockquote>
+      Your <em>speed</em> determines our revenue. Your <em>discipline</em> determines your growth. This is your weapon — <em>use it.</em>
+    </blockquote>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       SECTION 1: THE MODEL
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="section-card" id="section-1">
+    <div class="section-header">
+      <span class="section-number">01</span>
+      <h2 class="section-title">The Model <span class="dim">— How We Make Money</span></h2>
+    </div>
+
+    <p class="lead">STEADYWRK wins facilities work orders for major commercial properties nationwide and subcontracts them to local, independent, owner-operator technicians. <strong>You own your queue end to end.</strong></p>
+
+    <div class="terminal">
+      <div class="terminal-bar">
+        <span class="terminal-dot"></span>
+        <span class="terminal-dot"></span>
+        <span class="terminal-dot"></span>
+        <span class="terminal-title">Revenue Pipeline</span>
+      </div>
+      <div class="terminal-body"><span class="hl">GET WO</span> → <span class="hl-bright">Call Local Techs</span> → <span class="hl-bright">Vet</span> → <span class="hl-bright">Secure One</span> → <span class="hl-bright">Coordinate Visit</span> → <span class="hl-green">Photos + Completion</span> → <span class="hl-green">Invoice</span> → <span class="hl">$ PAID</span></div>
+    </div>
+
+    <p>The spread between what the job pays and what the tech costs is our margin. The faster you secure a good tech, the faster we earn.</p>
+
+    <div class="goal-badge">
+      <span class="goal-icon">🎯</span>
+      <span class="goal-text">3+ Jobs Closed Daily<span>Minimum throughput target per dispatcher</span></span>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       SECTION 2: YOUR DAILY LOOP
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="section-card" id="section-2">
+    <div class="section-header">
+      <span class="section-number">02</span>
+      <h2 class="section-title">Your Daily Loop</h2>
+    </div>
+
+    <ol class="step-list">
+      <li>A work order drops in your Slack channel <span class="field-tag">#d-you</span> — already formatted.</li>
+      <li><strong>Build your call list immediately</strong> using Yelp, Google, and BBB. Sourcing is 90% of the job. <em>You do NOT get ready leads.</em></li>
+      <li>Call the techs you source. <strong>Vet. Secure one.</strong> Lock a time + price.</li>
+      <li>Send the <strong>Tech Brief</strong> (see Section 7) once approved. Coordinate.</li>
+      <li>Drive it to completion → photos → invoice → <strong>paid.</strong></li>
+      <li>Report status in your channel so the board tracks you.</li>
+    </ol>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       SECTION 3: READING A WORK ORDER
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="section-card" id="section-3">
+    <div class="section-header">
+      <span class="section-number">03</span>
+      <h2 class="section-title">Reading a Work Order</h2>
+    </div>
+
+    <span class="small-label">Standard WO Format</span>
+
+    <div class="terminal">
+      <div class="terminal-bar">
+        <span class="terminal-dot"></span>
+        <span class="terminal-dot"></span>
+        <span class="terminal-dot"></span>
+        <span class="terminal-title">Work Order Template</span>
+      </div>
+      <div class="terminal-body"><span class="hl">📋 NEW WORK ORDER</span>   [ | <span class="hl-red">🚨 SUPER EMERGENCY</span> ]
+<span class="hl-bright">JOB-260612-7018</span>
+<span class="hl-dim">&lt;store / site&gt;</span> — <span class="hl-dim">&lt;street&gt;</span>
+<span class="hl-dim">&lt;city&gt;</span>, <span class="hl-dim">&lt;state&gt;</span>
+
+<span class="hl">Trade:</span> <span class="hl-dim">&lt;trade&gt;</span>     <span class="hl">Scope:</span> <span class="hl-dim">&lt;what to do&gt;</span>     <span class="hl">NTE:</span> <span class="hl-green">$&lt;price cap&gt;</span>     <span class="hl">Urgency:</span> <span class="hl-red">&lt;date&gt;</span>
+
+<span class="hl-dim">Notes: before + after photos required · Sign-Off Sheet · 30-min ETA call · no on-site payment</span>
+
+<span class="hl">📞 Call list:</span> <span class="hl-dim">[None / Sourcing Required]</span></div>
+    </div>
+
+    <ul class="bullet-list">
+      <li><span class="field-tag">NTE</span> = <strong>"Not To Exceed"</strong> — the most we can spend. Your tech's price must come in under NTE.</li>
+      <li><span class="field-tag">Urgency</span> = when it must be done. <strong>Overdue/today = drop everything.</strong></li>
+      <li><span class="field-tag">Call list</span> = Empty by default. <strong>Sourcing is 100% your responsibility.</strong> If a call list is ever attached, it is strictly a historical backup list.</li>
+    </ul>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       SECTION 4: THE CALL — YOUR SCRIPT
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="section-card" id="section-4">
+    <div class="section-header">
+      <span class="section-number">04</span>
+      <h2 class="section-title">The Call <span class="dim">— Your Script</span></h2>
+    </div>
+
+    <p class="lead" style="margin-bottom: 28px;"><strong>Memorize the rhythm, not the exact words.</strong></p>
+
+    <div class="script-block">
+      <span class="script-label">① The Local Opening</span>
+      <p class="script-text">"Hey, good morning/afternoon, I'm <span class="bracket">[Name]</span>. Looking for a <span class="bracket">[trade]</span> in <span class="bracket">[city]</span>?"</p>
+    </div>
+
+    <ul class="bullet-list" style="margin-left: 8px;">
+      <li class="no">Do NOT say "By the way" or "Hello, can you hear me?"</li>
+      <li class="no">Do NOT say the state right away. <strong>Sound local.</strong></li>
+      <li class="yes">If asked how you found them: <em>"Yeah, I recently moved into the neighborhood and am looking around..."</em></li>
+    </ul>
+
+    <div class="script-block">
+      <span class="script-label">② The Quick Pitch</span>
+      <p class="script-text">"Cool. Quick one — <span class="bracket">[scope of work, 5–7 words]</span>. Can you help?"</p>
+    </div>
+
+    <div class="script-block">
+      <span class="script-label">③ Fast Qualification</span>
+      <p class="script-text">"When can you go — anything today?"<br>"Free estimate on site, right?"<br>If yes: "Perfect, sending the address. Good number?"</p>
+    </div>
+
+    <div class="script-block">
+      <span class="script-label">④ Locking &amp; Rules</span>
+      <p class="script-text">"One last thing — you work independent, correct?"<br>"Cool, I'll text a couple house rules — quick read before you head out, sites are picky. Thanks man, text me anytime."</p>
+    </div>
+
+    <div class="callout callout--danger" style="margin-top: 32px;">
+      <div class="callout-title">⛔ CRITICAL WARNINGS — OPSEC &amp; PRICING</div>
+      <ol class="step-list" style="margin: 0;">
+        <li><strong>NEVER</strong> name the client. Say <em>"We are STEADYWRK Facilities Network. We coordinate maintenance for this site."</em></li>
+        <li><strong>NO</strong> payment talk on the phone. Let the texted brief handle it.</li>
+        <li><strong>NO</strong> on-site haggling. Approve quotes under NTE within 10 minutes.</li>
+        <li><strong>Do not</strong> send the address until the Team Leader approves the tech.</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       SECTION 5: VETTING STANDARDS
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="section-card" id="section-5">
+    <div class="section-header">
+      <span class="section-number">05</span>
+      <h2 class="section-title">Vetting Standards <span class="dim">— Who's a YES</span></h2>
+    </div>
+
+    <div class="callout callout--success">
+      <div class="callout-title">✅ Green Light — Proceed</div>
+      <ul class="bullet-list" style="margin: 0;">
+        <li class="yes">Owner-operator or small independent</li>
+        <li class="yes">Available in the required window</li>
+        <li class="yes">Price comes in under NTE</li>
+        <li class="yes">Clean, professional presentation</li>
+        <li class="yes">Licensed if required by the trade</li>
+        <li class="yes">OK to present as our team on site</li>
+      </ul>
+    </div>
+
+    <div class="callout callout--danger" style="margin-top: 16px;">
+      <div class="callout-title">❌ Red Flag — Pass Immediately</div>
+      <ul class="bullet-list" style="margin: 0;">
+        <li class="no">Big franchise (Roto-Rooter, Mr. Rooter, etc.)</li>
+        <li class="no">Can't make the time window</li>
+        <li class="no">Pricing exceeds NTE</li>
+        <li class="no">Won't do before/after photos</li>
+        <li class="no">Evasive or unprofessional on the phone</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       SECTION 6: SECURING THE TECH
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="section-card" id="section-6">
+    <div class="section-header">
+      <span class="section-number">06</span>
+      <h2 class="section-title">Securing the Tech</h2>
+    </div>
+
+    <ol class="step-list">
+      <li>Get the <strong>Team Leader's approval</strong> on the tech.</li>
+      <li>Then send the <strong>Tech Brief</strong> (Section 7) with the address + procedures.</li>
+      <li>Reply in your channel: <span class="field-tag">secured JOB-#### &lt;tech name&gt; &lt;time&gt;</span></li>
+    </ol>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       SECTION 7: THE TECH BRIEF ★
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="section-card section-card--highlight" id="section-7">
+    <div class="section-header">
+      <span class="section-number">★</span>
+      <h2 class="section-title">The Tech Brief <span class="dim">— What You SEND the Technician</span></h2>
+    </div>
+
+    <div class="callout callout--warning">
+      <div class="callout-title">⚠ Only send AFTER Team Leader approval</div>
+      <p>Copy, fill the brackets, send by text message. Never send this before the tech is approved.</p>
+    </div>
+
+    <span class="small-label">Tech Brief Template</span>
+
+    <div class="terminal">
+      <div class="terminal-bar">
+        <span class="terminal-dot"></span>
+        <span class="terminal-dot"></span>
+        <span class="terminal-dot"></span>
+        <span class="terminal-title">Tech Brief — Template</span>
+      </div>
+      <div class="terminal-body">Hey <span class="hl">[Tech name]</span> — here are the job details, please confirm you got this. 👍
+
+<span class="hl">📍 JOB:</span> <span class="hl-bright">[JOB-######-####]</span>
+<span class="hl-dim">[Site / client type]</span> — <span class="hl-dim">[full address, city, state, zip]</span>
+
+<span class="hl">🔧 Trade:</span> <span class="hl-dim">[trade]</span>
+<span class="hl">📝 Scope:</span> <span class="hl-dim">[clear, simple description of the work]</span>
+<span class="hl">🕐 When:</span>  <span class="hl-dim">[date / arrival window]</span>
+
+<span class="hl-bright">━━━ BEFORE YOU GO ━━━</span>
+• Call me <span class="hl">30 minutes</span> before you arrive.
+• Do <span class="hl-red">NOT</span> start repairs until I approve your quote.
+• Text me the quote first:
+  summary · labor $ · materials (itemized) $ · subtotal $
+
+<span class="hl-bright">━━━ ON SITE ━━━</span>
+• Take <span class="hl">[N]</span> BEFORE photos and <span class="hl">[N]</span> AFTER photos — <span class="hl-red">required</span>.
+• Complete the <span class="hl">Sign-Off Sheet</span>.
+• <span class="hl-red">No payment talk on site</span> — we handle payment.
+• Present yourself as part of our team.
+
+<span class="hl-bright">━━━ AFTER ━━━</span>
+• Send all photos + a short work summary.
+• Send your <span class="hl">W-9</span> (text/email) so we can set up payment.
+• Payment processes <span class="hl-green">5–7 business days</span> after completion
+  once we have photos + summary.
+
+Reply "<span class="hl-green">confirmed</span>" with your ETA. Thanks! 🙏</div>
+    </div>
+
+    <hr class="divider">
+
+    <span class="small-label">Filled Example — Live Job</span>
+
+    <div class="terminal">
+      <div class="terminal-bar">
+        <span class="terminal-dot"></span>
+        <span class="terminal-dot"></span>
+        <span class="terminal-dot"></span>
+        <span class="terminal-title">Tech Brief — Filled Sample</span>
+      </div>
+      <div class="terminal-body">Hey <span class="hl">Mike</span> — here are the job details, please confirm you got this. 👍
+
+<span class="hl">📍 JOB:</span> <span class="hl-bright">JOB-260612-7018</span>
+Commercial Retail — 142 Main St, Clinton, NY 13323
+
+<span class="hl">🔧 Trade:</span> Plumbing
+<span class="hl">📝 Scope:</span> Diagnose and repair leaking faucet in restroom
+<span class="hl">🕐 When:</span>  Today, arrive between 1:00 PM – 3:00 PM
+
+<span class="hl-bright">━━━ BEFORE YOU GO ━━━</span>
+• Call me <span class="hl">30 minutes</span> before you arrive.
+• Do <span class="hl-red">NOT</span> start repairs until I approve your quote.
+• Text me the quote first:
+  summary · labor $ · materials (itemized) $ · subtotal $
+
+<span class="hl-bright">━━━ ON SITE ━━━</span>
+• Take <span class="hl">4</span> BEFORE photos and <span class="hl">4</span> AFTER photos — <span class="hl-red">required</span>.
+• Complete the <span class="hl">Sign-Off Sheet</span>.
+• <span class="hl-red">No payment talk on site</span> — we handle payment.
+• Present yourself as part of our team.
+
+<span class="hl-bright">━━━ AFTER ━━━</span>
+• Send all photos + a short work summary.
+• Send your <span class="hl">W-9</span> (text/email) so we can set up payment.
+• Payment processes <span class="hl-green">5–7 business days</span> after completion
+  once we have photos + summary.
+
+Reply "<span class="hl-green">confirmed</span>" with your ETA. Thanks! 🙏</div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       SECTION 8: REPORTING
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="section-card" id="section-8">
+    <div class="section-header">
+      <span class="section-number">08</span>
+      <h2 class="section-title">Reporting</h2>
+    </div>
+
+    <p>In your channel, reply to the WO thread with status updates. Use the standard formats below:</p>
+
+    <div class="terminal">
+      <div class="terminal-bar">
+        <span class="terminal-dot"></span>
+        <span class="terminal-dot"></span>
+        <span class="terminal-dot"></span>
+        <span class="terminal-title">Status Report Formats</span>
+      </div>
+      <div class="terminal-body"><span class="hl-green">secured</span>  JOB-#### <span class="hl-dim">&lt;tech name&gt;</span> <span class="hl-dim">&lt;time&gt;</span>
+<span class="hl">looking</span>   JOB-####
+<span class="hl">enroute</span>   JOB-####
+<span class="hl">onsite</span>    JOB-####
+<span class="hl-green">done</span>      JOB-####
+<span class="hl">quote</span>     JOB-#### <span class="hl-green">$&lt;amount&gt;</span></div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       SECTION 9: WHERE TECHS COME FROM
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="section-card" id="section-9">
+    <div class="section-header">
+      <span class="section-number">09</span>
+      <h2 class="section-title">Where Techs Come From</h2>
+    </div>
+
+    <ol class="source-list">
+      <li>
+        <span class="source-name">Yelp</span>
+        <span class="source-desc">Search by trade, filter 4.0★+, select "Open Now."</span>
+      </li>
+      <li>
+        <span class="source-name">Google Maps</span>
+        <span class="source-desc">Local techs near the job site, call for same-day availability.</span>
+      </li>
+      <li>
+        <span class="source-name">BBB</span>
+        <span class="source-desc">Accredited + owner-operated businesses. Reliable vetting baseline.</span>
+      </li>
+      <li>
+        <span class="source-name">Craigslist</span>
+        <span class="source-desc">Skilled Trades section — independent operators posting services.</span>
+      </li>
+      <li>
+        <span class="source-name">Facebook</span>
+        <span class="source-desc">Marketplace + local trade groups. Community-sourced leads.</span>
+      </li>
+    </ol>
+
+    <div class="callout callout--warning" style="margin-top: 20px;">
+      <div class="callout-title">⚡ Rule of Thumb</div>
+      <p style="margin: 0;">Always favor <strong>owner-operators</strong>. Never call the big franchises — they won't work under our model and they'll waste your time.</p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       SECTION 10: HOW YOU'RE SCORED
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="section-card" id="section-10">
+    <div class="section-header">
+      <span class="section-number">10</span>
+      <h2 class="section-title">How You're Scored</h2>
+    </div>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Metric</th>
+          <th>What We Measure</th>
+          <th>Standard</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Throughput</strong></td>
+          <td>Techs secured · Jobs completed · Speed to secure</td>
+          <td><span class="field-tag">3+ / day</span></td>
+        </tr>
+        <tr>
+          <td><strong>Quality</strong></td>
+          <td>Calls recorded on Quo and scored automatically</td>
+          <td><span class="field-tag">Auto-scored</span></td>
+        </tr>
+        <tr>
+          <td><strong>Growth</strong></td>
+          <td>Hit the standard consistently → you move up</td>
+          <td><span class="field-tag">Promotion</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       SECTION 11: OPSEC & OPERATIONS STANDARDS
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="section-card section-card--danger" id="section-11">
+    <div class="section-header">
+      <span class="section-number" style="background: var(--danger-dim); border-color: rgba(229,62,62,0.3); color: var(--danger);">11</span>
+      <h2 class="section-title">OPSEC &amp; Operations Standards <span class="dim">— Non-Negotiable</span></h2>
+    </div>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Standard</th>
+          <th>Rule</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong style="color: var(--danger);">Queue Privacy</strong></td>
+          <td>You see your assigned queue only. Never access or discuss other dispatchers' queues.</td>
+        </tr>
+        <tr>
+          <td><strong style="color: var(--danger);">Client Shield</strong></td>
+          <td>Never mention client names to techs. Ever.</td>
+        </tr>
+        <tr>
+          <td><strong style="color: var(--danger);">Client Call Firewall</strong></td>
+          <td>If a client/manager calls you, <strong>mute/hang up immediately</strong> and escalate to Team Leader. You are strictly tech-facing; speaking to the client is <strong>grounds for dismissal.</strong></td>
+        </tr>
+        <tr>
+          <td><strong style="color: var(--danger);">Mic Discipline</strong></td>
+          <td>Do not mute your microphone in training huddles while on shift. Real-time coaching requires an open mic.</td>
+        </tr>
+        <tr>
+          <td><strong style="color: var(--danger);">Missed Scope</strong></td>
+          <td>Own the mistake as <em>"my bad / oversight"</em> and negotiate a <strong>$50 return fee</strong>.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout callout--danger" style="margin-top: 24px;">
+      <div class="callout-title">🔒 These rules protect the entire operation. Violations are not coached — they're terminal.</div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       SECTION 12: ONE-PAGE CHEAT SHEET
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="section-card section-card--highlight" id="section-12">
+    <div class="section-header">
+      <span class="section-number">12</span>
+      <h2 class="section-title">One-Page Cheat Sheet</h2>
+    </div>
+
+    <div class="cheat-grid">
+      <div class="cheat-item">
+        <div class="cheat-label">📞 Call</div>
+        <p>Looking for a <strong>[trade]</strong> in <strong>[city]</strong> → Vet → Rules → Close</p>
+      </div>
+      <div class="cheat-item">
+        <div class="cheat-label">🚫 Don't</div>
+        <p>Send the address until the tech is <strong>approved</strong> by Team Leader</p>
+      </div>
+      <div class="cheat-item">
+        <div class="cheat-label">🔒 Secure</div>
+        <p>Get approval → Send Tech Brief → <span class="field-tag">secured JOB-#### &lt;tech&gt; &lt;time&gt;</span></p>
+      </div>
+      <div class="cheat-item">
+        <div class="cheat-label">🎯 Goal</div>
+        <p><strong>3+ closed/day.</strong> NTE = ceiling (aim 30–50% below). Photos always.</p>
+      </div>
+      <div class="cheat-item">
+        <div class="cheat-label">🎤 Mic</div>
+        <p>Unmuted during training huddles. Always.</p>
+      </div>
+      <div class="cheat-item">
+        <div class="cheat-label">🔍 Source</div>
+        <p>Self-source always. No pre-built call lists. You are the list.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       SECTION 13: DAY-1 CHECKLIST
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="section-card" id="section-13">
+    <div class="section-header">
+      <span class="section-number">13</span>
+      <h2 class="section-title">Day-1 Checklist</h2>
+    </div>
+
+    <ul class="checklist">
+      <li>Join your <span class="field-tag">#d-you</span> channel · Read this package + run the deck.</li>
+      <li>Open your queue — pick the <strong>most urgent WO</strong>.</li>
+      <li>Dial the call list · Vet · Secure your first tech.</li>
+      <li>Get approval → Send the Tech Brief.</li>
+      <li>Reply <span class="field-tag">secured …</span> · Keep status updated.</li>
+      <li><strong>Close 1 before lunch. 3 by end of day.</strong></li>
+    </ul>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       CLOSING CTA
+       ═══════════════════════════════════════════════════════════ -->
+  <div class="footer-cta">
+    <p>Welcome to the team. Now go — read your queue, dial the list, secure your first tech.<br><span class="accent">Dominate. Deliver.</span></p>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       FOOTER
+       ═══════════════════════════════════════════════════════════ -->
+  <footer class="doc-footer">
+    <div class="footer-logo">STEADYWRK</div>
+    <p class="footer-text">
+      Confidential &amp; Proprietary — STEADYWRK Facilities Network<br>
+      Unauthorized distribution is prohibited<br>
+      Internal Operations Document · Rev 4.0 · June 2026
+    </p>
+  </footer>
+
+</main>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     JAVASCRIPT — Scroll Animations, Nav, Mobile Toggle
+     ═══════════════════════════════════════════════════════════════ -->
+<script>
+(function() {
+  'use strict';
+
+  // ── Scroll reveal for section cards ──────────────────────────
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.section-card').forEach(card => {
+    observer.observe(card);
+  });
+
+  // ── Active nav link on scroll ────────────────────────────────
+  const sections = document.querySelectorAll('.section-card[id]');
+  const navLinks = document.querySelectorAll('.sidebar nav a');
+
+  function updateActiveNav() {
+    let current = '';
+    sections.forEach(section => {
+      const rect = section.getBoundingClientRect();
+      if (rect.top <= 200) {
+        current = section.id;
+      }
+    });
+
+    navLinks.forEach(link => {
+      link.classList.remove('active');
+      if (link.getAttribute('href') === '#' + current) {
+        link.classList.add('active');
+      }
+    });
+  }
+
+  window.addEventListener('scroll', updateActiveNav, { passive: true });
+  updateActiveNav();
+
+  // ── Mobile nav toggle ────────────────────────────────────────
+  const sidebar = document.getElementById('sidebar');
+  const toggle = document.getElementById('navToggle');
+
+  toggle.addEventListener('click', () => {
+    sidebar.classList.toggle('open');
+    toggle.textContent = sidebar.classList.contains('open') ? '✕' : '☰';
+  });
+
+  // Close sidebar when clicking a nav link on mobile
+  navLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      if (window.innerWidth <= 1100) {
+        sidebar.classList.remove('open');
+        toggle.textContent = '☰';
+      }
+    });
+  });
+
+  // ── Smooth scroll for nav links ──────────────────────────────
+  navLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const targetId = link.getAttribute('href').substring(1);
+      const targetEl = document.getElementById(targetId);
+      if (targetEl) {
+        targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
+  // ── Subtle parallax on hero quote ────────────────────────────
+  const heroQuote = document.querySelector('.hero-quote');
+  window.addEventListener('scroll', () => {
+    if (heroQuote) {
+      const scrolled = window.pageYOffset;
+      const rate = scrolled * 0.08;
+      heroQuote.style.transform = `translateY(${rate}px)`;
+    }
+  }, { passive: true });
+
+})();
+</script>
+
+</body>
+</html>

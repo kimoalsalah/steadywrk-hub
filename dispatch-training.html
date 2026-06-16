@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STEADYWRK Dispatch - Training Module</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-bg: #0A0A0A;
+            --color-surface: #121211;
+            --color-surface-hover: #1A1A19;
+            --color-border: rgba(255, 255, 255, 0.08);
+            --color-brand: #E58A0F;
+            --color-brand-glow: rgba(229, 138, 15, 0.3);
+            --color-text: #E8E8E6;
+            --color-text-dim: #8A8A86;
+            --font-display: 'Outfit', sans-serif;
+            --font-body: 'Inter', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            font-family: var(--font-body);
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        /* Particle Background Canvas */
+        #canvas-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.6;
+        }
+
+        /* Grid overlay */
+        .grid-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .controls {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 100;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        button {
+            background: rgba(20, 20, 20, 0.8);
+            border: 1px solid var(--color-border);
+            color: var(--color-text);
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-family: var(--font-mono);
+            font-size: 12px;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        button:hover {
+            border-color: var(--color-brand);
+            box-shadow: 0 0 15px var(--color-brand-glow);
+            color: var(--color-brand);
+        }
+
+        #presenter-btn {
+            background: rgba(229, 138, 15, 0.1);
+            border-color: rgba(229, 138, 15, 0.3);
+            color: var(--color-brand);
+        }
+
+        .slide-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            z-index: 10;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            padding: 5%;
+        }
+
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .slide-content {
+            max-width: 1000px;
+            width: 100%;
+            text-align: center;
+        }
+
+        h1, h2 {
+            font-family: var(--font-display);
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 5rem;
+            background: linear-gradient(135deg, #fff 0%, #888 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.1;
+        }
+
+        .accent {
+            color: var(--color-brand);
+            background: none;
+            -webkit-text-fill-color: var(--color-brand);
+            text-shadow: 0 0 20px var(--color-brand-glow);
+        }
+
+        h2 {
+            font-size: 3.5rem;
+            color: var(--color-text);
+        }
+
+        p {
+            font-size: 1.5rem;
+            color: var(--color-text-dim);
+            line-height: 1.5;
+            margin-bottom: 30px;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: rgba(18, 18, 17, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--color-border);
+            border-radius: 16px;
+            padding: 40px;
+            margin-top: 30px;
+            text-align: left;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            transform: translateY(20px);
+            opacity: 0;
+        }
+
+        .code-block {
+            font-family: var(--font-mono);
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid rgba(229, 138, 15, 0.2);
+            padding: 20px;
+            border-radius: 8px;
+            color: var(--color-brand);
+            font-size: 1.1rem;
+            margin: 20px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .code-block::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 4px; height: 100%;
+            background: var(--color-brand);
+            box-shadow: 0 0 10px var(--color-brand);
+        }
+
+        .flex-row {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .box {
+            flex: 1;
+            min-width: 200px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--color-border);
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .box h3 {
+            color: var(--color-brand);
+            font-family: var(--font-mono);
+            font-size: 1rem;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        /* Work Order specific */
+        .wo-card {
+            background: #0A0A0A;
+            border: 1px solid var(--color-border);
+            border-radius: 8px;
+            padding: 0;
+            overflow: hidden;
+            font-family: var(--font-mono);
+            font-size: 14px;
+        }
+        
+        .wo-header {
+            background: #111;
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--color-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .wo-tag {
+            background: rgba(229, 138, 15, 0.1);
+            color: var(--color-brand);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        
+        .wo-body {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .wo-row {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px dashed #333;
+            padding-bottom: 10px;
+        }
+
+        .wo-label { color: #888; }
+        .wo-value { color: #fff; }
+
+        .progress-bar {
+            position: fixed;
+            top: 0; left: 0; height: 3px;
+            background: var(--color-brand);
+            box-shadow: 0 0 10px var(--color-brand);
+            width: 0%;
+            z-index: 100;
+            transition: width 0.3s ease;
+        }
+
+        .slide-indicator {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            font-family: var(--font-mono);
+            color: var(--color-text-dim);
+            z-index: 100;
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="canvas-container"></canvas>
+    <div class="grid-overlay"></div>
+    <div class="progress-bar" id="progress"></div>
+    
+    <div class="slide-indicator" id="indicator">01 / 10</div>
+
+    <div class="controls">
+        <a href="index.html" style="text-decoration:none;"><button style="background:rgba(255,255,255,0.05); border-style:dashed;">← Portal Hub</button></a>
+        <button id="presenter-btn" onclick="openPresenterMode()">Open Presenter Notes</button>
+        <button onclick="prevSlide()">Prev [ ← ]</button>
+        <button onclick="nextSlide()">Next [ → ]</button>
+    </div>
+
+    <div class="slide-container">
+        <!-- Slide 1 -->
+        <div class="slide active" id="slide-1">
+            <div class="slide-content">
+                <h1 class="gsap-title">STEADYWRK <span class="accent">DISPATCH</span></h1>
+                <p class="gsap-fade">Your speed determines our revenue.<br>Your discipline determines your growth.</p>
+                <div class="glass-card gsap-card">
+                    <p style="font-size: 1.2rem; margin:0; text-align:center;">This is your weapon. Learn it. Use it. Dominate.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 2 -->
+        <div class="slide" id="slide-2">
+            <div class="slide-content">
+                <h2 class="gsap-title">THE <span class="accent">MODEL</span></h2>
+                <p class="gsap-fade">How we make money: The spread between the NTE limit and the tech's rate.</p>
+                
+                <div class="flex-row gsap-stagger">
+                    <div class="box">
+                        <h3>1. Work Order Drops</h3>
+                        <p style="font-size:1rem; margin:0">We secure a commercial maintenance job with a strict NTE budget.</p>
+                    </div>
+                    <div class="box" style="border-color: var(--color-brand);">
+                        <h3>2. You Secure Tech</h3>
+                        <p style="font-size:1rem; margin:0">Find & lock a local owner-operator below the NTE limit.</p>
+                    </div>
+                    <div class="box">
+                        <h3>3. Profit Margin</h3>
+                        <p style="font-size:1rem; margin:0">The spread is our revenue. Speed + Pricing discipline is everything.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3 -->
+        <div class="slide" id="slide-3">
+            <div class="slide-content">
+                <h2 class="gsap-title">YOUR <span class="accent">LOOP</span></h2>
+                <p class="gsap-fade">End-to-end ownership. Goal: 3+ closed per day. **Self-Sourcing Required.**</p>
+                
+                <div class="glass-card gsap-card" style="text-align: center;">
+                    <div style="display:flex; justify-content: space-between; align-items:center; font-family: var(--font-mono); color: #fff; margin-bottom: 20px;">
+                        <span>SLACK ALERT</span> →
+                        <span style="color:var(--color-brand)">CALL TECHS</span> →
+                        <span>SECURE PRICE</span> →
+                        <span>COORDINATE</span> →
+                        <span style="color:#2d8a4e">PHOTOS & CLOSE</span>
+                    </div>
+                    <div style="font-family: var(--font-mono); font-size: 0.95rem; border-top: 1px solid var(--color-border); padding-top: 15px; color: var(--color-brand);">
+                        🔎 **SELF-SOURCING IS PRIMARY:** You do not get ready leads. Finding local techs yourself is 90% of the job.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4 -->
+        <div class="slide" id="slide-4">
+            <div class="slide-content">
+                <h2 class="gsap-title">THE <span class="accent">WORK ORDER</span></h2>
+                <p class="gsap-fade">What drops into your Slack queue.</p>
+                
+                <div class="glass-card gsap-card wo-card" style="margin:0 auto; max-width:600px;">
+                    <div class="wo-header">
+                        <span style="font-weight:bold;">JOB-260612-7018</span>
+                        <span class="wo-tag">URGENT</span>
+                    </div>
+                    <div class="wo-body">
+                        <div class="wo-row">
+                            <span class="wo-label">LOCATION:</span>
+                            <span class="wo-value">Utica, NY</span>
+                        </div>
+                        <div class="wo-row">
+                            <span class="wo-label">TRADE:</span>
+                            <span class="wo-value" style="color: var(--color-brand);">Plumbing</span>
+                        </div>
+                        <div class="wo-row">
+                            <span class="wo-label">NTE LIMIT:</span>
+                            <span class="wo-value" style="color: #2d8a4e;">$450.00</span>
+                        </div>
+                        <div class="wo-row" style="flex-direction: column; gap:10px;">
+                            <span class="wo-label" style="border-bottom: 1px solid #333; padding-bottom:5px;">SCOPE OF WORK:</span>
+                            <span class="wo-value" style="line-height: 1.4; color:#ddd;">Commercial restroom sink clogged in men's room. Needs auger/snake. Store manager reports water backing up. MUST provide before/after photos.</span>
+                        </div>
+                        <div class="wo-row" style="flex-direction: column; gap:10px; margin-top:10px;">
+                            <span class="wo-label" style="color: var(--color-brand);">📞 CALL LIST:</span>
+                            <span class="wo-value" style="font-size:13px; color: var(--color-error); font-weight: bold; border: 1px dashed rgba(184, 72, 46, 0.3); padding: 10px; border-radius: 4px; background: rgba(184, 72, 46, 0.05); text-align: center;">
+                                ⚠️ [NONE / SOURCING REQUIRED] — build your list using Yelp, Google, & BBB
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5 -->
+        <div class="slide" id="slide-5">
+            <div class="slide-content">
+                <h2 class="gsap-title">THE CALL: <span class="accent">OPENING</span></h2>
+                <p class="gsap-fade">No "How's your day". No robot voice. Be local.</p>
+                
+                <div class="glass-card gsap-card">
+                    <h3 style="color:#888; font-family:var(--font-mono); margin-bottom:15px;">EXACT SCRIPT:</h3>
+                    <div class="code-block">
+                        "Hey, good morning, I'm [Name]. Looking for a plumber in Utica?"
+                    </div>
+                    <ul style="color:var(--color-text-dim); line-height: 1.8; margin-left: 20px;">
+                        <li>Clean, direct tone.</li>
+                        <li>Only say the city, never the state. (Locals don't say the state).</li>
+                        <li>If asked how you found them: "Moved into the neighborhood, looking for help."</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6 -->
+        <div class="slide" id="slide-6">
+            <div class="slide-content">
+                <h2 class="gsap-title">THE CALL: <span class="accent">QUALIFICATION</span></h2>
+                <p class="gsap-fade">Pitch scope in 5-7 words. Lock the window.</p>
+                
+                <div class="flex-row gsap-stagger" style="margin-top:40px;">
+                    <div class="box">
+                        <span style="color:#888; font-size:12px;">STEP 1</span>
+                        <p style="color:#fff; font-size:1.1rem; margin:10px 0;">"Cool. Quick one—unclogging a commercial restroom sink. Can you help?"</p>
+                    </div>
+                    <div class="box">
+                        <span style="color:#888; font-size:12px;">STEP 2</span>
+                        <p style="color:#fff; font-size:1.1rem; margin:10px 0;">"When can you go—anything today?"</p>
+                    </div>
+                    <div class="box">
+                        <span style="color:#888; font-size:12px;">STEP 3</span>
+                        <p style="color:#fff; font-size:1.1rem; margin:10px 0;">"Free estimate on site, right? Perfect, sending the address. Good number?"</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7 -->
+        <div class="slide" id="slide-7">
+            <div class="slide-content">
+                <h2 class="gsap-title">THE CALL: <span class="accent">LOCKING</span></h2>
+                <p class="gsap-fade">Establish boundaries. No payment terms or app talks on the phone.</p>
+                
+                <div class="glass-card gsap-card">
+                    <h3 style="color:var(--color-error); font-family:var(--font-mono); margin-bottom:15px; border-bottom: 1px solid var(--color-error-bg); padding-bottom:10px;">NEVER DISCUSS PAYMENT TERMS OR APPS (PAYPAL/ZELLE/CASHAPP) ON THE PHONE.</h3>
+                    <p style="margin-top:15px; font-size: 1.2rem; line-height: 1.6;">
+                        "One last thing—you work independent, correct?"<br><br>
+                        "Cool, I'll text a couple house rules—quick read before you head out, sites are picky. Thanks man, text me anytime."
+                    </p>
+                    <div style="margin-top: 20px; font-family: var(--font-mono); font-size: 0.9rem; color: #888; border-top: 1px solid var(--color-border); padding-top: 15px;">
+                        If they ask: *"We pay standard ACH or check through our platform. Setup link is in the brief."* Do not argue payment apps.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 8 -->
+        <div class="slide" id="slide-8">
+            <div class="slide-content">
+                <h2 class="gsap-title">OPERATIONS: <span class="accent">30-MIN RULE</span></h2>
+                <p class="gsap-fade">Communication is oxygen. Silence is failure.</p>
+                
+                <div class="glass-card gsap-card">
+                    <ul style="color:var(--color-text); line-height: 1.8; margin-left: 20px; font-size:1.15rem;">
+                        <li>Set a physical 30-minute timer on your phone.</li>
+                        <li>Update <span style="color:var(--color-brand); font-family:var(--font-mono)">#reporting-daily</span> every 30 minutes.</li>
+                        <li>Format: <code>[JOB-ID] - [ACTION TAKEN] - [NEXT STEP]</code></li>
+                        <li>Reply to all technician callbacks within 4 hours.</li>
+                        <li style="color: var(--color-brand); font-weight: bold;">Huddle Mic Discipline: Keep mic UNMUTED at all times on shift so Kevin can coach live.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 9 -->
+        <div class="slide" id="slide-9">
+            <div class="slide-content">
+                <h2 class="gsap-title">SCHEDULING: <span class="accent">SPACING</span></h2>
+                <p class="gsap-fade">Always secure a backup. Never let them overlap.</p>
+                
+                <div class="glass-card gsap-card" style="text-align:center;">
+                    <div style="font-size: 3rem; color: var(--color-error); font-weight:800; font-family:var(--font-display);">2 HOURS MINIMUM</div>
+                    <p style="margin-top:20px;">Main and backup ETAs must be spaced by at least two hours to prevent double-booking collisions on-site.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 10 -->
+        <div class="slide" id="slide-10">
+            <div class="slide-content">
+                <h2 class="gsap-title">DISCIPLINE & <span class="accent">OPSEC</span></h2>
+                <p class="gsap-fade">Protect the operation. Protect your metrics.</p>
+                
+                <div class="flex-row gsap-stagger" style="margin-top:30px;">
+                    <div class="box" style="border-left: 3px solid var(--color-brand);">
+                        <h3>RECORD EVERYTHING</h3>
+                        <p style="font-size:0.95rem; margin:0">Press record first. 100% of calls. Missed recordings = disciplinary action.</p>
+                    </div>
+                    <div class="box" style="border-left: 3px solid var(--color-success);">
+                        <h3>OPSEC & FIREWALL</h3>
+                        <p style="font-size:0.95rem; margin:0">Never mention clients (e.g., Dollar General/UPS) to techs. **Strict Firewall:** If a client/manager calls, hang up & escalate to Kevin immediately.</p>
+                    </div>
+                    <div class="box" style="border-left: 3px solid var(--color-brand);">
+                        <h3>MISSED SCOPE</h3>
+                        <p style="font-size:0.95rem; margin:0">Own the mistake as "my bad/oversight" and offer a flat $50 return fee to secure completion and sign-off.</p>
+                    </div>
+                </div>
+                
+                <div style="margin-top:40px;">
+                    <h3 style="font-family:var(--font-display); font-size:1.8rem;">GO DOMINATE.</h3>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Particle Background Logic
+        const canvas = document.getElementById('canvas-container');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let particles = [];
+
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.size = Math.random() * 2 + 0.1;
+                this.speedX = Math.random() * 1 - 0.5;
+                this.speedY = Math.random() * 1 - 0.5;
+                this.opacity = Math.random() * 0.5 + 0.1;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x > width) this.x = 0;
+                if (this.x < 0) this.x = width;
+                if (this.y > height) this.y = 0;
+                if (this.y < 0) this.y = height;
+            }
+            draw() {
+                ctx.fillStyle = `rgba(229, 138, 15, ${this.opacity})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            particles = [];
+            for (let i = 0; i < 100; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, width, height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animateParticles);
+        }
+
+        window.addEventListener('resize', resize);
+        resize();
+        initParticles();
+        animateParticles();
+
+        // Slide Navigation Logic
+        let currentSlide = 1;
+        const totalSlides = 10;
+        let isAnimating = false;
+
+        function updateProgress() {
+            const pct = ((currentSlide - 1) / (totalSlides - 1)) * 100;
+            document.getElementById('progress').style.width = `${pct}%`;
+            document.getElementById('indicator').innerText = `${String(currentSlide).padStart(2, '0')} / ${totalSlides}`;
+        }
+
+        function animateSlideIn(slideEl) {
+            const tl = gsap.timeline();
+            tl.fromTo(slideEl, {opacity: 0, scale: 0.95}, {opacity: 1, scale: 1, duration: 0.5, ease: "power2.out"})
+              .fromTo(slideEl.querySelectorAll('.gsap-title'), {y: 30, opacity: 0}, {y: 0, opacity: 1, duration: 0.6, ease: "back.out(1.7)"}, "-=0.2")
+              .fromTo(slideEl.querySelectorAll('.gsap-fade'), {y: 20, opacity: 0}, {y: 0, opacity: 1, duration: 0.5}, "-=0.4")
+              .fromTo(slideEl.querySelectorAll('.gsap-card'), {y: 40, opacity: 0}, {y: 0, opacity: 1, duration: 0.6, ease: "power2.out"}, "-=0.3")
+              .fromTo(slideEl.querySelectorAll('.gsap-stagger > div'), {y: 30, opacity: 0}, {y: 0, opacity: 1, duration: 0.5, stagger: 0.15}, "-=0.4");
+            return tl;
+        }
+
+        function animateSlideOut(slideEl) {
+            return gsap.to(slideEl, {opacity: 0, scale: 1.05, duration: 0.4, ease: "power2.in"});
+        }
+
+        function goToSlide(n) {
+            if (isAnimating || n === currentSlide || n < 1 || n > totalSlides) return;
+            isAnimating = true;
+
+            const currentEl = document.getElementById(`slide-${currentSlide}`);
+            const nextEl = document.getElementById(`slide-${n}`);
+
+            animateSlideOut(currentEl).then(() => {
+                currentEl.classList.remove('active');
+                nextEl.classList.add('active');
+                currentSlide = n;
+                updateProgress();
+                animateSlideIn(nextEl).then(() => {
+                    isAnimating = false;
+                });
+            });
+        }
+
+        function nextSlide() { goToSlide(currentSlide + 1); }
+        function prevSlide() { goToSlide(currentSlide - 1); }
+
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') nextSlide();
+            if (e.key === 'ArrowLeft') prevSlide();
+        });
+
+        // Initialize first slide animation
+        gsap.set('.slide', {opacity: 0});
+        gsap.set('#slide-1', {opacity: 1});
+        animateSlideIn(document.getElementById('slide-1'));
+        updateProgress();
+
+        // Presenter Mode
+        function openPresenterMode() {
+            window.open('presenter-notes.html', 'STEADYWRK_PRESENTER', 'width=800,height=900,menubar=no,toolbar=no,location=no,status=no');
+        }
+    </script>
+</body>
+</html>

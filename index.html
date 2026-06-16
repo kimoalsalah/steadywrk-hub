@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STEADYWRK — Dispatch Operations Hub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════════════════════
+   STEADYWRK PORTAL SYSTEM
+   Design System: Dark Premium HSL, Glassmorphism, Micro-animations
+   ═══════════════════════════════════════════════════════════════ */
+
+:root {
+  --bg: #0A0A0A;
+  --surface: #121211;
+  --surface-elevated: #181816;
+  --surface-glass: rgba(18, 18, 17, 0.75);
+  --accent: #E58A0F;
+  --accent-dim: rgba(229, 138, 15, 0.12);
+  --accent-glow: rgba(229, 138, 15, 0.35);
+  --accent-bright: #F5A623;
+  --text: #E8E8E6;
+  --text-dim: #8A8A86;
+  --text-muted: #5A5A57;
+  --danger: #B8482E;
+  --danger-dim: rgba(184, 72, 46, 0.12);
+  --danger-glow: rgba(184, 72, 46, 0.25);
+  --danger-bright: #D9553A;
+  --border: rgba(255, 255, 255, 0.05);
+  --border-accent: rgba(229, 138, 15, 0.2);
+  --radius-lg: 16px;
+  --radius-md: 12px;
+  --radius-sm: 8px;
+  --font-heading: 'Outfit', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  --shadow-glow: 0 0 50px rgba(229, 138, 15, 0.06);
+  --transition: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.6;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* ── Interactive Particle Canvas ── */
+#particle-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.85;
+}
+
+/* ── Cyber Grid Background ── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(229, 138, 15, 0.012) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(229, 138, 15, 0.012) 1px, transparent 1px);
+  background-size: 50px 50px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Ambient Radial Glows ── */
+body::after {
+  content: '';
+  position: fixed;
+  top: -10%;
+  left: 30%;
+  width: 60%;
+  height: 60%;
+  background: radial-gradient(circle, rgba(229, 138, 15, 0.04) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.portal-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 60px 40px 100px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ════════════════════════════════════════
+   HEADER / HERO
+   ════════════════════════════════════════ */
+.portal-header {
+  text-align: center;
+  margin-bottom: 70px;
+  position: relative;
+}
+
+.classification-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 18px;
+  background: var(--danger-dim);
+  border: 1px solid rgba(184, 72, 46, 0.2);
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--danger-bright);
+  margin-bottom: 30px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.classification-badge span {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  background: var(--danger-bright);
+  border-radius: 50%;
+  box-shadow: 0 0 8px var(--danger-bright);
+  animation: badgeBlink 1.5s ease-in-out infinite;
+}
+
+@keyframes badgeBlink {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+
+.logo {
+  font-family: var(--font-heading);
+  font-weight: 900;
+  font-size: 48px;
+  letter-spacing: 6px;
+  color: var(--text);
+  margin-bottom: 12px;
+  text-transform: uppercase;
+}
+
+.logo span {
+  color: var(--accent);
+  text-shadow: 0 0 30px rgba(229, 138, 15, 0.25);
+}
+
+.logo .dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  background: var(--accent);
+  border-radius: 50%;
+  margin-left: 2px;
+  box-shadow: 0 0 12px var(--accent);
+}
+
+.title-desc {
+  font-size: 16px;
+  color: var(--text-dim);
+  max-width: 600px;
+  margin: 0 auto 10px;
+  line-height: 1.6;
+}
+
+.portal-meta {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-top: 16px;
+}
+
+.portal-meta span {
+  color: var(--accent);
+}
+
+/* ════════════════════════════════════════
+   MAIN DOCUMENT GRID
+   ════════════════════════════════════════ */
+.doc-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+  margin-bottom: 60px;
+}
+
+@media (max-width: 850px) {
+  .doc-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.doc-card {
+  background: var(--surface-glass);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+  transition: var(--transition);
+  text-decoration: none;
+  color: inherit;
+}
+
+.doc-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border-accent), transparent);
+}
+
+.doc-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--border-accent);
+  box-shadow: var(--shadow-card), var(--shadow-glow);
+}
+
+.doc-card:hover::before {
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+}
+
+.card-tag {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--accent);
+  background: var(--accent-dim);
+  border: 1px solid var(--border-accent);
+  padding: 4px 12px;
+  border-radius: 4px;
+  align-self: flex-start;
+  margin-bottom: 24px;
+  transition: var(--transition);
+}
+
+.doc-card:hover .card-tag {
+  background: var(--accent);
+  color: #0a0a0a;
+}
+
+/* OPSEC rules specific red variant */
+.doc-card.opsec-card .card-tag {
+  color: var(--danger-bright);
+  background: var(--danger-dim);
+  border-color: rgba(184, 72, 46, 0.2);
+}
+
+.doc-card.opsec-card:hover .card-tag {
+  background: var(--danger-bright);
+  color: #0a0a0a;
+}
+
+.doc-card.opsec-card:hover {
+  border-color: rgba(184, 72, 46, 0.3);
+  box-shadow: var(--shadow-card), 0 0 50px rgba(184, 72, 46, 0.08);
+}
+
+.card-title {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 26px;
+  line-height: 1.2;
+  margin-bottom: 12px;
+  color: var(--text);
+  letter-spacing: -0.5px;
+}
+
+.card-desc {
+  font-size: 14px;
+  color: var(--text-dim);
+  line-height: 1.6;
+  margin-bottom: 30px;
+  flex: 1;
+}
+
+.card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid var(--border);
+  padding-top: 20px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-dim);
+}
+
+.action-link {
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: var(--transition);
+}
+
+.doc-card:hover .action-link {
+  color: var(--text);
+  gap: 12px;
+}
+
+.doc-card.opsec-card .action-link {
+  color: var(--danger-bright);
+}
+
+.doc-card.opsec-card:hover .action-link {
+  color: var(--text);
+}
+
+/* ════════════════════════════════════════
+   TRAINING DECK BANNER (FULL WIDTH)
+   ════════════════════════════════════════ */
+.training-deck-card {
+  grid-column: span 2;
+  background: linear-gradient(135deg, var(--surface-glass), rgba(229, 138, 15, 0.03));
+  border-color: var(--border-accent);
+}
+
+@media (max-width: 850px) {
+  .training-deck-card {
+    grid-column: span 1;
+  }
+}
+
+.training-deck-card::before {
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  height: 2px;
+}
+
+.training-deck-card:hover {
+  border-color: var(--accent-bright);
+}
+
+/* ════════════════════════════════════════
+   DOMAIN SETUP INFO BOX
+   ════════════════════════════════════════ */
+.info-section {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 40px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+}
+
+.info-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.info-icon {
+  font-size: 24px;
+  color: var(--accent);
+}
+
+.info-title {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 20px;
+  color: var(--text);
+  letter-spacing: 0.5px;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+}
+
+@media (max-width: 800px) {
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.info-col h4 {
+  font-family: var(--font-heading);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 12px;
+}
+
+.info-col p {
+  font-size: 13px;
+  color: var(--text-dim);
+  margin-bottom: 16px;
+  line-height: 1.6;
+}
+
+.code-block {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 14px 18px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--accent);
+  margin-bottom: 16px;
+  position: relative;
+}
+
+.code-block code {
+  display: block;
+  word-break: break-all;
+}
+
+.dns-table {
+  width: 100%;
+  font-size: 12px;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.dns-table th, .dns-table td {
+  padding: 10px 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+
+.dns-table th {
+  font-family: var(--font-mono);
+  color: var(--text-muted);
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.dns-table td {
+  font-family: var(--font-mono);
+  color: var(--text-dim);
+}
+
+.dns-table td strong {
+  color: var(--accent);
+}
+
+/* ════════════════════════════════════════
+   FOOTER
+   ════════════════════════════════════════ */
+.portal-footer {
+  text-align: center;
+  margin-top: 70px;
+  border-top: 1px solid var(--border);
+  padding-top: 32px;
+}
+
+.footer-logo {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 15px;
+  color: var(--accent);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.footer-notice {
+  font-size: 11px;
+  color: var(--text-muted);
+  letter-spacing: 0.5px;
+}
+</style>
+</head>
+<body>
+
+<canvas id="particle-canvas"></canvas>
+
+<div class="portal-wrapper">
+
+  <!-- ════════════════════════════════════════
+       HEADER / HERO
+       ════════════════════════════════════════ -->
+  <header class="portal-header">
+    <div class="classification-badge">
+      <span></span> RESTRICTED — INTERNAL OPS CENTRAL
+    </div>
+    <div class="logo">STEADY<span>WRK</span><span class="dot"></span></div>
+    <div class="title-desc">
+      Official deployment of training systems, guides, scripts, and security protocols for dispatcher onboarding. Sourcing is our core engine. Speed and discipline are non-negotiable.
+    </div>
+    <div class="portal-meta">
+      Security Level: <span>LEVEL 3 RESTRICTED</span> &bull; Updated: <span>2026-06-16</span>
+    </div>
+  </header>
+
+  <!-- ════════════════════════════════════════
+       DOCUMENT GRID
+       ════════════════════════════════════════ -->
+  <section class="doc-grid">
+
+    <!-- Card 0: Training Slide Deck (Full Width) -->
+    <a href="dispatch-training.html" class="doc-card training-deck-card">
+      <div class="card-tag">Interactive Presentation</div>
+      <h3 class="card-title">Onboarding &amp; Operations Training Deck</h3>
+      <p class="card-desc">The official interactive onboarding deck used to align new dispatchers. Covers the revenue model (DMG), self-sourcing loop, local phone openings, qualification flows, backup technician spacing, call recording, and security rules.</p>
+      <div class="card-footer">
+        <div>Slides: 10 Modules (GSAP Interactive)</div>
+        <div class="action-link">LAUNCH TRAINING SYSTEM &rarr;</div>
+      </div>
+    </a>
+
+    <!-- Card 1: Operations Manual -->
+    <a href="official-docs/dispatcher-package.html" class="doc-card">
+      <div class="card-tag">Manual &amp; Runbook</div>
+      <h3 class="card-title">Main Operations Manual</h3>
+      <p class="card-desc">A comprehensive 13-section manual covering the complete dispatcher loop. Includes the daily schedule timeline, work order terminal mockups, client list details, dispatcher scoreboard metrics, check-in templates, and a one-page operations cheat sheet.</p>
+      <div class="card-footer">
+        <div>Format: HTML Manual (Sidebar Nav)</div>
+        <div class="action-link">OPEN MANUAL &rarr;</div>
+      </div>
+    </a>
+
+    <!-- Card 2: Call Script -->
+    <a href="official-docs/call-script.html" class="doc-card">
+      <div class="card-tag">Quick Reference</div>
+      <h3 class="card-title">Tech-Securing Call Script</h3>
+      <p class="card-desc">Designed to be kept open on a second monitor during live calls. Contains word-for-word spoken dialog lines for local openings, qualification, pricing lockdown, complete objection handling, and platform ranking guidelines.</p>
+      <div class="card-footer">
+        <div>Format: Call Reference Card</div>
+        <div class="action-link">OPEN SCRIPT &rarr;</div>
+      </div>
+    </a>
+
+    <!-- Card 3: Sourcing Playbook -->
+    <a href="official-docs/sourcing-guide.html" class="doc-card">
+      <div class="card-tag">Core Directive</div>
+      <h3 class="card-title">Technician Sourcing Playbook</h3>
+      <p class="card-desc">The complete manual sourcing playbook. Explains Yelp, Google Maps, BBB, Facebook, and Craigslist filtering. Features high-fidelity browser mockups of bad vs. good leads, pass/fail checklists, and vetting techniques to avoid corporate franchises.</p>
+      <div class="card-footer">
+        <div>Format: Sourcing Playbook</div>
+        <div class="action-link">OPEN PLAYBOOK &rarr;</div>
+      </div>
+    </a>
+
+    <!-- Card 4: OPSEC Rules -->
+    <a href="official-docs/opsec-rules.html" class="doc-card opsec-card">
+      <div class="card-tag">Confidentiality Standards</div>
+      <h3 class="card-title">Operations Security Rules</h3>
+      <p class="card-desc">12 non-negotiable operational security and quality standards. Details strict requirements for queue privacy, blocking client identity (Dollar General/Walgreens/etc.), avoiding national franchises, recording calls, and daily screenshot submissions.</p>
+      <div class="card-footer">
+        <div>Format: Quality Standards Agreement</div>
+        <div class="action-link">OPEN RULES &rarr;</div>
+      </div>
+    </a>
+
+  </section>
+
+  <!-- ════════════════════════════════════════
+       FOOTER
+       ════════════════════════════════════════ -->
+  <footer class="portal-footer">
+    <div class="footer-logo">STEADYWRK</div>
+    <div class="footer-notice">&copy; 2026 STEADYWRK LOGISTICS. RESTRICTED INTERNAL USE ONLY. CONFIDENTIALITY PROTOCOLS ENFORCED.</div>
+  </footer>
+
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   LIGHTWEIGHT BACKGROUND PARTICLE ENGINE
+   Zero external dependencies, HSL colors, smooth frames
+   ═══════════════════════════════════════════════════════════════ */
+(function() {
+  const canvas = document.getElementById('particle-canvas');
+  const ctx = canvas.getContext('2d');
+  
+  let width = canvas.width = window.innerWidth;
+  let height = canvas.height = window.innerHeight;
+  
+  window.addEventListener('resize', () => {
+    width = canvas.width = window.innerWidth;
+    height = canvas.height = window.innerHeight;
+  });
+  
+  const particles = [];
+  const particleCount = Math.min(60, Math.floor(width / 20));
+  
+  class Particle {
+    constructor() {
+      this.reset();
+      this.y = Math.random() * height; // initial distribution
+    }
+    
+    reset() {
+      this.x = Math.random() * width;
+      this.y = height + 10;
+      this.size = Math.random() * 1.8 + 0.5;
+      this.speedY = -(Math.random() * 0.4 + 0.1);
+      this.speedX = (Math.random() - 0.5) * 0.15;
+      this.alpha = Math.random() * 0.4 + 0.1;
+      this.fadeRate = Math.random() * 0.003 + 0.001;
+      this.color = 36; // Amber HSL Hue
+    }
+    
+    update() {
+      this.y += this.speedY;
+      this.x += this.speedX;
+      
+      // Gently drift and float up
+      if (this.y < -10 || this.x < -10 || this.x > width + 10) {
+        this.reset();
+      }
+    }
+    
+    draw() {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fillStyle = `hsla(${this.color}, 90%, 55%, ${this.alpha})`;
+      ctx.fill();
+    }
+  }
+  
+  for (let i = 0; i < particleCount; i++) {
+    particles.push(new Particle());
+  }
+  
+  function animate() {
+    ctx.clearRect(0, 0, width, height);
+    
+    // Draw canvas grid lines
+    ctx.strokeStyle = 'rgba(229, 138, 15, 0.01)';
+    ctx.lineWidth = 1;
+    
+    for (let i = 0; i < particles.length; i++) {
+      particles[i].update();
+      particles[i].draw();
+    }
+    
+    requestAnimationFrame(animate);
+  }
+  
+  animate();
+})();
+</script>
+</body>
+</html>

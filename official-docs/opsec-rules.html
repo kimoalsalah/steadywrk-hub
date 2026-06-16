@@ -1,0 +1,1223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STEADYWRK — Operations Security & Standards</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════════════════════
+   STEADYWRK — OPSEC & OPERATIONS STANDARDS
+   Classification: INTERNAL USE ONLY
+   ═══════════════════════════════════════════════════════════════ */
+
+:root {
+  --bg-primary: #0A0A0A;
+  --bg-surface: #121211;
+  --bg-elevated: #1A1A18;
+  --bg-card: #161614;
+  --accent: #E58A0F;
+  --accent-dim: rgba(229, 138, 15, 0.15);
+  --accent-glow: rgba(229, 138, 15, 0.08);
+  --danger: #B8482E;
+  --danger-dim: rgba(184, 72, 46, 0.12);
+  --danger-glow: rgba(184, 72, 46, 0.06);
+  --danger-bright: #D9553A;
+  --text-primary: #E8E8E6;
+  --text-secondary: #B0B0AC;
+  --text-dim: #8A8A86;
+  --text-muted: #5A5A57;
+  --border: rgba(255, 255, 255, 0.06);
+  --border-accent: rgba(229, 138, 15, 0.2);
+  --border-danger: rgba(184, 72, 46, 0.25);
+  --glass: rgba(18, 18, 17, 0.7);
+  --glass-danger: rgba(30, 14, 10, 0.6);
+}
+
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 15px;
+  line-height: 1.7;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* ── Subtle grid background ── */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image:
+    linear-gradient(rgba(229, 138, 15, 0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(229, 138, 15, 0.015) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Top scanline effect ── */
+body::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg,
+    transparent,
+    var(--accent) 20%,
+    var(--accent) 80%,
+    transparent
+  );
+  opacity: 0.6;
+  z-index: 1000;
+}
+
+/* ── Container ── */
+.document-wrapper {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 32px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ════════════════════════════════════════
+   HEADER / MASTHEAD
+   ════════════════════════════════════════ */
+.masthead {
+  padding: 60px 0 48px;
+  text-align: center;
+  position: relative;
+}
+
+.masthead::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border-accent), transparent);
+}
+
+.classification-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 20px;
+  background: var(--danger-dim);
+  border: 1px solid var(--border-danger);
+  border-radius: 2px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--danger-bright);
+  margin-bottom: 36px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.classification-badge::before,
+.classification-badge::after {
+  content: '◆';
+  font-size: 6px;
+  opacity: 0.7;
+}
+
+.logo {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 800;
+  font-size: 42px;
+  letter-spacing: 6px;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+}
+
+.logo span {
+  color: var(--accent);
+}
+
+.doc-title {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 600;
+  font-size: 22px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  margin-top: 16px;
+  margin-bottom: 8px;
+}
+
+.doc-subtitle {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 13px;
+  color: var(--text-dim);
+  max-width: 520px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.doc-meta {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  margin-top: 28px;
+  flex-wrap: wrap;
+}
+
+.meta-item {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--text-muted);
+  letter-spacing: 0.5px;
+}
+
+.meta-item span {
+  color: var(--text-dim);
+}
+
+/* ════════════════════════════════════════
+   WARNING BANNER
+   ════════════════════════════════════════ */
+.warning-banner {
+  margin: 40px 0;
+  padding: 24px 32px;
+  background: linear-gradient(135deg, var(--glass-danger), rgba(184, 72, 46, 0.08));
+  border: 1px solid var(--border-danger);
+  border-left: 3px solid var(--danger);
+  border-radius: 4px;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.warning-banner p {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  color: var(--danger-bright);
+  line-height: 1.7;
+  letter-spacing: 0.2px;
+}
+
+.warning-banner .warning-icon {
+  font-size: 16px;
+  margin-right: 8px;
+}
+
+/* ════════════════════════════════════════
+   RULE CARDS
+   ════════════════════════════════════════ */
+.rules-section {
+  padding: 20px 0 60px;
+}
+
+.rule-card {
+  position: relative;
+  margin-bottom: 28px;
+  padding: 32px 36px 32px 36px;
+  background: var(--glass);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.rule-card:hover {
+  border-color: var(--border-accent);
+  box-shadow: 0 0 40px var(--accent-glow);
+}
+
+.rule-card.critical {
+  background: linear-gradient(135deg, var(--glass-danger), rgba(20, 12, 10, 0.7));
+  border-color: var(--border-danger);
+}
+
+.rule-card.critical:hover {
+  border-color: rgba(184, 72, 46, 0.45);
+  box-shadow: 0 0 40px var(--danger-glow), 0 0 80px rgba(184, 72, 46, 0.03);
+}
+
+.rule-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.rule-number {
+  flex-shrink: 0;
+  width: 52px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--accent-dim);
+  border: 1px solid var(--border-accent);
+  border-radius: 4px;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  color: var(--accent);
+}
+
+.rule-card.critical .rule-number {
+  background: var(--danger-dim);
+  border-color: var(--border-danger);
+  color: var(--danger-bright);
+}
+
+.rule-title-group {
+  flex: 1;
+  padding-top: 2px;
+}
+
+.rule-title {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  line-height: 1.3;
+}
+
+.severity-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 8px;
+  padding: 4px 12px;
+  border-radius: 2px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+.severity-badge.termination {
+  background: rgba(184, 72, 46, 0.2);
+  border: 1px solid rgba(184, 72, 46, 0.35);
+  color: var(--danger-bright);
+}
+
+.severity-badge.disciplinary {
+  background: rgba(229, 138, 15, 0.12);
+  border: 1px solid rgba(229, 138, 15, 0.25);
+  color: var(--accent);
+}
+
+.severity-badge.mandatory {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-dim);
+}
+
+.rule-body {
+  padding-left: 72px;
+}
+
+.rule-body ul {
+  list-style: none;
+  padding: 0;
+}
+
+.rule-body ul li {
+  position: relative;
+  padding: 6px 0 6px 22px;
+  font-size: 14px;
+  line-height: 1.75;
+  color: var(--text-secondary);
+}
+
+.rule-body ul li::before {
+  content: '▸';
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  font-size: 12px;
+  top: 8px;
+}
+
+.rule-card.critical .rule-body ul li::before {
+  color: var(--danger-bright);
+}
+
+.rule-body ul li strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.rule-body ul li code {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12.5px;
+  padding: 2px 8px;
+  background: rgba(229, 138, 15, 0.08);
+  border: 1px solid rgba(229, 138, 15, 0.12);
+  border-radius: 3px;
+  color: var(--accent);
+}
+
+.rule-card.critical .rule-body ul li code {
+  background: rgba(184, 72, 46, 0.1);
+  border-color: rgba(184, 72, 46, 0.2);
+  color: var(--danger-bright);
+}
+
+.rule-body .script-block {
+  margin: 12px 0 8px;
+  padding: 14px 18px;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid var(--border);
+  border-left: 2px solid var(--accent);
+  border-radius: 3px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12.5px;
+  color: var(--accent);
+  line-height: 1.7;
+}
+
+.rule-card.critical .rule-body .script-block {
+  border-left-color: var(--danger-bright);
+}
+
+.never-tag {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  padding: 2px 7px;
+  background: rgba(184, 72, 46, 0.18);
+  border: 1px solid rgba(184, 72, 46, 0.3);
+  border-radius: 2px;
+  color: var(--danger-bright);
+  vertical-align: middle;
+  margin-right: 4px;
+}
+
+/* ════════════════════════════════════════
+   SECTION DIVIDERS
+   ════════════════════════════════════════ */
+.section-divider {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 48px 0 32px;
+}
+
+.section-divider .line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, var(--border-accent), transparent);
+}
+
+.section-divider .line:last-child {
+  background: linear-gradient(270deg, var(--border-accent), transparent);
+}
+
+.section-divider .label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+/* ════════════════════════════════════════
+   ACKNOWLEDGMENT SECTION
+   ════════════════════════════════════════ */
+.acknowledgment-section {
+  margin: 60px 0 40px;
+  padding: 40px 36px;
+  background: var(--glass);
+  border: 1px solid var(--border-accent);
+  border-radius: 6px;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.ack-title {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 16px;
+}
+
+.ack-text {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.8;
+  margin-bottom: 32px;
+}
+
+.ack-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.ack-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ack-field label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.ack-field .field-line {
+  height: 40px;
+  border-bottom: 1px solid var(--border-accent);
+  background: transparent;
+}
+
+.ack-field.full-width {
+  grid-column: 1 / -1;
+}
+
+.ack-field .field-line.signature {
+  height: 64px;
+  border: 1px dashed rgba(229, 138, 15, 0.2);
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ack-field .field-line.signature span {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  color: var(--text-muted);
+  opacity: 0.5;
+}
+
+/* ════════════════════════════════════════
+   FOOTER
+   ════════════════════════════════════════ */
+.document-footer {
+  padding: 40px 0 60px;
+  border-top: 1px solid var(--border);
+  text-align: center;
+}
+
+.footer-logo {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 4px;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+}
+
+.footer-logo span {
+  color: var(--accent);
+  opacity: 0.6;
+}
+
+.footer-notice {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  line-height: 2;
+  letter-spacing: 0.5px;
+  color: var(--text-muted);
+  max-width: 640px;
+  margin: 0 auto 20px;
+}
+
+.footer-classification {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px;
+  border: 1px solid rgba(184, 72, 46, 0.2);
+  border-radius: 2px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--danger);
+  opacity: 0.7;
+}
+
+/* ════════════════════════════════════════
+   RESPONSIVE
+   ════════════════════════════════════════ */
+@media (max-width: 768px) {
+  .document-wrapper {
+    padding: 0 16px;
+  }
+
+  .masthead {
+    padding: 40px 0 36px;
+  }
+
+  .logo {
+    font-size: 28px;
+    letter-spacing: 3px;
+  }
+
+  .doc-title {
+    font-size: 16px;
+  }
+
+  .doc-meta {
+    gap: 16px;
+  }
+
+  .rule-card {
+    padding: 24px 20px;
+  }
+
+  .rule-header {
+    gap: 14px;
+  }
+
+  .rule-number {
+    width: 42px;
+    height: 42px;
+    font-size: 16px;
+  }
+
+  .rule-body {
+    padding-left: 0;
+    margin-top: 8px;
+  }
+
+  .rule-title {
+    font-size: 15px;
+  }
+
+  .ack-form {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ════════════════════════════════════════
+   PRINT STYLES
+   ════════════════════════════════════════ */
+@media print {
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  body {
+    background: #fff !important;
+    color: #111 !important;
+    font-size: 11pt;
+  }
+
+  body::before,
+  body::after {
+    display: none !important;
+  }
+
+  .document-wrapper {
+    max-width: 100%;
+    padding: 0;
+  }
+
+  .masthead {
+    padding: 24pt 0;
+    border-bottom: 2pt solid #111;
+  }
+
+  .classification-badge {
+    background: none;
+    border: 1.5pt solid #B8482E;
+    color: #B8482E;
+    backdrop-filter: none;
+  }
+
+  .logo {
+    color: #111;
+    font-size: 28pt;
+  }
+
+  .logo span {
+    color: #B8482E;
+  }
+
+  .doc-title {
+    color: #333;
+    font-size: 14pt;
+  }
+
+  .warning-banner {
+    background: none;
+    border: 1.5pt solid #B8482E;
+    border-left: 4pt solid #B8482E;
+    backdrop-filter: none;
+  }
+
+  .warning-banner p {
+    color: #B8482E;
+  }
+
+  .rule-card {
+    background: none;
+    border: 1pt solid #ccc;
+    backdrop-filter: none;
+    break-inside: avoid;
+    page-break-inside: avoid;
+    margin-bottom: 16pt;
+    padding: 18pt 20pt;
+  }
+
+  .rule-card.critical {
+    background: none;
+    border: 1.5pt solid #B8482E;
+  }
+
+  .rule-number {
+    background: none;
+    border: 1.5pt solid #666;
+    color: #111;
+  }
+
+  .rule-card.critical .rule-number {
+    border-color: #B8482E;
+    color: #B8482E;
+  }
+
+  .rule-title {
+    color: #111;
+    font-size: 12pt;
+  }
+
+  .severity-badge {
+    border: 1pt solid currentColor;
+    background: none;
+  }
+
+  .rule-body ul li {
+    color: #333;
+    font-size: 10pt;
+  }
+
+  .rule-body ul li::before {
+    color: #666;
+  }
+
+  .rule-card.critical .rule-body ul li::before {
+    color: #B8482E;
+  }
+
+  .rule-body ul li strong {
+    color: #111;
+  }
+
+  .rule-body ul li code {
+    background: #f5f5f5;
+    border: 1pt solid #ddd;
+    color: #333;
+  }
+
+  .rule-body .script-block {
+    background: #f5f5f5;
+    border: 1pt solid #ddd;
+    border-left: 3pt solid #666;
+    color: #333;
+  }
+
+  .rule-card.critical .rule-body .script-block {
+    border-left-color: #B8482E;
+  }
+
+  .never-tag {
+    background: none;
+    border: 1pt solid #B8482E;
+    color: #B8482E;
+  }
+
+  .section-divider .line {
+    background: #ccc;
+  }
+
+  .section-divider .label {
+    color: #666;
+  }
+
+  .acknowledgment-section {
+    background: none;
+    border: 1.5pt solid #999;
+    backdrop-filter: none;
+  }
+
+  .ack-title {
+    color: #111;
+  }
+
+  .ack-text {
+    color: #333;
+  }
+
+  .ack-field label {
+    color: #666;
+  }
+
+  .ack-field .field-line {
+    border-bottom: 1pt solid #999;
+  }
+
+  .ack-field .field-line.signature {
+    border: 1pt dashed #999;
+  }
+
+  .document-footer {
+    border-top: 1pt solid #ccc;
+  }
+
+  .footer-logo {
+    color: #666;
+  }
+
+  .footer-logo span {
+    color: #111;
+  }
+
+  .footer-notice {
+    color: #666;
+  }
+
+  .footer-classification {
+    border: 1pt solid #B8482E;
+    color: #B8482E;
+    opacity: 1;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="document-wrapper">
+
+  <!-- ═══ MASTHEAD ═══ -->
+  <header class="masthead">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 14px;">
+      <a href="../index.html" style="display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px; border: 1px dashed var(--accent); border-radius: 4px; font-family: var(--font-mono); font-size: 10px; font-weight: 600; text-transform: uppercase; color: var(--accent); text-decoration: none; letter-spacing: 1px; transition: all 0.2s;" onmouseover="this.style.background='var(--accent-dim)';" onmouseout="this.style.background='transparent';">← Back to Portal</a>
+      <div class="classification-badge" style="margin-bottom: 0;">
+        Classified — Operations Security — Internal Use Only
+      </div>
+    </div>
+    <div class="logo">STEADY<span>WRK</span></div>
+    <div class="doc-title">Operations Security &amp; Standards</div>
+    <div class="doc-subtitle">
+      These rules are non-negotiable. Violation of any item is grounds for immediate disciplinary action or termination.
+    </div>
+    <div class="doc-meta">
+      <div class="meta-item">Version <span>3.1</span></div>
+      <div class="meta-item">Effective <span>2026-06-16</span></div>
+      <div class="meta-item">Classification <span>RESTRICTED</span></div>
+      <div class="meta-item">Dept <span>DISPATCH OPS</span></div>
+    </div>
+  </header>
+
+  <!-- ═══ WARNING BANNER ═══ -->
+  <div class="warning-banner">
+    <p><span class="warning-icon">⛔</span> Every dispatcher is required to read, understand, and comply with every standard in this document. Ignorance is not a defense. These protocols exist to protect STEADYWRK contracts, client relationships, and your employment. Treat this document as your operational bible.</p>
+  </div>
+
+  <!-- ═══ RULES ═══ -->
+  <div class="rules-section">
+
+    <!-- ── Section: Information Security ── -->
+    <div class="section-divider">
+      <div class="line"></div>
+      <div class="label">§ Information Security</div>
+      <div class="line"></div>
+    </div>
+
+    <!-- RULE 1 -->
+    <div class="rule-card">
+      <div class="rule-header">
+        <div class="rule-number">01</div>
+        <div class="rule-title-group">
+          <div class="rule-title">Queue Privacy</div>
+          <div class="severity-badge disciplinary">⚠ Disciplinary Action</div>
+        </div>
+      </div>
+      <div class="rule-body">
+        <ul>
+          <li>You see and discuss your assigned queue <strong>ONLY</strong></li>
+          <li><span class="never-tag">NEVER</span> ask about or discuss other dispatchers' jobs, queues, or performance</li>
+          <li>Your channel <code>#d-you</code> is private for a reason — treat it that way</li>
+          <li>Queue information is compartmentalized by design; cross-queue visibility is a security breach</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- RULE 2 -->
+    <div class="rule-card critical">
+      <div class="rule-header">
+        <div class="rule-number">02</div>
+        <div class="rule-title-group">
+          <div class="rule-title">Client Shield Protocol</div>
+          <div class="severity-badge termination">🔴 Grounds for Dismissal</div>
+        </div>
+      </div>
+      <div class="rule-body">
+        <ul>
+          <li><span class="never-tag">NEVER</span> mention our client names to technicians</li>
+          <li><span class="never-tag">NEVER</span> say: <code>"Dollar General"</code>, <code>"Walgreens"</code>, <code>"UPS"</code>, or any other client name</li>
+          <li>To the tech, it's always <strong>"a facility we coordinate"</strong> — nothing more</li>
+          <li>This protects our contracts and prevents techs from going direct to clients</li>
+        </ul>
+        <div class="script-block">
+          IF A TECH ASKS "Who is this for?"<br>
+          → "We are STEADYWRK Facilities Network. We coordinate maintenance for this site."
+        </div>
+      </div>
+    </div>
+
+    <!-- RULE 3 -->
+    <div class="rule-card critical">
+      <div class="rule-header">
+        <div class="rule-number">03</div>
+        <div class="rule-title-group">
+          <div class="rule-title">Client Call Firewall</div>
+          <div class="severity-badge termination">🔴 Grounds for Dismissal</div>
+        </div>
+      </div>
+      <div class="rule-body">
+        <ul>
+          <li>If a store manager, corporate representative, or client contact calls you:</li>
+        </ul>
+        <div class="script-block">
+          1. MUTE or HANG UP immediately<br>
+          2. Escalate to the Team Leader (Kevin)<br>
+          3. Do NOT answer their questions<br>
+          4. Do NOT redirect them<br>
+          5. Do NOT attempt to be helpful
+        </div>
+        <ul>
+          <li>You are <strong>STRICTLY tech-facing</strong> — client communication is above your clearance</li>
+          <li>Speaking directly to a client representative is <strong>grounds for immediate dismissal</strong></li>
+          <li>Simply hang up and escalate — there is no exception to this rule</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ── Section: Financial Security ── -->
+    <div class="section-divider">
+      <div class="line"></div>
+      <div class="label">§ Financial Security</div>
+      <div class="line"></div>
+    </div>
+
+    <!-- RULE 4 -->
+    <div class="rule-card critical">
+      <div class="rule-header">
+        <div class="rule-number">04</div>
+        <div class="rule-title-group">
+          <div class="rule-title">Payment Terms Protocol</div>
+          <div class="severity-badge termination">🔴 Grounds for Dismissal</div>
+        </div>
+      </div>
+      <div class="rule-body">
+        <ul>
+          <li><span class="never-tag">NEVER</span> discuss payment terms on the initial phone call</li>
+          <li><span class="never-tag">NEVER</span> discuss specific payment methods (<code>PayPal</code>, <code>Zelle</code>, <code>Cash App</code>, <code>Venmo</code>) on the phone</li>
+          <li>Let the <strong>Tech Brief</strong> handle payment terms in writing</li>
+          <li>Payment is <strong>5–7 business days</strong> after completion + photos + summary</li>
+        </ul>
+        <div class="script-block">
+          IF A TECH ASKS ABOUT PAYMENT:<br>
+          → "We pay standard ACH or check through our accounting platform. I'll text you the link."
+        </div>
+      </div>
+    </div>
+
+    <!-- RULE 5 -->
+    <div class="rule-card">
+      <div class="rule-header">
+        <div class="rule-number">05</div>
+        <div class="rule-title-group">
+          <div class="rule-title">NTE Discipline</div>
+          <div class="severity-badge disciplinary">⚠ Disciplinary Action</div>
+        </div>
+      </div>
+      <div class="rule-body">
+        <ul>
+          <li>NTE is a <strong>STRICT CEILING</strong>, not a target</li>
+          <li><span class="never-tag">NEVER</span> disclose the NTE amount to the technician</li>
+          <li>Aim for <strong>30–50% below NTE</strong> to preserve margin</li>
+          <li>Approve quotes under NTE within <strong>10 minutes</strong> when tech is on-site</li>
+          <li>Do <strong>NOT</strong> haggle on-site over minor amounts (<code>$10–$50</code>) — speed closes deals</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ── Section: Operational Discipline ── -->
+    <div class="section-divider">
+      <div class="line"></div>
+      <div class="label">§ Operational Discipline</div>
+      <div class="line"></div>
+    </div>
+
+    <!-- RULE 6 -->
+    <div class="rule-card">
+      <div class="rule-header">
+        <div class="rule-number">06</div>
+        <div class="rule-title-group">
+          <div class="rule-title">Real-Time Coaching Mic Discipline</div>
+          <div class="severity-badge disciplinary">⚠ Disciplinary Action</div>
+        </div>
+      </div>
+      <div class="rule-body">
+        <ul>
+          <li>Do <strong>NOT</strong> mute your microphone in training huddles while on shift</li>
+          <li>The Team Leader must hear your live calls from <strong>A to Z</strong></li>
+          <li>This enables real-time coaching and error correction</li>
+          <li>Muting during calls = missed coaching opportunities = performance risk</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- RULE 7 -->
+    <div class="rule-card">
+      <div class="rule-header">
+        <div class="rule-number">07</div>
+        <div class="rule-title-group">
+          <div class="rule-title">Recording Protocol</div>
+          <div class="severity-badge disciplinary">⚠ Disciplinary Action</div>
+        </div>
+      </div>
+      <div class="rule-body">
+        <ul>
+          <li>Record <strong>100%</strong> of outbound calls — no exceptions</li>
+          <li>Press record <strong>BEFORE</strong> you start speaking</li>
+          <li>If you forget to record a call, <strong>flag it to the Team Leader immediately</strong></li>
+          <li>Unrecorded calls that aren't flagged = <strong>disciplinary action</strong></li>
+          <li>Recordings are used for coaching, quality scoring, and dispute resolution</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- RULE 8 -->
+    <div class="rule-card critical">
+      <div class="rule-header">
+        <div class="rule-number">08</div>
+        <div class="rule-title-group">
+          <div class="rule-title">Address Release Protocol</div>
+          <div class="severity-badge termination">🔴 Unauthorized Dispatch</div>
+        </div>
+      </div>
+      <div class="rule-body">
+        <ul>
+          <li><span class="never-tag">NEVER</span> send the job address to a tech until the Team Leader approves</li>
+          <li>Sending an address before approval = <strong>unauthorized dispatch</strong></li>
+        </ul>
+        <div class="script-block">
+          WORKFLOW: Source → Vet → Get Team Leader Approval → THEN Send Tech Brief with Address
+        </div>
+        <ul>
+          <li>No shortcuts. No exceptions. The chain of approval exists for operational security.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ── Section: Service Recovery ── -->
+    <div class="section-divider">
+      <div class="line"></div>
+      <div class="label">§ Service Recovery &amp; Accountability</div>
+      <div class="line"></div>
+    </div>
+
+    <!-- RULE 9 -->
+    <div class="rule-card">
+      <div class="rule-header">
+        <div class="rule-number">09</div>
+        <div class="rule-title-group">
+          <div class="rule-title">Missed Scope Protocol</div>
+          <div class="severity-badge mandatory">◈ Mandatory Process</div>
+        </div>
+      </div>
+      <div class="rule-body">
+        <ul>
+          <li>If a tech misses part of the scope, <strong>own the mistake</strong></li>
+          <li>Never blame the tech for scope you didn't communicate clearly</li>
+          <li>Offer a flat <code>$50</code> return fee to have them come back, complete it, and get the sign-off sheet</li>
+        </ul>
+        <div class="script-block">
+          SCRIPT: "Hey, I'm sorry, my bad, I missed a small part…"<br>
+          → Offer $50 return trip fee → Complete scope → Get sign-off
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Section: Communication & Reporting ── -->
+    <div class="section-divider">
+      <div class="line"></div>
+      <div class="label">§ Communication &amp; Reporting</div>
+      <div class="line"></div>
+    </div>
+
+    <!-- RULE 10 -->
+    <div class="rule-card">
+      <div class="rule-header">
+        <div class="rule-number">10</div>
+        <div class="rule-title-group">
+          <div class="rule-title">Communication Standards</div>
+          <div class="severity-badge disciplinary">⚠ Disciplinary Action</div>
+        </div>
+      </div>
+      <div class="rule-body">
+        <ul>
+          <li>Set a <strong>30-minute timer</strong> on your phone</li>
+          <li>Update <code>#reporting-daily</code> every 30 minutes with: <code>[JOB-ID] - [ACTION] - [NEXT STEP]</code></li>
+          <li>Reply to tech callbacks within <strong>4 hours</strong></li>
+          <li>Never leave a warm lead cold — momentum is everything</li>
+          <li>Submit <strong>Clockify</strong> and <strong>ActivityWatch</strong> screenshots daily</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- RULE 11 -->
+    <div class="rule-card">
+      <div class="rule-header">
+        <div class="rule-number">11</div>
+        <div class="rule-title-group">
+          <div class="rule-title">Scheduling Rules</div>
+          <div class="severity-badge disciplinary">⚠ Disciplinary Action</div>
+        </div>
+      </div>
+      <div class="rule-body">
+        <ul>
+          <li>Main and backup ETAs must be spaced at least <strong>2 HOURS apart</strong></li>
+          <li>Never double-book techs at the same time</li>
+          <li>If main tech completes, call backup to cancel politely</li>
+          <li>If techs see each other on-site, <strong>we lose both</strong> — this is a critical failure</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ── Section: Documentation ── -->
+    <div class="section-divider">
+      <div class="line"></div>
+      <div class="label">§ Documentation &amp; Compliance</div>
+      <div class="line"></div>
+    </div>
+
+    <!-- RULE 12 -->
+    <div class="rule-card">
+      <div class="rule-header">
+        <div class="rule-number">12</div>
+        <div class="rule-title-group">
+          <div class="rule-title">Photo &amp; Documentation Standards</div>
+          <div class="severity-badge mandatory">◈ Mandatory Process</div>
+        </div>
+      </div>
+      <div class="rule-body">
+        <ul>
+          <li><strong>6 BEFORE photos</strong> and <strong>6 AFTER photos</strong> — minimum, strict standard</li>
+          <li>Store manager must sign the <strong>Sign-Off Sheet</strong> with Job ID</li>
+          <li>Tech must send <strong>work summary</strong> after completion</li>
+          <li>Tech must submit <strong>W-9</strong> for payment setup</li>
+          <li><strong>No photos = no payment processing</strong> — there are zero exceptions</li>
+        </ul>
+        <div class="script-block">
+          REQUIRED DELIVERABLES:<br>
+          ☐ 6× Before Photos &nbsp;|&nbsp; ☐ 6× After Photos &nbsp;|&nbsp; ☐ Signed Sign-Off Sheet<br>
+          ☐ Work Summary &nbsp;|&nbsp; ☐ W-9 on File
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /rules-section -->
+
+  <!-- ═══ ACKNOWLEDGMENT ═══ -->
+  <div class="section-divider">
+    <div class="line"></div>
+    <div class="label">§ Acknowledgment</div>
+    <div class="line"></div>
+  </div>
+
+  <div class="acknowledgment-section">
+    <div class="ack-title">📋 Dispatcher Acknowledgment</div>
+    <div class="ack-text">
+      By signing below, I confirm that I have read, understood, and agree to comply with all operations security standards and protocols outlined in this document. I understand that violation of any standard herein may result in disciplinary action up to and including immediate termination of my engagement with STEADYWRK.
+    </div>
+    <div class="ack-form">
+      <div class="ack-field">
+        <label>Full Name (Print)</label>
+        <div class="field-line"></div>
+      </div>
+      <div class="ack-field">
+        <label>Dispatcher ID</label>
+        <div class="field-line"></div>
+      </div>
+      <div class="ack-field">
+        <label>Date</label>
+        <div class="field-line"></div>
+      </div>
+      <div class="ack-field">
+        <label>Team Leader</label>
+        <div class="field-line"></div>
+      </div>
+      <div class="ack-field full-width">
+        <label>Signature</label>
+        <div class="field-line signature">
+          <span>Sign here</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer class="document-footer">
+    <div class="footer-logo">STEADY<span>WRK</span></div>
+    <div class="footer-notice">
+      This document contains proprietary operational procedures of STEADYWRK Facilities Network.<br>
+      Unauthorized reproduction, distribution, or disclosure of this material is strictly prohibited.<br>
+      All dispatchers are bound by their NDA and employment agreement regarding the contents herein.<br>
+      Questions or concerns should be directed to operations leadership only.
+    </div>
+    <div class="footer-classification">
+      ◆ &nbsp;Confidential — Do Not Distribute &nbsp; ◆
+    </div>
+  </footer>
+
+</div><!-- /document-wrapper -->
+
+</body>
+</html>
