@@ -3,149 +3,149 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>STEADYWRK Trainer Script - Plain</title>
+  <title>STEADYWRK Presenter Script - Operations</title>
   <style>
-    :root { --bg:#080909; --card:#151512; --ink:#f5f1e8; --muted:#beb6a7; --line:#333; --brand:#e58a0f; --green:#2dc28a; --blue:#61a8ff; }
+    :root { --bg:#080909; --panel:#141512; --panel2:#0d0e0d; --text:#f4f0e7; --muted:#b8b0a2; --line:#333; --brand:#e58a0f; --green:#2dc28a; --blue:#61a8ff; }
     * { box-sizing:border-box; }
-    body { margin:0; background:var(--bg); color:var(--ink); font-family:Arial, Helvetica, sans-serif; line-height:1.55; }
-    header { position:sticky; top:0; z-index:10; padding:14px 18px; background:#10100f; border-bottom:1px solid var(--line); }
+    body { margin:0; background:var(--bg); color:var(--text); font-family:Arial, Helvetica, sans-serif; line-height:1.55; }
+    header { position:sticky; top:0; z-index:10; padding:14px 18px; background:#10100f; border-bottom:1px solid var(--line); display:flex; justify-content:space-between; gap:12px; align-items:center; }
     h1 { margin:0; font-size:22px; color:var(--brand); }
-    header p { margin:4px 0 0; color:var(--muted); font-size:14px; }
-    main { width:min(1080px, calc(100% - 28px)); margin:16px auto 70px; display:grid; gap:14px; }
-    section { background:#141512; border:1px solid var(--line); border-left:5px solid var(--brand); border-radius:8px; padding:16px; }
+    header p { margin:3px 0 0; color:var(--muted); font-size:14px; }
+    .badge { color:var(--brand); border:1px solid rgba(229,138,15,.45); border-radius:8px; padding:8px 10px; font-weight:700; font-size:12px; white-space:nowrap; }
+    main { width:min(1080px, calc(100% - 28px)); margin:16px auto 80px; display:grid; gap:14px; }
+    section { background:linear-gradient(135deg,#171815,#10110f); border:1px solid var(--line); border-left:5px solid var(--brand); border-radius:8px; padding:16px; }
     h2 { margin:0 0 10px; font-size:23px; }
-    .say { background:#0b0c0b; border:1px solid #282828; border-radius:8px; padding:14px; color:#fff; font-size:20px; }
-    .do, .ask, .note { margin-top:10px; color:var(--muted); font-size:16px; }
-    .do b, .ask b, .note b { color:var(--brand); }
+    .say { background:var(--panel2); border:1px solid #282828; border-radius:8px; padding:14px; color:#fff; font-size:19px; }
+    .note, .ask, .move { margin-top:10px; color:var(--muted); font-size:16px; }
+    .note b, .ask b, .move b { color:var(--brand); }
     .grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; margin-top:10px; }
-    .box { background:#101110; border:1px solid #2a2a2a; border-radius:8px; padding:10px; color:var(--muted); }
-    .box b { color:var(--blue); display:block; margin-bottom:4px; }
-    .line { font-size:18px; background:#0d0d0d; border-left:4px solid var(--green); padding:10px 12px; border-radius:0 6px 6px 0; margin-top:8px; }
+    .box { background:#101110; border:1px solid #2a2a2a; border-radius:8px; padding:11px; color:var(--muted); }
+    .box b { display:block; color:var(--blue); margin-bottom:4px; }
+    .line { background:#0d0d0d; border-left:4px solid var(--green); padding:10px 12px; border-radius:0 6px 6px 0; margin-top:8px; font-size:18px; }
     code { color:var(--brand); background:#090909; padding:2px 4px; border-radius:4px; }
-    @media (max-width:760px){ header{position:relative}.grid{grid-template-columns:1fr}.say{font-size:18px} }
+    @media (max-width:760px){ header{position:relative;display:block}.badge{display:inline-block;margin-top:8px}.grid{grid-template-columns:1fr}.say{font-size:18px} }
   </style>
 </head>
 <body>
 <header>
-  <h1>STEADYWRK Trainer Script - Plain Version</h1>
-  <p>Private screen. Read naturally. Share only the presentation deck.</p>
+  <div>
+    <h1>STEADYWRK Presenter Script</h1>
+    <p>Private screen. Operational tone. Clear, serious, experienced.</p>
+  </div>
+  <div class="badge">Control the sequence. Protect the record.</div>
 </header>
 
 <main>
   <section>
-    <h2>Do Not Forget These Points</h2>
+    <h2>Trainer Positioning</h2>
+    <div class="say">"I am going to keep this practical. Dispatch is not just answering phones. It is controlling the sequence between the client problem, the technician, the site, and the record. If that sequence is clean, the job moves. If the sequence is messy, the job slows down, costs more, or becomes hard to prove."</div>
     <div class="grid">
-      <div class="box"><b>1. What dispatch means</b>Receive a job, understand it, find the right technician, keep everyone updated, collect proof.</div>
-      <div class="box"><b>2. Basic words</b>Work order, technician, NTE, scope, ETA, proof, update, sourcing.</div>
-      <div class="box"><b>3. What we teach</b>Calls, English, sourcing, updates, AI tools, digital tools, proof, professional behavior.</div>
-      <div class="box"><b>4. Certificate</b>SCOA proves they trained on these skills. It is connected to IGNITE FOUNDATION.</div>
-      <div class="box"><b>5. Safety rule</b>If unsure, ask. Do not guess. Do not invent information. Do not hide problems.</div>
-      <div class="box"><b>6. Practice</b>They must repeat the call script out loud. This is the most important activity.</div>
+      <div class="box"><b>Your tone</b>Calm, direct, competent. Do not over-explain.</div>
+      <div class="box"><b>Training promise</b>They will understand the dispatch sequence, the call flow, updates, proof, and the certificate path.</div>
+      <div class="box"><b>Certificate angle</b>SCOA is proof of operating habits, not a decoration.</div>
+      <div class="box"><b>Critical rule</b>If information is missing, verify it. Do not guess.</div>
     </div>
   </section>
 
   <section>
     <h2>Opening</h2>
-    <div class="say">"Welcome. Today we are doing dispatcher training. A dispatcher helps move a job from problem to solution. You receive the job, understand what is needed, find the right technician, give clear updates, and make sure there is proof when the job is done."</div>
-    <div class="say">"This training is also part of what we teach in IGNITE FOUNDATION. The certificate connected to this path is called SCOA: STEADYWRK Certified Operations Associate."</div>
-    <div class="do"><b>Keep it simple:</b> Do not talk too long here. Start the slides quickly.</div>
+    <div class="say">"Welcome. Today we are walking through the dispatcher workflow the way it actually happens: a work order comes in, we read it, we source the right technician, we make the call, we confirm timing, we update the team, and we close with proof. I will also show where this connects to IGNITE FOUNDATION and the SCOA certificate path."</div>
+    <div class="say">"The goal is not to memorize slides. The goal is to understand the order of operations and the judgment behind it."</div>
   </section>
 
   <section>
-    <h2>Slide 1 - What This Training Is</h2>
-    <div class="say">"By the end, I want you to understand the full dispatcher flow: read the work order, call technicians, confirm details, update the team, use AI tools carefully, and close the job with proof."</div>
-    <div class="ask"><b>Ask:</b> "Has anyone here ever had to coordinate people by phone or WhatsApp?" Connect their answer to dispatch.</div>
+    <h2>Slide 1 - What The Training Covers</h2>
+    <div class="say">"This training sits at the center of field-service operations. You need enough English to handle job language, enough dispatch logic to read the ticket, enough call control to secure a technician, enough discipline to update the record, and enough judgment to use tools like AI without letting them make decisions for you."</div>
+    <div class="ask"><b>Ask:</b> "When a job goes badly, where does it usually break: bad information, wrong technician, bad timing, or missing proof?" Let them answer, then connect it back to the slides.</div>
   </section>
 
   <section>
-    <h2>Slide 2 - The Business Model</h2>
-    <div class="say">"A work order is a job request. It usually has a budget. The budget is called NTE. NTE means 'not to exceed.' If the NTE is 450 dollars, we should not go above 450 unless someone approves it."</div>
-    <div class="say">"Our job is to find a technician who can do the work correctly, on time, and inside the budget."</div>
-    <div class="do"><b>Example:</b> "If the budget is $450 and the technician charges $300, there is room. If the technician asks for $600, we need approval or another option."</div>
+    <h2>Slide 2 - The Model</h2>
+    <div class="say">"The commercial logic is simple. A job comes in with a budget. That budget is usually controlled by an NTE, which means not-to-exceed. If the NTE is 450, we do not treat 450 as a suggestion. We either stay inside it or get approval before going beyond it."</div>
+    <div class="say">"The dispatcher affects margin by choosing the right technician, confirming the price or visit terms clearly, and avoiding preventable confusion."</div>
+    <div class="move"><b>Use example:</b> "NTE 450. Technician expects 300. That can work. Technician expects 600. We need approval or another option."</div>
   </section>
 
   <section>
-    <h2>Slide 3 - The Dispatcher Flow</h2>
-    <div class="say">"The flow is: alert, read, source, call, confirm, update, proof, close. Let's say it once together: alert, read, source, call, confirm, update, proof, close."</div>
-    <div class="do"><b>Explain:</b> Source means find possible technicians. Proof means photos, notes, time, invoice, or anything the client needs to confirm the work.</div>
+    <h2>Slide 3 - The Dispatch Loop</h2>
+    <div class="say">"This is the desk rhythm: alert, read, source, call, confirm, update, proof, close. Every part matters. If you skip reading, the call is weak. If you skip updates, the team loses visibility. If you skip proof, closeout becomes difficult."</div>
+    <div class="line">Main point: "A dispatcher does not just move fast. A dispatcher moves in the right order."</div>
   </section>
 
   <section>
     <h2>Slide 4 - Reading The Work Order</h2>
-    <div class="say">"Before calling anyone, read the job. Look for six things: location, trade, scope, urgency, NTE, and proof required."</div>
-    <div class="line">Location = where. Trade = type of work. Scope = what problem. Urgency = how soon. NTE = budget. Proof = what we need after.</div>
-    <div class="do"><b>Do on screen:</b> Point to the sample job and make them answer each item.</div>
+    <div class="say">"Before calling, pull out the operating facts: location, trade, scope, urgency, NTE, site instructions, and proof required. Scope means what the job is asking for. ETA means estimated time of arrival. Proof means the photos, notes, invoice, or confirmation needed to close the job."</div>
+    <div class="move"><b>On screen:</b> Point to the sample ticket and make them identify location, trade, NTE, problem, and proof requirement.</div>
+    <div class="line">Say: "If you cannot explain the job in one clean sentence, you are not ready to make the call."</div>
   </section>
 
   <section>
     <h2>Slide 5 - Opening The Call</h2>
-    <div class="say">"The call opening should be short. Do not give too much information at the start. First, check if they can help."</div>
+    <div class="say">"The opening should sound normal and specific. You are not reading a paragraph. You are checking whether a local technician can handle a real job today."</div>
     <div class="line">"Hey, good morning, I'm [Name]. Looking for a plumber in Utica for a small commercial job today."</div>
-    <div class="do"><b>Practice:</b> You read it once. They repeat it. Correct only the important parts: city, trade, today.</div>
+    <div class="move"><b>Practice:</b> Read it once. Have them repeat it. Correct only clarity: city, trade, today, commercial job.</div>
   </section>
 
   <section>
-    <h2>Slide 6 - Checking If They Fit</h2>
-    <div class="say">"After the opening, ask simple questions. Can they do this trade? Can they go today? What time can they arrive? Can they send photos? Are they independent or owner-operated?"</div>
+    <h2>Slide 6 - Qualifying The Technician</h2>
+    <div class="say">"Now qualify the fit. Do they do this trade? Can they go today? What time? Can they handle a commercial site? Can they send before and after photos? Are they independent or owner-operated? The point is to avoid sending someone who sounds interested but cannot actually complete the job."</div>
     <div class="line">"Quick one: commercial restroom sink clog. Can you take a look today?"</div>
     <div class="line">"What time can you arrive? And you can send before and after photos, correct?"</div>
-    <div class="ask"><b>Ask:</b> "Why do we ask about photos?" Answer: because photos help close the job and prove the work.</div>
   </section>
 
   <section>
-    <h2>Slide 7 - Confirming The Technician</h2>
-    <div class="say">"If the technician can help, confirm the next step. Send the address and job notes. Ask them to reply with ETA when they are on the way. ETA means estimated time of arrival."</div>
+    <h2>Slide 7 - Confirming And Controlling Scope</h2>
+    <div class="say">"Once the technician is interested, confirm the next action. Send the address and notes. Get the ETA. Make sure they understand that if the scope changes, they need to stop and tell us before doing extra work. That prevents surprise charges and messy closeouts."</div>
     <div class="line">"Perfect. I'll text the address and job notes now. Reply with ETA when you are on the way."</div>
-    <div class="note"><b>Important:</b> If the job changes, the technician should stop and tell us first. No surprise extra work.</div>
+    <div class="note"><b>Important:</b> Do not bury the tech in rules before they are interested. First establish the job. Then confirm expectations.</div>
   </section>
 
   <section>
     <h2>Slide 8 - Updates</h2>
-    <div class="say">"An update should be clear enough that another person can continue the job without calling you. Do not write only 'called tech.' Write what happened and what is next."</div>
+    <div class="say">"An update should let another person continue the job without calling you for context. 'Called tech' is not an update. A useful update includes the job ID, action taken, current status, blocker if any, and next step."</div>
     <div class="line">Good update: "JOB-7018: called 4 plumbers. One available at 2:30. Waiting for photo confirmation. Next call in 10 minutes."</div>
-    <div class="do"><b>Practice:</b> Ask them to create one update using: <code>JOB - action - status - next step</code>.</div>
+    <div class="move"><b>Practice:</b> Have them build one update using: <code>JOB - action - status - next step</code>.</div>
   </section>
 
   <section>
-    <h2>Slide 9 - Scheduling</h2>
-    <div class="say">"If we have a main technician and a backup, we must keep them spaced apart. If two technicians arrive at the same time, it creates confusion and possible extra cost."</div>
-    <div class="ask"><b>Ask:</b> "What can go wrong if two techs arrive together?" Let them answer: confusion, double charge, bad experience.</div>
+    <h2>Slide 9 - Scheduling And Backup</h2>
+    <div class="say">"A backup technician is useful only if the schedule is controlled. If two technicians arrive together, you create confusion, possible double cost, and a bad site experience. Know who is primary, who is backup, and what time each person is expected."</div>
+    <div class="ask"><b>Ask:</b> "What information should be in the record when a backup is set?" Answer: name, phone, ETA, role, and next confirmation time.</div>
   </section>
 
   <section>
     <h2>Slide 10 - IGNITE FOUNDATION And SCOA</h2>
-    <div class="say">"IGNITE FOUNDATION is the full program. It is six weeks, two sessions each week, in Aqaba and Amman. Each cohort has twenty seats. The program teaches operations English, dispatch basics, technician calls, sourcing, digital tools, AI tools, professional behavior, and a final practice simulation."</div>
-    <div class="say">"Graduates receive SCOA: STEADYWRK Certified Operations Associate. The certificate is serialized and can be checked at steadywrk.app/verify."</div>
+    <div class="say">"IGNITE FOUNDATION is the broader training path behind this. It is six weeks, two sessions per week, in Aqaba and Amman, with twenty seats per cohort. It covers operations English, dispatch fundamentals, technician calls, sourcing, digital tools, AI tools, professional conduct, and a capstone simulation."</div>
+    <div class="say">"Graduates receive SCOA, the STEADYWRK Certified Operations Associate certificate. The point of the certificate is to show that the person has practiced real operating behaviors: reading tickets, communicating clearly, updating the record, using tools carefully, and closing with proof."</div>
     <div class="line">Arabic if useful: "أساسيات الحقبة الذكية تدريب عملي لتعلّم تشغيل غرفة العمليات واستخدام الأدوات الحديثة بطريقة صحيحة."</div>
   </section>
 
   <section>
     <h2>Slide 11 - AI Tools</h2>
-    <div class="say">"We also teach AI tools. AI can help summarize a work order, translate a message, make a checklist, or draft an update. But AI can be wrong. Before using the answer, check the real work order."</div>
-    <div class="line">Simple rule: "Use AI for help. Check before using."</div>
-    <div class="do"><b>Example:</b> "If AI says the job is not urgent, but the ticket says water is backing up, trust the ticket."</div>
+    <div class="say">"AI tools are useful, but they are not a source of truth. Use them for summaries, translation help, checklists, or draft updates. Then verify against the actual work order. If the ticket says water is backing up, but an AI summary makes it sound low priority, trust the ticket."</div>
+    <div class="line">Plain rule: "Use AI for help. Check the real ticket before using the answer."</div>
   </section>
 
   <section>
-    <h2>Slide 12 - What They Learn</h2>
-    <div class="say">"The skills are practical: English for work orders and calls, how to read tickets, how to call technicians, how to find local contractors, how to use WhatsApp and scheduling tools, how to use AI safely, and how to close a job with proof."</div>
-    <div class="ask"><b>Ask:</b> "Which skill do you think you need most: English, calls, sourcing, AI tools, or updates?"</div>
+    <h2>Slide 12 - What They Leave With</h2>
+    <div class="say">"The practical value is this: stronger operations English, cleaner call control, better ticket reading, local sourcing habits, safer use of AI tools, better updates, and proof discipline. These are useful in dispatch, hotel operations, facility management, construction support, and field-service coordination."</div>
+    <div class="ask"><b>Ask:</b> "Which part do you think is hardest in real life: finding the tech, controlling the call, updating, or getting proof?" Use their answer to start discussion.</div>
   </section>
 
   <section>
-    <h2>Slide 13 - Call Script Practice</h2>
-    <div class="say">"Now we practice the technician call. I will read one line. Then you repeat it. Do not worry about a perfect accent. The goal is clear meaning."</div>
+    <h2>Slide 13 - Call Script Walkthrough</h2>
+    <div class="say">"Now we will practice the technician call. I will read each line once. Then you repeat it. I am not listening for a perfect accent. I am listening for clear meaning, correct job details, and a calm tone."</div>
     <div class="line">1. "Hey, good morning, I'm [Name]. Looking for a plumber in Utica for a small commercial job today."</div>
     <div class="line">2. "Quick one: commercial restroom sink clog. Can you take a look today?"</div>
     <div class="line">3. "What time can you arrive? And you can send before and after photos, correct?"</div>
     <div class="line">4. "Perfect. I'll text the address and job notes now. Reply with ETA when you are on the way."</div>
-    <div class="do"><b>After practice:</b> Ask: "What information did we confirm?" Answer: trade, availability, ETA, photos, phone number.</div>
+    <div class="move"><b>After practice:</b> Ask what was confirmed: trade, city, availability, ETA, photo requirement, and next step.</div>
   </section>
 
   <section>
     <h2>Close</h2>
-    <div class="say">"That is the basic job. Read clearly. Call clearly. Update clearly. Use tools carefully. Close with proof. That is what we train in IGNITE FOUNDATION, and that is what SCOA is meant to show."</div>
-    <div class="note"><b>Final reminder:</b> If someone asks something you do not know, say: "Good question. I will confirm and come back to you." Do not guess.</div>
+    <div class="say">"That is the operating standard: read the job correctly, call clearly, confirm details, update the record, use tools carefully, and close with proof. When those habits are consistent, the person is useful on a real operations desk. That is what the SCOA path is meant to represent."</div>
+    <div class="note"><b>If you get a question you cannot answer:</b> "Good question. I do not want to guess. I will confirm and come back to you."</div>
   </section>
 </main>
 </body>
