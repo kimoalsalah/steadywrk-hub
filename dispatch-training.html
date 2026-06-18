@@ -1,784 +1,668 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>STEADYWRK Dispatch + SCOA Training</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --bg: #080909;
-      --panel: rgba(18, 19, 18, 0.76);
-      --panel-strong: rgba(27, 28, 26, 0.92);
-      --border: rgba(255, 255, 255, 0.11);
-      --line: rgba(229, 138, 15, 0.33);
-      --amber: #e58a0f;
-      --amber-soft: rgba(229, 138, 15, 0.16);
-      --green: #2dc28a;
-      --green-soft: rgba(45, 194, 138, 0.13);
-      --blue: #61a8ff;
-      --blue-soft: rgba(97, 168, 255, 0.13);
-      --red: #e05f46;
-      --text: #f1f0eb;
-      --muted: #aaa69b;
-      --dim: #747168;
-      --mono: "JetBrains Mono", monospace;
-      --body: "Inter", sans-serif;
-      --display: "Outfit", sans-serif;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STEADYWRK Dispatch Academy - Live Training</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-bg: #0A0A0A;
+            --color-surface: #121211;
+            --color-surface-hover: #1A1A19;
+            --color-border: rgba(255, 255, 255, 0.08);
+            --color-brand: #E58A0F;
+            --color-brand-glow: rgba(229, 138, 15, 0.3);
+            --color-text: #E8E8E6;
+            --color-text-dim: #8A8A86;
+            --font-display: 'Outfit', sans-serif;
+            --font-body: 'Inter', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    html, body {
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      background: var(--bg);
-      color: var(--text);
-      font-family: var(--body);
-    }
+        body {
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            font-family: var(--font-body);
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+        }
 
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      background:
-        linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
-      background-size: 44px 44px;
-      mask-image: linear-gradient(to bottom, rgba(0,0,0,0.7), transparent 88%);
-      pointer-events: none;
-      z-index: 1;
-    }
+        /* Particle Background Canvas */
+        #canvas-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.6;
+        }
 
-    #mesh {
-      position: fixed;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      opacity: 0.55;
-      z-index: 0;
-    }
+        /* Grid overlay */
+        .grid-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: 1;
+            pointer-events: none;
+        }
 
-    .chrome {
-      position: fixed;
-      z-index: 30;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-family: var(--mono);
-      font-size: 11px;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
+        .controls {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 100;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
 
-    .topbar {
-      top: 18px;
-      left: 22px;
-      right: 22px;
-      justify-content: space-between;
-    }
+        button {
+            background: rgba(20, 20, 20, 0.8);
+            border: 1px solid var(--color-border);
+            color: var(--color-text);
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-family: var(--font-mono);
+            font-size: 12px;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
 
-    .brand-lockup {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      color: var(--text);
-      letter-spacing: 0;
-    }
+        button:hover {
+            border-color: var(--color-brand);
+            box-shadow: 0 0 15px var(--color-brand-glow);
+            color: var(--color-brand);
+        }
 
-    .seal {
-      width: 34px;
-      height: 34px;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      display: grid;
-      place-items: center;
-      color: var(--amber);
-      background: var(--amber-soft);
-      font-weight: 800;
-      font-family: var(--display);
-    }
+        #presenter-btn {
+            background: rgba(229, 138, 15, 0.1);
+            border-color: rgba(229, 138, 15, 0.3);
+            color: var(--color-brand);
+        }
 
-    .nav {
-      bottom: 22px;
-      right: 22px;
-    }
+        .slide-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            z-index: 10;
+        }
 
-    .indicator {
-      bottom: 22px;
-      left: 22px;
-    }
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            padding: 5%;
+        }
 
-    .progress {
-      position: fixed;
-      left: 0;
-      top: 0;
-      height: 3px;
-      width: 0;
-      background: linear-gradient(90deg, var(--amber), var(--green), var(--blue));
-      z-index: 40;
-      transition: width 220ms ease;
-    }
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+        }
 
-    .btn {
-      min-height: 38px;
-      min-width: 42px;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      background: rgba(18, 19, 18, 0.72);
-      color: var(--text);
-      font: 700 11px var(--mono);
-      padding: 0 13px;
-      cursor: pointer;
-      transition: border-color 160ms ease, color 160ms ease, background 160ms ease;
-    }
+        .slide-content {
+            max-width: 1000px;
+            width: 100%;
+            text-align: center;
+        }
 
-    .btn:hover {
-      border-color: var(--amber);
-      color: var(--amber);
-      background: rgba(229, 138, 15, 0.08);
-    }
+        h1, h2 {
+            font-family: var(--font-display);
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+            margin-bottom: 20px;
+        }
 
-    .slide {
-      position: absolute;
-      inset: 0;
-      display: grid;
-      place-items: center;
-      padding: 74px 56px 82px;
-      visibility: hidden;
-      opacity: 0;
-      z-index: 10;
-    }
+        h1 {
+            font-size: 5rem;
+            background: linear-gradient(135deg, #fff 0%, #888 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.1;
+        }
 
-    .slide.active {
-      visibility: visible;
-      opacity: 1;
-    }
+        .accent {
+            color: var(--color-brand);
+            background: none;
+            -webkit-text-fill-color: var(--color-brand);
+            text-shadow: 0 0 20px var(--color-brand-glow);
+        }
 
-    .stage {
-      width: min(1180px, 100%);
-      height: min(640px, calc(100vh - 156px));
-      max-height: 100%;
-      min-height: 0;
-      display: grid;
-      grid-template-columns: minmax(0, 1.14fr) minmax(300px, 0.72fr);
-      gap: 22px;
-      align-items: stretch;
-    }
+        h2 {
+            font-size: 3.5rem;
+            color: var(--color-text);
+        }
 
-    .main-panel,
-    .side-panel,
-    .tile,
-    .script-box,
-    .scoa-strip {
-      border: 1px solid var(--border);
-      background: var(--panel);
-      backdrop-filter: blur(18px);
-      box-shadow: 0 18px 60px rgba(0, 0, 0, 0.34);
-      border-radius: 8px;
-    }
+        p {
+            font-size: 1.5rem;
+            color: var(--color-text-dim);
+            line-height: 1.5;
+            margin-bottom: 30px;
+        }
 
-    .main-panel {
-      min-height: 0;
-      height: 100%;
-      padding: 38px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      overflow: hidden;
-    }
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: rgba(18, 18, 17, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--color-border);
+            border-radius: 16px;
+            padding: 40px;
+            margin-top: 30px;
+            text-align: left;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            transform: translateY(20px);
+            opacity: 0;
+        }
 
-    .side-panel {
-      min-height: 0;
-      height: 100%;
-      padding: 26px;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-      justify-content: space-between;
-    }
+        .code-block {
+            font-family: var(--font-mono);
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid rgba(229, 138, 15, 0.2);
+            padding: 20px;
+            border-radius: 8px;
+            color: var(--color-brand);
+            font-size: 1.1rem;
+            margin: 20px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .code-block::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 4px; height: 100%;
+            background: var(--color-brand);
+            box-shadow: 0 0 10px var(--color-brand);
+        }
 
-    .kicker {
-      font: 700 12px var(--mono);
-      color: var(--amber);
-      text-transform: uppercase;
-      margin-bottom: 14px;
-    }
+        .flex-row {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
 
-    h1 {
-      font-family: var(--display);
-      font-size: clamp(38px, 5.1vw, 72px);
-      line-height: 0.96;
-      letter-spacing: 0;
-      text-transform: uppercase;
-      max-width: 900px;
-    }
+        .box {
+            flex: 1;
+            min-width: 200px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--color-border);
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+        }
 
-    h1 span,
-    .accent { color: var(--amber); }
+        .box h3 {
+            color: var(--color-brand);
+            font-family: var(--font-mono);
+            font-size: 1rem;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
 
-    .subtitle {
-      color: var(--muted);
-      font-size: clamp(16px, 1.55vw, 22px);
-      line-height: 1.42;
-      max-width: 850px;
-      margin-top: 20px;
-    }
+        /* Work Order specific */
+        .wo-card {
+            background: #0A0A0A;
+            border: 1px solid var(--color-border);
+            border-radius: 8px;
+            padding: 0;
+            overflow: hidden;
+            font-family: var(--font-mono);
+            font-size: 14px;
+        }
+        
+        .wo-header {
+            background: #111;
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--color-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 12px;
-      margin-top: 28px;
-    }
+        .wo-tag {
+            background: rgba(229, 138, 15, 0.1);
+            color: var(--color-brand);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        
+        .wo-body {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
 
-    .tile {
-      padding: 18px;
-      min-height: 134px;
-    }
+        .wo-row {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px dashed #333;
+            padding-bottom: 10px;
+        }
 
-    .tile b {
-      display: block;
-      font: 700 12px var(--mono);
-      color: var(--amber);
-      text-transform: uppercase;
-      margin-bottom: 10px;
-    }
+        .wo-label { color: #888; }
+        .wo-value { color: #fff; }
 
-    .tile p {
-      color: var(--text);
-      font-size: 15px;
-      line-height: 1.45;
-    }
+        .progress-bar {
+            position: fixed;
+            top: 0; left: 0; height: 3px;
+            background: var(--color-brand);
+            box-shadow: 0 0 10px var(--color-brand);
+            width: 0%;
+            z-index: 100;
+            transition: width 0.3s ease;
+        }
 
-    .script-box {
-      background: rgba(0, 0, 0, 0.5);
-      border-color: var(--line);
-      padding: 18px 20px;
-      color: var(--text);
-      font: 600 clamp(17px, 2vw, 24px) var(--display);
-      line-height: 1.34;
-      margin-top: 22px;
-    }
+        .slide-indicator {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            font-family: var(--font-mono);
+            color: var(--color-text-dim);
+            z-index: 100;
+        }
 
-    .scoa-strip {
-      background: linear-gradient(135deg, var(--amber-soft), rgba(255,255,255,0.035));
-      border-color: var(--line);
-      padding: 14px 16px;
-      margin-top: 24px;
-      display: grid;
-      grid-template-columns: 170px 1fr;
-      gap: 14px;
-      align-items: start;
-    }
+        .cert-ribbon {
+            position: fixed;
+            top: 78px;
+            left: 30px;
+            z-index: 100;
+            border: 1px solid rgba(229, 138, 15, 0.34);
+            background: rgba(18, 18, 17, 0.82);
+            color: var(--color-text);
+            border-radius: 8px;
+            padding: 10px 12px;
+            font-family: var(--font-mono);
+            font-size: 11px;
+            line-height: 1.45;
+            max-width: 360px;
+            backdrop-filter: blur(12px);
+        }
 
-    .scoa-strip b {
-      font: 700 11px var(--mono);
-      color: var(--amber);
-      text-transform: uppercase;
-    }
-
-    .scoa-strip span {
-      color: var(--text);
-      line-height: 1.45;
-      font-size: 14px;
-    }
-
-    .side-title {
-      font: 800 18px var(--display);
-      text-transform: uppercase;
-      color: var(--text);
-      margin-bottom: 4px;
-    }
-
-    .side-copy {
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.55;
-    }
-
-    .metric {
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 13px 14px;
-      background: rgba(255, 255, 255, 0.035);
-    }
-
-    .metric small {
-      display: block;
-      color: var(--dim);
-      font: 700 10px var(--mono);
-      text-transform: uppercase;
-      margin-bottom: 5px;
-    }
-
-    .metric strong {
-      display: block;
-      color: var(--text);
-      font: 800 22px var(--display);
-      line-height: 1.05;
-    }
-
-    .metric.green strong { color: var(--green); }
-    .metric.blue strong { color: var(--blue); }
-
-    .ladder {
-      display: grid;
-      gap: 9px;
-    }
-
-    .ladder div {
-      padding: 11px 12px;
-      border-left: 3px solid var(--amber);
-      background: rgba(255,255,255,0.04);
-      color: var(--text);
-      font-size: 14px;
-      line-height: 1.35;
-      border-radius: 0 8px 8px 0;
-    }
-
-    .arabic {
-      direction: rtl;
-      text-align: right;
-      font-size: 19px;
-      line-height: 1.7;
-      color: var(--text);
-      border: 1px solid rgba(45, 194, 138, 0.28);
-      background: var(--green-soft);
-      padding: 16px;
-      border-radius: 8px;
-    }
-
-    .wa-row {
-      display: grid;
-      gap: 8px;
-      margin-top: 12px;
-    }
-
-    .wa {
-      display: block;
-      text-decoration: none;
-      text-align: center;
-      border: 1px solid rgba(45, 194, 138, 0.4);
-      color: var(--text);
-      background: var(--green-soft);
-      padding: 11px 12px;
-      border-radius: 8px;
-      font: 700 12px var(--mono);
-      text-transform: uppercase;
-    }
-
-    .scenario {
-      border: 1px solid rgba(97, 168, 255, 0.32);
-      background: var(--blue-soft);
-      border-radius: 8px;
-      padding: 16px;
-      color: var(--text);
-      font-size: 15px;
-      line-height: 1.52;
-    }
-
-    @media (max-height: 760px) and (min-width: 921px) {
-      .slide { padding: 58px 44px 60px; }
-      .stage { height: calc(100vh - 118px); gap: 18px; }
-      .main-panel { padding: 24px; }
-      .side-panel { padding: 18px; gap: 10px; }
-      .kicker { font-size: 10px; margin-bottom: 9px; }
-      h1 { font-size: clamp(34px, 4.35vw, 56px); line-height: 0.94; }
-      .subtitle { font-size: 16px; line-height: 1.32; margin-top: 12px; }
-      .grid { gap: 9px; margin-top: 16px; }
-      .tile { min-height: 0; padding: 12px; }
-      .tile b { font-size: 10px; margin-bottom: 7px; }
-      .tile p { font-size: 12.5px; line-height: 1.32; }
-      .script-box { font-size: 16px; line-height: 1.25; margin-top: 14px; padding: 12px 14px; }
-      .scoa-strip { grid-template-columns: 126px 1fr; gap: 10px; margin-top: 12px; padding: 10px 12px; }
-      .scoa-strip b { font-size: 9.5px; }
-      .scoa-strip span { font-size: 12.5px; line-height: 1.32; }
-      .side-title { font-size: 16px; }
-      .side-copy { font-size: 12.5px; line-height: 1.38; }
-      .metric { padding: 9px 10px; }
-      .metric small { font-size: 9px; margin-bottom: 4px; }
-      .metric strong { font-size: 18px; }
-      .ladder { gap: 7px; }
-      .ladder div { font-size: 12.5px; line-height: 1.3; padding: 8px 10px; }
-      .arabic { font-size: 15px; line-height: 1.5; padding: 12px; }
-      .wa-row { gap: 7px; margin-top: 10px; }
-      .wa { padding: 9px 10px; font-size: 10px; }
-      .scenario { font-size: 13px; line-height: 1.38; padding: 12px; }
-    }
-
-    @media (max-width: 920px) {
-      html, body { overflow: auto; height: auto; min-height: 100%; }
-      .slide { display: none; position: relative; min-height: 100vh; padding: 78px 18px 92px; }
-      .slide.active { display: grid; }
-      .stage { grid-template-columns: 1fr; height: auto; }
-      .main-panel, .side-panel { min-height: unset; height: auto; padding: 24px; }
-      .grid { grid-template-columns: 1fr; }
-      .scoa-strip { grid-template-columns: 1fr; }
-      .topbar { left: 14px; right: 14px; }
-      .nav { right: 14px; bottom: 14px; }
-      .indicator { left: 14px; bottom: 14px; }
-    }
-  </style>
+        .cert-ribbon strong { color: var(--color-brand); }
+    </style>
 </head>
 <body>
-  <canvas id="mesh"></canvas>
-  <div class="progress" id="progress"></div>
-  <div class="chrome topbar">
-    <div class="brand-lockup"><div class="seal">S</div><span>STEADYWRK Dispatch Academy</span></div>
-    <div>IGNITE FOUNDATION -> SCOA</div>
-  </div>
-  <div class="chrome indicator" id="indicator">01 / 12</div>
-  <div class="chrome nav">
-    <a href="index.html"><button class="btn">Hub</button></a>
-    <button class="btn" onclick="openPresenterMode()">Notes</button>
-    <button class="btn" onclick="prevSlide()">Prev</button>
-    <button class="btn" onclick="nextSlide()">Next</button>
-  </div>
-  <main id="deck"></main>
 
-  <script>
-    const slides = [
-      {
-        kicker: "01 / Identity",
-        title: "You Are Not <span>Taking Orders</span>",
-        subtitle: "You are entering the room where field-service decisions get made. Dispatch is the first live rep toward the STEADYWRK Certified Operations Associate.",
-        tiles: [
-          ["Status", "The certificate is not decoration. It says you can handle live commercial operations under pressure."],
-          ["Belonging", "You learn the language, rhythm, and discipline of the operators who get trusted with real sites."],
-          ["Standard", "Every call, update, and escalation is evidence that you are becoming an operations associate."]
-        ],
-        script: "This is real money, real sites, real technicians, and real documentation. Treat the shift like a certification lab.",
-        cert: "SCOA competency: professional conduct, operational posture, and zero-excuse ownership.",
-        side: {
-          title: "IGNITE FOUNDATION",
-          copy: "Tier 1 Core feeds IGNITE. 20 seats per cohort. 6 weeks, 2 sessions per week in Aqaba + Amman.",
-          metrics: [["Seats", "20 / cohort"], ["Length", "6 weeks"], ["Award", "SCOA"]]
-        }
-      },
-      {
-        kicker: "02 / Market Reality",
-        title: "AI Is On The Floor <span>Already</span>",
-        subtitle: "The market does not wait for people who only follow instructions. Hotels, contractors, and facilities teams need operators who can work with AI copilots and still verify reality.",
-        tiles: [
-          ["Human edge", "AI can draft, search, and summarize. You make judgment calls when a tech, client, or store is at risk."],
-          ["Verification", "Never trust a generated answer until it matches the work order, the phone call, and the proof."],
-          ["Career value", "An operator who can use AI without being fooled by it becomes harder to replace."]
-        ],
-        script: "AI is a tool. Field truth comes from calls, photos, timestamps, and clean escalation.",
-        cert: "SCOA competency: AI copilot fluency - prompt, verify, and catch hallucinations before they cost a job.",
-        side: {
-          title: "Why the certificate matters",
-          copy: "The SCOA proves you can operate in the intelligent era: English, dispatch logic, tools, AI verification, and war-room discipline.",
-          ladder: ["Prompt clearly.", "Verify against source records.", "Escalate uncertainty fast.", "Document what changed."]
-        }
-      },
-      {
-        kicker: "03 / Business Model",
-        title: "Work Order -> Tech -> <span>Margin</span>",
-        subtitle: "STEADYWRK coordinates commercial maintenance work. Your job is to secure a local, independent technician below the NTE ceiling and drive the job to paid proof.",
-        tiles: [
-          ["NTE", "Not To Exceed is the ceiling, never the target. Aim for 30-50% below when the job allows it."],
-          ["Spread", "The difference between job value and tech cost is margin. Slow sourcing and weak negotiation kill it."],
-          ["Proof", "No photos, no signed sheet, no clean summary means weak billing and weak trust."]
-        ],
-        script: "If the job pays 450 and you secure clean work for 220, discipline created the win.",
-        cert: "SCOA competency: dispatch fundamentals - ticket logic, NTE discipline, and commercial service economics.",
-        side: {
-          title: "Operator math",
-          copy: "Every dispatcher must understand why pricing discipline matters. This is not call-center theater; this is live margin control.",
-          metrics: [["NTE", "Ceiling"], ["Target", "Below NTE"], ["Goal", "3+ closes/day"]]
-        }
-      },
-      {
-        kicker: "04 / Ticket Intelligence",
-        title: "Read The Work Order Like <span>A Map</span>",
-        subtitle: "The WO is your join key. Every call, Slack update, photo, quote, invoice, and escalation must stay attached to the same job number.",
-        tiles: [
-          ["Priority", "Emergency, overdue, high NTE, and scheduled-today jobs move first."],
-          ["Scope", "Translate the work into 5-7 words before you call. Long explanations lose techs."],
-          ["SLA", "Due dates and arrival windows are not suggestions. They are the clock."]
-        ],
-        script: "JOB-260612-7018 is not just a number. It is the thread that keeps the operation from losing the job.",
-        cert: "SCOA competency: ticket logic, priority triage, SLA calendars, and zero-loss documentation.",
-        side: {
-          title: "Sample WO",
-          copy: "Trade: plumbing. City: Utica. Scope: commercial restroom sink clogged. NTE: 450. Call list: sourcing required.",
-          scenario: "Your first move is not to ask for help. Your first move is to build a local call list and start dialing."
-        }
-      },
-      {
-        kicker: "05 / Self-Sourcing",
-        title: "You Are <span>The Lead Engine</span>",
-        subtitle: "Ready-made leads are a backup plan, not the job. The job is finding local, owner-operated technicians who can move now.",
-        tiles: [
-          ["Yelp + Maps", "Trade + city. Filter high-rated and open-now. Prioritize local operators over national brands."],
-          ["BBB + Facebook", "Use BBB as a trust check and local groups for hard rural or niche trades."],
-          ["Reject fast", "Skip franchises, toll-free call centers, vague dispatch desks, and anyone who cannot follow proof rules."]
-        ],
-        script: "Sourcing fresh local techs is 90% of dispatch. If you wait for a list, you already lost tempo.",
-        cert: "SCOA competency: local market mapping, sourcing discipline, and technician vetting.",
-        side: {
-          title: "Aqaba / Amman connection",
-          copy: "The same sourcing muscle applies locally: hospitality FM, construction support, maintenance vendors, and field crews need people who can find capacity under pressure.",
-          metrics: [["Primary", "Self-source"], ["Backup", "Team leads"], ["Standard", "Owner-operator"]]
-        }
-      },
-      {
-        kicker: "06 / Operational English",
-        title: "Sound Local. Sound <span>Useful.</span>",
-        subtitle: "Your voice decides whether a technician stays on the phone. Keep it short, warm, and direct.",
-        tiles: [
-          ["No robot open", "Do not say 'can you hear me' or drift into telemarketer language."],
-          ["City only", "Say 'Utica', not 'Utica, New York'. Locals do not over-label their own market."],
-          ["Fast scope", "Say the job in one breath. Then ask for availability today."]
-        ],
-        script: "\"Hey, good morning, I'm Karim. Looking for a plumber in Utica? Quick one - commercial restroom sink clog. Can you help today?\"",
-        cert: "SCOA competency: operational English, job-site vocabulary, and client-facing communication.",
-        side: {
-          title: "Language creates trust",
-          copy: "The certificate tells employers you can speak the practical language of field service, not just classroom English.",
-          ladder: ["Warm opening.", "Short scope.", "Availability today.", "Good number to text.", "Clean handoff."]
-        }
-      },
-      {
-        kicker: "07 / Vetting + Control",
-        title: "Secure Interest Before <span>House Rules</span>",
-        subtitle: "Do not bury the tech in policy before they even agree to go. First confirm availability, estimate, and independence. Then send the controlled brief.",
-        tiles: [
-          ["Qualify", "Can you go today? Free estimate on site, right? You work independent, correct?"],
-          ["Control", "No repairs before quote approval. No payment talk on site. Photos before and after."],
-          ["No app debate", "Do not negotiate PayPal, Zelle, Cash App, or same-day cash on the first call."]
-        ],
-        script: "\"Cool, I'll text a couple house rules - quick read before you head out. Sites are picky. Text me anytime.\"",
-        cert: "SCOA competency: professional conduct, vendor control, and service-risk prevention.",
-        side: {
-          title: "Hard stops",
-          copy: "National franchise. No photos. Won't present professionally. Wants payment handled by store. Cannot provide quote before work.",
-          metrics: [["Before work", "Quote"], ["During work", "Photos"], ["After work", "Summary + sign-off"]]
-        }
-      },
-      {
-        kicker: "08 / War Room",
-        title: "Silence Is <span>Operational Debt</span>",
-        subtitle: "A war room stays alive through updates. If the team leader has to chase you, the system is already losing visibility.",
-        tiles: [
-          ["30-minute timer", "Every timer hit gets a clear update: job number, action taken, next step."],
-          ["Open mic", "During live huddles, stay unmuted so coaching can happen in real time."],
-          ["Callbacks", "Tech callbacks are warm leads. Respond within 4 hours or the lead cools."]
-        ],
-        script: "Update format: JOB-260612-7018 - called 7 plumbers, 2 no answer, 1 can go 3pm - waiting on quote.",
-        cert: "SCOA competency: war-room discipline, shift handoffs, escalation chains, and zero-loss documentation.",
-        side: {
-          title: "Documentation wins trust",
-          copy: "Elite teams do not rely on memory. They leave a trail another operator can pick up instantly.",
-          scenario: "If you vanish for 30 minutes with no update, the system cannot tell whether the job is alive, stalled, or burning."
-        }
-      },
-      {
-        kicker: "09 / AI Copilot Discipline",
-        title: "Use AI. Do Not <span>Obey AI.</span>",
-        subtitle: "AI can help you summarize a scope, generate a call checklist, or compare vendor notes. It cannot replace source verification.",
-        tiles: [
-          ["Prompt", "Ask for a short operational output: risks, call script, checklist, or escalation summary."],
-          ["Verify", "Check every AI output against WO, Slack, Quo/OpenPhone, photos, and actual call notes."],
-          ["Escalate", "If AI is uncertain or contradicts the source, you escalate instead of guessing."]
-        ],
-        script: "A hallucination is not a funny AI mistake. In operations, it can send a tech to the wrong site or approve the wrong scope.",
-        cert: "SCOA competency: AI copilot fluency and hallucination control.",
-        side: {
-          title: "Copilot rule",
-          copy: "AI drafts. Operators decide. Proof wins.",
-          ladder: ["Use AI for structure.", "Use records for truth.", "Use calls for reality.", "Use escalation for risk."]
-        }
-      },
-      {
-        kicker: "10 / Evidence",
-        title: "No Proof. <span>No Pay.</span>",
-        subtitle: "Completion is not a feeling. Completion is photos, quote, summary, sign-off, and a clean thread tied to the job number.",
-        tiles: [
-          ["Photos", "6 before and 6 after when the job requires it. Clear, useful, and tied to the scope."],
-          ["Sign-off", "Manager signature and job ID where required. Missing paperwork delays payment."],
-          ["Summary", "Work completed, labor, itemized materials, subtotal, and remaining issue if any."]
-        ],
-        script: "Your documentation is what lets STEADYWRK bill, defend the work, and pay the technician cleanly.",
-        cert: "SCOA competency: digital tools in ops, workspace suites, scheduling records, and evidence control.",
-        side: {
-          title: "SCOA evidence log",
-          copy: "During training, every good update is part of your evidence trail: clean call notes, correct escalation, and proof discipline.",
-          metrics: [["Photos", "Before / after"], ["Thread", "One WO"], ["Invoice", "Clean proof"]]
-        }
-      },
-      {
-        kicker: "11 / Certification Path",
-        title: "IGNITE FOUNDATION <span>Feeds The Room</span>",
-        subtitle: "The live dispatch shift is the practical spine of Tier 1 Core. Graduates move toward the STEADYWRK Certified Operations Associate.",
-        tiles: [
-          ["Program", "6 weeks. 2 sessions per week. Aqaba + Amman. 20 seats per cohort."],
-          ["Skills", "Operational English, dispatch fundamentals, AI copilot fluency, war-room discipline, digital tools, local market context."],
-          ["Credential", "SCOA is sealed, serialized, and verifiable at steadywrk.app/verify."]
-        ],
-        script: "This is not a random training. It is the operator track: dispatch reps today, verified operations associate tomorrow.",
-        cert: "SCOA competency: capstone simulation, peer review, and instructor debrief.",
-        side: {
-          title: "أساسيات الحقبة الذكية",
-          copy: "Legitimacy: the certificate proves you belong in the room where decisions get made - not just on the radio taking orders.",
-          arabic: "دورة أساسيات الحقبة الذكية هي بوابتك إلى سوق عمل لا ينتظر. ستتعلّم كيف تُدير غرفة العمليات بدقّة، وكيف تتعاون مع أدوات الذكاء الاصطناعي دون أن تثق بها عمياً.",
-          links: true
-        }
-      },
-      {
-        kicker: "12 / Capstone",
-        title: "Now Run The <span>Live Scenario</span>",
-        subtitle: "You will receive a work order, source local techs, qualify one, post clean updates, use AI only as a copilot, and produce the proof trail.",
-        tiles: [
-          ["Rep 1", "Build a 10-lead local call list for one urgent WO. No ready list."],
-          ["Rep 2", "Call, qualify, and summarize the best tech for team-leader approval."],
-          ["Rep 3", "Send the tech brief, update Slack, and document next step."]
-        ],
-        script: "The capstone is simple: can another operator read your thread and know exactly what happened, what is next, and what risk remains?",
-        cert: "SCOA competency: live dispatch scenario, peer review, instructor debrief, and professional readiness.",
-        side: {
-          title: "Exit standard",
-          copy: "You pass when your work is visible, verifiable, and usable by the next operator without a phone call.",
-          metrics: [["Tempo", "Fast"], ["Proof", "Clean"], ["Posture", "Elite"]]
-        }
-      }
-    ];
+    <canvas id="canvas-container"></canvas>
+    <div class="grid-overlay"></div>
+    <div class="progress-bar" id="progress"></div>
+    
+    <div class="slide-indicator" id="indicator">01 / 10</div>
+    <div class="cert-ribbon"><strong>IGNITE FOUNDATION</strong> · 6 weeks · Aqaba + Amman · <strong>SCOA</strong> certificate</div>
 
-    let current = 0;
-    let animating = false;
-    const deck = document.getElementById("deck");
+    <div class="controls">
+        <a href="index.html" style="text-decoration:none;"><button style="background:rgba(255,255,255,0.05); border-style:dashed;">← Portal Hub</button></a>
+        <button id="presenter-btn" onclick="openPresenterMode()">Open Trainer Script</button>
+        <button onclick="prevSlide()">Prev [ ← ]</button>
+        <button onclick="nextSlide()">Next [ → ]</button>
+    </div>
 
-    function htmlSlide(slide, i) {
-      const metrics = (slide.side.metrics || []).map(([label, value], idx) =>
-        `<div class="metric ${idx === 1 ? "green" : idx === 2 ? "blue" : ""}"><small>${label}</small><strong>${value}</strong></div>`
-      ).join("");
-      const ladder = (slide.side.ladder || []).map(item => `<div>${item}</div>`).join("");
-      const links = slide.side.links ? `
-        <div class="wa-row">
-          <a class="wa" href="https://wa.me/962795776130?text=I%27m%20interested%20in%20the%20IGNITE%20FOUNDATION%20cohort.%20Please%20send%20me%20dates%20and%20availability.">Inquire on WhatsApp</a>
-          <a class="wa" href="https://wa.me/962795776130?text=%D8%A3%D9%88%D8%AF%D9%91%20%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%B9%D9%86%20%D8%AF%D9%88%D8%B1%D8%A9%20%D8%A3%D8%B3%D8%A7%D8%B3%D9%8A%D8%A7%D8%AA%20%D8%A7%D9%84%D8%AD%D9%82%D8%A8%D8%A9%20%D8%A7%D9%84%D8%B0%D9%83%D9%8A%D8%A9.%20%D9%87%D9%84%20%D8%A8%D8%A5%D9%85%D9%83%D8%A7%D9%86%D9%83%D9%85%20%D8%A5%D8%B1%D8%B3%D8%A7%D9%84%20%D8%A7%D9%84%D9%85%D9%88%D8%A7%D8%B9%D9%8A%D8%AF%20%D8%A7%D9%84%D9%85%D8%AA%D8%A7%D8%AD%D8%A9%D8%9F">استفسر عبر واتساب</a>
-        </div>` : "";
-      return `
-        <section class="slide ${i === 0 ? "active" : ""}" id="slide-${i + 1}">
-          <div class="stage">
-            <div class="main-panel">
-              <div>
-                <div class="kicker">${slide.kicker}</div>
-                <h1>${slide.title}</h1>
-                <p class="subtitle">${slide.subtitle}</p>
-                <div class="grid">
-                  ${slide.tiles.map(([label, body]) => `<div class="tile"><b>${label}</b><p>${body}</p></div>`).join("")}
+    <div class="slide-container">
+        <!-- Slide 1 -->
+        <div class="slide active" id="slide-1">
+            <div class="slide-content">
+                <h1 class="gsap-title">STEADYWRK <span class="accent">DISPATCH + SCOA</span></h1>
+                <p class="gsap-fade">Live training for dispatch, sourcing, AI checks, proof, and the STEADYWRK certificate path.</p>
+                <div class="glass-card gsap-card">
+                    <p style="font-size: 1.2rem; margin:0; text-align:center;">This session connects to IGNITE FOUNDATION and the STEADYWRK Certified Operations Associate certificate.</p>
                 </div>
-                <div class="script-box">${slide.script}</div>
-              </div>
-              <div class="scoa-strip"><b>IGNITE / SCOA link</b><span>${slide.cert}</span></div>
             </div>
-            <aside class="side-panel">
-              <div>
-                <div class="side-title">${slide.side.title}</div>
-                <p class="side-copy">${slide.side.copy}</p>
-              </div>
-              ${slide.side.arabic ? `<div class="arabic">${slide.side.arabic}</div>` : ""}
-              ${slide.side.scenario ? `<div class="scenario">${slide.side.scenario}</div>` : ""}
-              ${metrics ? `<div class="ladder">${metrics}</div>` : ""}
-              ${ladder ? `<div class="ladder">${ladder}</div>` : ""}
-              ${links}
-            </aside>
-          </div>
-        </section>`;
-    }
+        </div>
 
-    deck.innerHTML = slides.map(htmlSlide).join("");
+        <!-- Slide 2 -->
+        <div class="slide" id="slide-2">
+            <div class="slide-content">
+                <h2 class="gsap-title">THE <span class="accent">MODEL</span></h2>
+                <p class="gsap-fade">How we make money: The spread between the NTE limit and the tech's rate.</p>
+                
+                <div class="flex-row gsap-stagger">
+                    <div class="box">
+                        <h3>1. Work Order Drops</h3>
+                        <p style="font-size:1rem; margin:0">We secure a commercial maintenance job with a strict NTE budget.</p>
+                    </div>
+                    <div class="box" style="border-color: var(--color-brand);">
+                        <h3>2. You Secure Tech</h3>
+                        <p style="font-size:1rem; margin:0">Find & lock a local owner-operator below the NTE limit.</p>
+                    </div>
+                    <div class="box">
+                        <h3>3. Profit Margin</h3>
+                        <p style="font-size:1rem; margin:0">The spread is our revenue. Speed + Pricing discipline is everything.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-    function updateChrome() {
-      document.getElementById("indicator").textContent = `${String(current + 1).padStart(2, "0")} / ${slides.length}`;
-      document.getElementById("progress").style.width = `${(current / (slides.length - 1)) * 100}%`;
-    }
+        <!-- Slide 3 -->
+        <div class="slide" id="slide-3">
+            <div class="slide-content">
+                <h2 class="gsap-title">YOUR <span class="accent">LOOP</span></h2>
+                <p class="gsap-fade">End-to-end ownership. Read the job, find the tech, update the team, collect proof.</p>
+                
+                <div class="glass-card gsap-card" style="text-align: center;">
+                    <div style="display:flex; justify-content: space-between; align-items:center; font-family: var(--font-mono); color: #fff; margin-bottom: 20px;">
+                        <span>SLACK ALERT</span> →
+                        <span style="color:var(--color-brand)">CALL TECHS</span> →
+                        <span>SECURE PRICE</span> →
+                        <span>COORDINATE</span> →
+                        <span style="color:#2d8a4e">PHOTOS & CLOSE</span>
+                    </div>
+                    <div style="font-family: var(--font-mono); font-size: 0.95rem; border-top: 1px solid var(--color-border); padding-top: 15px; color: var(--color-brand);">
+                        SELF-SOURCING IS A CERTIFICATION SKILL: find local independent techs, check fit, and build a usable lead list.
+                    </div>
+                </div>
+            </div>
+        </div>
 
-    function enter(el) {
-      const tl = gsap.timeline();
-      tl.fromTo(el, { opacity: 0, scale: 0.985 }, { opacity: 1, scale: 1, duration: 0.24, ease: "power2.out" })
-        .fromTo(el.querySelectorAll(".kicker, h1, .subtitle"), { y: 14, opacity: 0 }, { y: 0, opacity: 1, duration: 0.28, stagger: 0.04 }, "-=0.12")
-        .fromTo(el.querySelectorAll(".tile, .script-box, .scoa-strip, .side-panel > *"), { y: 14, opacity: 0 }, { y: 0, opacity: 1, duration: 0.24, stagger: 0.025 }, "-=0.14");
-      return tl;
-    }
+        <!-- Slide 4 -->
+        <div class="slide" id="slide-4">
+            <div class="slide-content">
+                <h2 class="gsap-title">THE <span class="accent">WORK ORDER</span></h2>
+                <p class="gsap-fade">What drops into your Slack queue.</p>
+                
+                <div class="glass-card gsap-card wo-card" style="margin:0 auto; max-width:600px;">
+                    <div class="wo-header">
+                        <span style="font-weight:bold;">JOB-260612-7018</span>
+                        <span class="wo-tag">URGENT</span>
+                    </div>
+                    <div class="wo-body">
+                        <div class="wo-row">
+                            <span class="wo-label">LOCATION:</span>
+                            <span class="wo-value">Utica, NY</span>
+                        </div>
+                        <div class="wo-row">
+                            <span class="wo-label">TRADE:</span>
+                            <span class="wo-value" style="color: var(--color-brand);">Plumbing</span>
+                        </div>
+                        <div class="wo-row">
+                            <span class="wo-label">NTE LIMIT:</span>
+                            <span class="wo-value" style="color: #2d8a4e;">$450.00</span>
+                        </div>
+                        <div class="wo-row" style="flex-direction: column; gap:10px;">
+                            <span class="wo-label" style="border-bottom: 1px solid #333; padding-bottom:5px;">SCOPE OF WORK:</span>
+                            <span class="wo-value" style="line-height: 1.4; color:#ddd;">Commercial restroom sink clogged in men's room. Needs auger/snake. Store manager reports water backing up. MUST provide before/after photos.</span>
+                        </div>
+                        <div class="wo-row" style="flex-direction: column; gap:10px; margin-top:10px;">
+                            <span class="wo-label" style="color: var(--color-brand);">📞 CALL LIST:</span>
+                            <span class="wo-value" style="font-size:13px; color: var(--color-error); font-weight: bold; border: 1px dashed rgba(184, 72, 46, 0.3); padding: 10px; border-radius: 4px; background: rgba(184, 72, 46, 0.05); text-align: center;">
+                                ⚠️ [NONE / SOURCING REQUIRED] — build your list using Yelp, Google, & BBB
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-    function go(n) {
-      if (animating || n < 0 || n >= slides.length || n === current) return;
-      animating = true;
-      const oldEl = document.getElementById(`slide-${current + 1}`);
-      const newEl = document.getElementById(`slide-${n + 1}`);
-      gsap.to(oldEl, { opacity: 0, scale: 1.01, duration: 0.22, ease: "power1.in", onComplete: () => {
-        oldEl.classList.remove("active");
-        gsap.set(oldEl, { clearProps: "opacity,transform,scale" });
-        newEl.classList.add("active");
-        current = n;
-        updateChrome();
-        enter(newEl).then(() => {
-          gsap.set(newEl, { clearProps: "opacity,transform,scale" });
-          animating = false;
-        });
-      }});
-    }
+        <!-- Slide 5 -->
+        <div class="slide" id="slide-5">
+            <div class="slide-content">
+                <h2 class="gsap-title">THE CALL: <span class="accent">OPENING</span></h2>
+                <p class="gsap-fade">No "How's your day". No robot voice. Be local.</p>
+                
+                <div class="glass-card gsap-card">
+                    <h3 style="color:#888; font-family:var(--font-mono); margin-bottom:15px;">EXACT SCRIPT:</h3>
+                    <div class="code-block">
+                        "Hey, good morning, I'm [Name]. Looking for a plumber in Utica for a small commercial job today."
+                    </div>
+                    <ul style="color:var(--color-text-dim); line-height: 1.8; margin-left: 20px;">
+                        <li>Clean, direct tone.</li>
+                        <li>Only say the city, never the state. (Locals don't say the state).</li>
+                        <li>If asked how you found them: "Moved into the neighborhood, looking for help."</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
 
-    function nextSlide() { go(current + 1); }
-    function prevSlide() { go(current - 1); }
-    function openPresenterMode() {
-      window.open("presenter-notes.html", "STEADYWRK_PRESENTER", "width=860,height=920,menubar=no,toolbar=no,location=no,status=no");
-    }
+        <!-- Slide 6 -->
+        <div class="slide" id="slide-6">
+            <div class="slide-content">
+                <h2 class="gsap-title">THE CALL: <span class="accent">QUALIFICATION</span></h2>
+                <p class="gsap-fade">Pitch scope in 5-7 words. Lock the window.</p>
+                
+                <div class="flex-row gsap-stagger" style="margin-top:40px;">
+                    <div class="box">
+                        <span style="color:#888; font-size:12px;">STEP 1</span>
+                        <p style="color:#fff; font-size:1.1rem; margin:10px 0;">"Cool. Quick one—unclogging a commercial restroom sink. Can you help?"</p>
+                    </div>
+                    <div class="box">
+                        <span style="color:#888; font-size:12px;">STEP 2</span>
+                        <p style="color:#fff; font-size:1.1rem; margin:10px 0;">"When can you go—anything today?"</p>
+                    </div>
+                    <div class="box">
+                        <span style="color:#888; font-size:12px;">STEP 3</span>
+                        <p style="color:#fff; font-size:1.1rem; margin:10px 0;">"Free estimate on site, right? Perfect, sending the address. Good number?"</p>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-    window.addEventListener("keydown", e => {
-      if (e.key === "ArrowRight" || e.key === " ") nextSlide();
-      if (e.key === "ArrowLeft") prevSlide();
-    });
-    updateChrome();
-    enter(document.getElementById("slide-1"));
+        <!-- Slide 7 -->
+        <div class="slide" id="slide-7">
+            <div class="slide-content">
+                <h2 class="gsap-title">THE CALL: <span class="accent">LOCKING</span></h2>
+                <p class="gsap-fade">Establish boundaries. No payment terms or app talks on the phone.</p>
+                
+                <div class="glass-card gsap-card">
+                    <h3 style="color:var(--color-error); font-family:var(--font-mono); margin-bottom:15px; border-bottom: 1px solid var(--color-error-bg); padding-bottom:10px;">NEVER DISCUSS PAYMENT TERMS OR APPS (PAYPAL/ZELLE/CASHAPP) ON THE PHONE.</h3>
+                    <p style="margin-top:15px; font-size: 1.2rem; line-height: 1.6;">
+                        "One last thing—you work independent, correct?"<br><br>
+                        "Cool, I'll text a couple house rules—quick read before you head out, sites are picky. Thanks man, text me anytime."
+                    </p>
+                    <div style="margin-top: 20px; font-family: var(--font-mono); font-size: 0.9rem; color: #888; border-top: 1px solid var(--color-border); padding-top: 15px;">
+                        If they ask: *"We pay standard ACH or check through our platform. Setup link is in the brief."* Do not argue payment apps.
+                    </div>
+                </div>
+            </div>
+        </div>
 
-    const canvas = document.getElementById("mesh");
-    const ctx = canvas.getContext("2d");
-    let w = 0, h = 0, points = [];
-    function resize() {
-      w = canvas.width = window.innerWidth;
-      h = canvas.height = window.innerHeight;
-      points = Array.from({ length: Math.min(95, Math.floor(w / 18)) }, () => ({
-        x: Math.random() * w,
-        y: Math.random() * h,
-        vx: (Math.random() - 0.5) * 0.45,
-        vy: (Math.random() - 0.5) * 0.45
-      }));
-    }
-    function draw() {
-      ctx.clearRect(0, 0, w, h);
-      ctx.lineWidth = 1;
-      points.forEach(p => {
-        p.x += p.vx; p.y += p.vy;
-        if (p.x < 0 || p.x > w) p.vx *= -1;
-        if (p.y < 0 || p.y > h) p.vy *= -1;
-      });
-      for (let i = 0; i < points.length; i++) {
-        for (let j = i + 1; j < points.length; j++) {
-          const a = points[i], b = points[j];
-          const d = Math.hypot(a.x - b.x, a.y - b.y);
-          if (d < 130) {
-            ctx.strokeStyle = `rgba(229,138,15,${0.12 * (1 - d / 130)})`;
-            ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
-          }
+        <!-- Slide 8 -->
+        <div class="slide" id="slide-8">
+            <div class="slide-content">
+                <h2 class="gsap-title">OPERATIONS: <span class="accent">30-MIN RULE</span></h2>
+                <p class="gsap-fade">Communication is oxygen. Silence is failure.</p>
+                
+                <div class="glass-card gsap-card">
+                    <ul style="color:var(--color-text); line-height: 1.8; margin-left: 20px; font-size:1.15rem;">
+                        <li>Set a physical 30-minute timer on your phone.</li>
+                        <li>Update <span style="color:var(--color-brand); font-family:var(--font-mono)">#reporting-daily</span> every 30 minutes.</li>
+                        <li>Format: <code>[JOB-ID] - [ACTION TAKEN] - [NEXT STEP]</code></li>
+                        <li>Reply to all technician callbacks within 4 hours.</li>
+                        <li style="color: var(--color-brand); font-weight: bold;">Huddle Mic Discipline: Keep mic UNMUTED at all times on shift so Kevin can coach live.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 9 -->
+        <div class="slide" id="slide-9">
+            <div class="slide-content">
+                <h2 class="gsap-title">SCHEDULING: <span class="accent">SPACING</span></h2>
+                <p class="gsap-fade">Always secure a backup. Never let them overlap.</p>
+                
+                <div class="glass-card gsap-card" style="text-align:center;">
+                    <div style="font-size: 3rem; color: var(--color-error); font-weight:800; font-family:var(--font-display);">2 HOURS MINIMUM</div>
+                    <p style="margin-top:20px;">Main and backup ETAs must be spaced by at least two hours to prevent double-booking collisions on-site.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 10 -->
+        <div class="slide" id="slide-10">
+            <div class="slide-content">
+                <h2 class="gsap-title">CERTIFICATE <span class="accent">PATH</span></h2>
+                <p class="gsap-fade">IGNITE FOUNDATION turns these dispatch skills into a clear STEADYWRK credential.</p>
+                
+                <div class="flex-row gsap-stagger" style="margin-top:30px;">
+                    <div class="box" style="border-left: 3px solid var(--color-brand);">
+                        <h3>IGNITE FOUNDATION</h3>
+                        <p style="font-size:0.95rem; margin:0">6 weeks. 2 sessions/week. Aqaba + Amman. 20 seats per cohort.</p>
+                    </div>
+                    <div class="box" style="border-left: 3px solid var(--color-success);">
+                        <h3>SCOA CERTIFICATE</h3>
+                        <p style="font-size:0.95rem; margin:0">STEADYWRK Certified Operations Associate. Serialized and verifiable at steadywrk.app/verify.</p>
+                    </div>
+                    <div class="box" style="border-left: 3px solid var(--color-brand);">
+                        <h3>WHAT IT PROVES</h3>
+                        <p style="font-size:0.95rem; margin:0">You can read tickets, speak clearly, use AI carefully, source techs, update the team, and close with proof.</p>
+                    </div>
+                </div>
+                
+                <div style="margin-top:40px;">
+                    <h3 style="font-family:var(--font-display); font-size:1.8rem;">أساسيات الحقبة الذكية</h3>
+                    <p style="color:var(--color-text-dim); margin-top:10px;">The entry point into field-service operations in the AI era.</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Particle Background Logic
+        const canvas = document.getElementById('canvas-container');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let particles = [];
+
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
         }
-      }
-      points.forEach(p => {
-        ctx.fillStyle = "rgba(97,168,255,0.22)";
-        ctx.beginPath(); ctx.arc(p.x, p.y, 1.2, 0, Math.PI * 2); ctx.fill();
-      });
-      requestAnimationFrame(draw);
-    }
-    window.addEventListener("resize", resize);
-    resize();
-    draw();
-  </script>
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.size = Math.random() * 2 + 0.1;
+                this.speedX = Math.random() * 1 - 0.5;
+                this.speedY = Math.random() * 1 - 0.5;
+                this.opacity = Math.random() * 0.5 + 0.1;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x > width) this.x = 0;
+                if (this.x < 0) this.x = width;
+                if (this.y > height) this.y = 0;
+                if (this.y < 0) this.y = height;
+            }
+            draw() {
+                ctx.fillStyle = `rgba(229, 138, 15, ${this.opacity})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            particles = [];
+            for (let i = 0; i < 100; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, width, height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animateParticles);
+        }
+
+        window.addEventListener('resize', resize);
+        resize();
+        initParticles();
+        animateParticles();
+
+        // Slide Navigation Logic
+        let currentSlide = 1;
+        const totalSlides = 10;
+        let isAnimating = false;
+
+        function updateProgress() {
+            const pct = ((currentSlide - 1) / (totalSlides - 1)) * 100;
+            document.getElementById('progress').style.width = `${pct}%`;
+            document.getElementById('indicator').innerText = `${String(currentSlide).padStart(2, '0')} / ${totalSlides}`;
+        }
+
+        function animateSlideIn(slideEl) {
+            const tl = gsap.timeline();
+            tl.fromTo(slideEl, {opacity: 0, scale: 0.95}, {opacity: 1, scale: 1, duration: 0.5, ease: "power2.out"})
+              .fromTo(slideEl.querySelectorAll('.gsap-title'), {y: 30, opacity: 0}, {y: 0, opacity: 1, duration: 0.6, ease: "back.out(1.7)"}, "-=0.2")
+              .fromTo(slideEl.querySelectorAll('.gsap-fade'), {y: 20, opacity: 0}, {y: 0, opacity: 1, duration: 0.5}, "-=0.4")
+              .fromTo(slideEl.querySelectorAll('.gsap-card'), {y: 40, opacity: 0}, {y: 0, opacity: 1, duration: 0.6, ease: "power2.out"}, "-=0.3")
+              .fromTo(slideEl.querySelectorAll('.gsap-stagger > div'), {y: 30, opacity: 0}, {y: 0, opacity: 1, duration: 0.5, stagger: 0.15}, "-=0.4");
+            return tl;
+        }
+
+        function animateSlideOut(slideEl) {
+            return gsap.to(slideEl, {opacity: 0, scale: 1.05, duration: 0.4, ease: "power2.in"});
+        }
+
+        function goToSlide(n) {
+            if (isAnimating || n === currentSlide || n < 1 || n > totalSlides) return;
+            isAnimating = true;
+
+            const currentEl = document.getElementById(`slide-${currentSlide}`);
+            const nextEl = document.getElementById(`slide-${n}`);
+
+            animateSlideOut(currentEl).then(() => {
+                currentEl.classList.remove('active');
+                nextEl.classList.add('active');
+                currentSlide = n;
+                updateProgress();
+                animateSlideIn(nextEl).then(() => {
+                    isAnimating = false;
+                });
+            });
+        }
+
+        function nextSlide() { goToSlide(currentSlide + 1); }
+        function prevSlide() { goToSlide(currentSlide - 1); }
+
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') nextSlide();
+            if (e.key === 'ArrowLeft') prevSlide();
+        });
+
+        // Initialize first slide animation
+        gsap.set('.slide', {opacity: 0});
+        gsap.set('#slide-1', {opacity: 1});
+        animateSlideIn(document.getElementById('slide-1'));
+        updateProgress();
+
+        // Presenter Mode
+        function openPresenterMode() {
+            window.open('presenter-notes.html', 'STEADYWRK_PRESENTER', 'width=800,height=900,menubar=no,toolbar=no,location=no,status=no');
+        }
+    </script>
 </body>
 </html>
