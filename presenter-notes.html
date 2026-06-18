@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Presenter Notes - STEADYWRK Dispatch + SCOA</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #090909;
+      --panel: #141411;
+      --border: rgba(255,255,255,0.12);
+      --amber: #e58a0f;
+      --green: #2dc28a;
+      --blue: #61a8ff;
+      --text: #f0eee8;
+      --muted: #aaa69b;
+      --mono: "JetBrains Mono", monospace;
+      --body: "Inter", sans-serif;
+      --display: "Outfit", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--body);
+      padding: 22px;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      background: rgba(9,9,9,0.94);
+      border-bottom: 1px solid var(--border);
+      padding: 0 0 14px;
+      margin-bottom: 18px;
+      backdrop-filter: blur(14px);
+    }
+
+    h1 {
+      font: 800 28px var(--display);
+      text-transform: uppercase;
+      margin: 0 0 8px;
+      letter-spacing: 0;
+    }
+
+    .sub {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .note {
+      border: 1px solid var(--border);
+      background: var(--panel);
+      border-radius: 8px;
+      padding: 18px;
+      margin-bottom: 16px;
+    }
+
+    .meta {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+      font: 700 11px var(--mono);
+      text-transform: uppercase;
+    }
+
+    .tag {
+      border: 1px solid rgba(229,138,15,0.35);
+      background: rgba(229,138,15,0.13);
+      color: var(--amber);
+      border-radius: 999px;
+      padding: 5px 8px;
+    }
+
+    .tag.green {
+      border-color: rgba(45,194,138,0.35);
+      color: var(--green);
+      background: rgba(45,194,138,0.1);
+    }
+
+    h2 {
+      font: 800 22px var(--display);
+      text-transform: uppercase;
+      margin: 0 0 10px;
+      letter-spacing: 0;
+    }
+
+    h3 {
+      font: 700 13px var(--mono);
+      color: var(--amber);
+      text-transform: uppercase;
+      margin: 18px 0 7px;
+    }
+
+    p, li {
+      color: var(--text);
+      line-height: 1.58;
+      font-size: 15px;
+    }
+
+    p {
+      margin: 0 0 10px;
+    }
+
+    ul {
+      margin: 0;
+      padding-left: 20px;
+    }
+
+    .say {
+      background: rgba(0,0,0,0.45);
+      border-left: 3px solid var(--amber);
+      padding: 12px 14px;
+      margin-top: 8px;
+      border-radius: 0 8px 8px 0;
+    }
+
+    .arabic {
+      direction: rtl;
+      text-align: right;
+      border: 1px solid rgba(45,194,138,0.3);
+      background: rgba(45,194,138,0.1);
+      border-radius: 8px;
+      padding: 12px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>STEADYWRK Presenter Notes</h1>
+    <div class="sub">Use this on your private screen. The trainee sees the deck; you drive the psychology: dispatch is the live operating lab for IGNITE FOUNDATION and the SCOA credential.</div>
+  </header>
+  <main id="notes"></main>
+
+  <script>
+    const notes = [
+      {
+        title: "You Are Not Taking Orders",
+        skill: "Professional conduct + operational posture",
+        intent: "Start with identity and status. They should feel they are entering a serious room, not joining a temporary call-center task.",
+        say: "Welcome to STEADYWRK. This is not a school exercise and it is not random dialing. Today you are stepping into field-service operations. Real money, real facilities, real technicians, and real documentation. If you work cleanly, you do not just finish a shift - you build evidence toward becoming a certified operations associate.",
+        reinforce: ["Tie the certificate to behavior, not attendance.", "Say that every clean update and every good call is evidence.", "Do not oversell. Make it feel earned."]
+      },
+      {
+        title: "AI Is On The Floor Already",
+        skill: "AI copilot fluency",
+        intent: "Make the certification feel modern and valuable. They are not competing with AI; they are learning how to operate with it responsibly.",
+        say: "The market has changed. AI can draft notes, summarize scopes, and help structure a call plan. But AI does not know whether a plumber actually answered, whether the store is flooding, or whether the quote is real. Your job is to use the tool and verify the truth before it costs the operation.",
+        reinforce: ["AI drafts. Operators decide.", "Field truth beats generated text.", "This is one of the core IGNITE skills."]
+      },
+      {
+        title: "Work Order -> Tech -> Margin",
+        skill: "Dispatch fundamentals + NTE discipline",
+        intent: "Make the money model concrete without making them reckless. NTE is a ceiling, not a target.",
+        say: "A work order comes in with a maximum budget. We secure a local technician for less than that amount and manage the job through completion. That spread is margin. If you are slow, vague, or weak on pricing, the margin disappears. The certificate means you understand operations economics, not just phone etiquette.",
+        reinforce: ["NTE is the ceiling.", "Aim below NTE.", "Proof is what turns activity into paid work."]
+      },
+      {
+        title: "Read The Work Order Like A Map",
+        skill: "Ticket logic + SLA triage",
+        intent: "Train them to read a WO as a system object: ID, scope, priority, due time, evidence requirements.",
+        say: "The job number is your join key. Every call, text, photo, update, and invoice has to stay attached to that job number. If you lose the job number, you lose the thread. Read the city, trade, scope, NTE, due date, and proof requirements before you call.",
+        reinforce: ["Emergency and overdue move first.", "Translate scope into a short call pitch.", "Documentation must be transferable to the next operator."]
+      },
+      {
+        title: "You Are The Lead Engine",
+        skill: "Self-sourcing + local market mapping",
+        intent: "Correct the dependency mindset. The trainee should feel pride in sourcing, not see it as grunt work.",
+        say: "This is the core skill. We do not hand you a warm list and ask you to read it. You build the list. Yelp, Google Maps, BBB, Facebook groups, local directories - you find owner-operators who can move. If we give backup leads, that is a safety net. Your job is sourcing.",
+        reinforce: ["Sourcing is 90 percent of dispatch.", "Reject franchises and toll-free call centers fast.", "This connects to the Aqaba and Amman market: operators who can find capacity are valuable everywhere."]
+      },
+      {
+        title: "Sound Local. Sound Useful.",
+        skill: "Operational English",
+        intent: "Give them a precise opening and explain why it works psychologically.",
+        say: "Do not start like a robocall. Do not over-explain. Your opening is short: 'Hey, good morning, I am Karim. Looking for a plumber in Utica?' It sounds local, direct, and useful. Then pitch the scope in one breath and ask if they can help today.",
+        reinforce: ["Use city only.", "Do not say the state unless asked.", "Warm but fast beats polite but slow."]
+      },
+      {
+        title: "Secure Interest Before House Rules",
+        skill: "Vendor control + service-risk prevention",
+        intent: "Stop trainees from dumping policy too early and losing techs before qualification.",
+        say: "First secure interest. Are they available? Can they do a free estimate? Are they independent? Once they are interested, you send the controlled brief. Do not debate PayPal, Zelle, same-day cash, or payment terms on the first call. The brief handles rules after the tech is already engaged.",
+        reinforce: ["No repairs before approved quote.", "No payment talk on site.", "Photos before and after."]
+      },
+      {
+        title: "Silence Is Operational Debt",
+        skill: "War-room discipline + handoffs",
+        intent: "Create pressure around visibility. Silence should feel unprofessional.",
+        say: "If I have to ask what is happening, the system is already losing visibility. Every 30 minutes you update: job number, action taken, next step. Your mic stays unmuted in live huddle because coaching happens in real time. Callback discipline matters because warm leads go cold fast.",
+        reinforce: ["Updates must be specific.", "Open mic is coaching infrastructure.", "Shift handoff must be readable by someone else."]
+      },
+      {
+        title: "Use AI. Do Not Obey AI.",
+        skill: "Hallucination control",
+        intent: "Make them excited about AI while making verification non-negotiable.",
+        say: "AI can help you write a checklist, shorten a scope, or summarize a thread. But AI can also hallucinate. In operations, a hallucination can send a tech to the wrong address or approve the wrong scope. So you prompt clearly, verify against records, and escalate uncertainty.",
+        reinforce: ["Do not copy AI blindly.", "Check against work order and call notes.", "Escalate contradictions."]
+      },
+      {
+        title: "No Proof. No Pay.",
+        skill: "Evidence control + digital tools",
+        intent: "Make proof feel like professional power, not annoying paperwork.",
+        say: "Completion is not 'the tech said done.' Completion is before photos, after photos, quote, summary, signed sheet when required, and a clean thread. That proof is how STEADYWRK bills, how the technician gets paid, and how the operation protects itself.",
+        reinforce: ["Photos must show the issue and the fix.", "Sign-off matters.", "One clean thread per WO."]
+      },
+      {
+        title: "IGNITE FOUNDATION Feeds The Room",
+        skill: "Program bridge + credential motivation",
+        intent: "Now name the program directly. It should feel like the natural formalization of everything they just learned.",
+        say: "What you are learning today is the practical spine of IGNITE FOUNDATION: أساسيات الحقبة الذكية. Six weeks, two sessions per week, Aqaba and Amman, twenty seats per cohort. It covers operational English, dispatch fundamentals, AI copilot fluency, war-room discipline, digital tools, and the local operations market.",
+        reinforce: ["Graduates receive SCOA.", "SCOA is sealed, serialized, and verifiable at steadywrk.app/verify.", "This is legitimacy, not decoration."],
+        arabic: "الأماكن محدودة بعشرين مقعداً لكل دورة - لأن التدريب الحقيقي يحتاج حضوراً حقيقياً."
+      },
+      {
+        title: "Now Run The Live Scenario",
+        skill: "Capstone simulation + instructor debrief",
+        intent: "End by converting energy into action. The deck should launch the capstone immediately.",
+        say: "Now we run it. You receive a work order. You build a local call list. You qualify a technician. You post a clean update. You use AI only as a copilot. You produce a proof trail another operator can pick up without calling you. That is the standard.",
+        reinforce: ["Rep 1: source 10 leads.", "Rep 2: qualify one tech.", "Rep 3: update the thread and prepare the handoff.", "Peer review and instructor debrief finish the loop."]
+      }
+    ];
+
+    document.getElementById("notes").innerHTML = notes.map((n, i) => `
+      <section class="note">
+        <div class="meta"><span class="tag">Slide ${String(i + 1).padStart(2, "0")}</span><span class="tag green">${n.skill}</span></div>
+        <h2>${n.title}</h2>
+        <h3>Psychological intent</h3>
+        <p>${n.intent}</p>
+        <h3>Say this</h3>
+        <div class="say"><p>${n.say}</p></div>
+        ${n.arabic ? `<div class="arabic">${n.arabic}</div>` : ""}
+        <h3>Reinforce</h3>
+        <ul>${n.reinforce.map(item => `<li>${item}</li>`).join("")}</ul>
+      </section>
+    `).join("");
+  </script>
+</body>
+</html>

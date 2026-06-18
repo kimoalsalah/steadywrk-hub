@@ -1,16 +1,16 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>STEADYWRK — Dispatcher Package</title>
+<title>STEADYWRK - Dispatcher Package</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-/* ═══════════════════════════════════════════════════════════════
-   STEADYWRK — DESIGN SYSTEM TOKENS
-   ═══════════════════════════════════════════════════════════════ */
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+   STEADYWRK â€” DESIGN SYSTEM TOKENS
+   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 :root {
   --bg: #0A0A0A;
   --surface: #121211;
@@ -41,9 +41,9 @@
   --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* ═══════════════════════════════════════════════════════════════
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
    RESET & BASE
-   ═══════════════════════════════════════════════════════════════ */
+   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 html {
@@ -67,9 +67,9 @@ body {
 ::-webkit-scrollbar-track { background: var(--bg); }
 ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 4px; }
 
-/* ═══════════════════════════════════════════════════════════════
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
    BACKGROUND GRID & PARTICLES
-   ═══════════════════════════════════════════════════════════════ */
+   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 body::before {
   content: '';
   position: fixed;
@@ -101,9 +101,9 @@ body::after {
   100% { transform: translate(-3%, 2%) rotate(1deg); }
 }
 
-/* ═══════════════════════════════════════════════════════════════
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
    LAYOUT
-   ═══════════════════════════════════════════════════════════════ */
+   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 .page-wrapper {
   position: relative;
   z-index: 1;
@@ -111,9 +111,9 @@ body::after {
   min-height: 100vh;
 }
 
-/* ═══════════════════════════════════════════════════════════════
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
    SIDEBAR NAVIGATION
-   ═══════════════════════════════════════════════════════════════ */
+   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 .sidebar {
   position: fixed;
   top: 0;
@@ -208,9 +208,9 @@ body::after {
   line-height: 1.6;
 }
 
-/* ═══════════════════════════════════════════════════════════════
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
    MAIN CONTENT
-   ═══════════════════════════════════════════════════════════════ */
+   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 .main-content {
   margin-left: 280px;
   flex: 1;
@@ -218,9 +218,9 @@ body::after {
   padding: 48px 56px 120px;
 }
 
-/* ═══════════════════════════════════════════════════════════════
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
    DOCUMENT HEADER
-   ═══════════════════════════════════════════════════════════════ */
+   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 .doc-header {
   margin-bottom: 64px;
   position: relative;
@@ -302,9 +302,9 @@ body::after {
   letter-spacing: 0.5px;
 }
 
-/* ═══════════════════════════════════════════════════════════════
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
    HERO QUOTE
-   ═══════════════════════════════════════════════════════════════ */
+   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 .hero-quote {
   background: linear-gradient(135deg, var(--surface), var(--surface-elevated));
   border: 1px solid var(--border-accent);
@@ -356,9 +356,9 @@ body::after {
   font-weight: 700;
 }
 
-/* ═══════════════════════════════════════════════════════════════
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
    SECTION CARDS
-   ═══════════════════════════════════════════════════════════════ */
+   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 .section-card {
   background: var(--surface-glass);
   backdrop-filter: blur(20px);
@@ -421,9 +421,9 @@ body::after {
   height: 2px;
 }
 
-/* ═══════════════════════════════════════════════════════════════
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
    SECTION HEADERS
-   ═══════════════════════════════════════════════════════════════ */
+   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 .section-header {
   display: flex;
   align-items: flex-start;
@@ -461,9 +461,9 @@ body::after {
   font-weight: 400;
 }
 
-/* ═══════════════════════════════════════════════════════════════
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
    TYPOGRAPHY
-   ═══════════════════════════════════════════════════════════════ */
+   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 .section-card p {
   color: var(--text);
   margin-bottom: 16px;
@@ -495,9 +495,9 @@ body::after {
   display: block;
 }
 
-/* ═══════════════════════════════════════════════════════════════
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
    ORDERED & UNORDERED LISTS
-   ═══════════════════════════════════════════════════════════════ */
+   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 .step-list {
   list-style: none;
   counter-reset: steps;
@@ -561,9 +561,9 @@ body::after {
 .bullet-list li.yes::before { background: var(--success); }
 .bullet-list li.no::before { background: var(--danger); }
 
-/* ═══════════════════════════════════════════════════════════════
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
    TERMINAL / CODE BLOCKS
-   ═══════════════════════════════════════════════════════════════ */
+   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 .terminal {
   background: #0D0D0C;
   border: 1px solid var(--border);
@@ -617,9 +617,9 @@ body::after {
 .terminal-body .hl-dim { color: var(--text-muted); }
 .terminal-body .hl-bright { color: var(--text); }
 
-/* ═══════════════════════════════════════════════════════════════
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
    CALL SCRIPT BLOCKS
-   ═══════════════════════════════════════════════════════════════ */
+   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 .script-block {
   background: linear-gradient(135deg, var(--surface-elevated), rgba(229,138,15,0.04));
   border-left: 3px solid var(--accent);
@@ -654,9 +654,9 @@ body::after {
   font-weight: 600;
 }
 
-/* ═══════════════════════════════════════════════════════════════
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
    WARNING / CALLOUT BOXES
-   ═══════════════════════════════════════════════════════════════ */
+   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 .callout {
   border-radius: var(--radius-sm);
   padding: 24px 28px;
@@ -715,9 +715,9 @@ body::after {
   line-height: 1.7;
 }
 
-/* ═══════════════════════════════════════════════════════════════
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
    GOAL / METRIC BADGE
-   ═══════════════════════════════════════════════════════════════ */
+   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 .goal-badge {
   display: inline-flex;
   align-items: center;
@@ -750,9 +750,9 @@ body::after {
   margin-top: 2px;
 }
 
-/* ═══════════════════════════════════════════════════════════════
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
    HORIZONTAL RULE / DIVIDER
-   ═══════════════════════════════════════════════════════════════ */
+   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 .divider {
   border: none;
   height: 1px;
@@ -760,9 +760,9 @@ body::after {
   margin: 48px 0;
 }
 
-/* ═══════════════════════════════════════════════════════════════
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
    DATA TABLE
-   ═══════════════════════════════════════════════════════════════ */
+   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 .data-table {
   width: 100%;
   border-collapse: separate;
@@ -792,9 +792,9 @@ body::after {
 
 .data-table tr:hover td { background: rgba(229,138,15,0.03); }
 
-/* ═══════════════════════════════════════════════════════════════
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
    CHECKLIST
-   ═══════════════════════════════════════════════════════════════ */
+   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 .checklist {
   list-style: none;
   margin: 24px 0;
@@ -835,9 +835,9 @@ body::after {
   opacity: 0;
 }
 
-/* ═══════════════════════════════════════════════════════════════
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
    CHEAT SHEET
-   ═══════════════════════════════════════════════════════════════ */
+   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 .cheat-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -874,9 +874,9 @@ body::after {
   line-height: 1.6;
 }
 
-/* ═══════════════════════════════════════════════════════════════
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
    SOURCE RANK LIST
-   ═══════════════════════════════════════════════════════════════ */
+   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 .source-list {
   list-style: none;
   counter-reset: sources;
@@ -922,9 +922,9 @@ body::after {
   font-size: 14px;
 }
 
-/* ═══════════════════════════════════════════════════════════════
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
    FOOTER
-   ═══════════════════════════════════════════════════════════════ */
+   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 .doc-footer {
   margin-top: 80px;
   padding-top: 40px;
@@ -969,9 +969,9 @@ body::after {
 
 .footer-cta p .accent { color: var(--accent); }
 
-/* ═══════════════════════════════════════════════════════════════
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
    MOBILE NAV TOGGLE
-   ═══════════════════════════════════════════════════════════════ */
+   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 .mobile-nav-toggle {
   display: none;
   position: fixed;
@@ -992,9 +992,9 @@ body::after {
 
 .mobile-nav-toggle:hover { transform: scale(1.1); }
 
-/* ═══════════════════════════════════════════════════════════════
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
    WO INLINE FIELD HIGHLIGHTS
-   ═══════════════════════════════════════════════════════════════ */
+   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 .field-tag {
   display: inline-block;
   background: var(--accent-dim);
@@ -1008,9 +1008,9 @@ body::after {
   vertical-align: baseline;
 }
 
-/* ═══════════════════════════════════════════════════════════════
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
    RESPONSIVE
-   ═══════════════════════════════════════════════════════════════ */
+   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 @media (max-width: 1100px) {
   .sidebar { transform: translateX(-100%); transition: var(--transition); }
   .sidebar.open { transform: translateX(0); box-shadow: 4px 0 40px rgba(0,0,0,0.5); }
@@ -1021,9 +1021,9 @@ body::after {
   .cheat-grid { grid-template-columns: 1fr; }
 }
 
-/* ═══════════════════════════════════════════════════════════════
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
    PRINT STYLES
-   ═══════════════════════════════════════════════════════════════ */
+   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 @media print {
   body { background: #fff; color: #111; font-size: 11pt; }
   body::before, body::after { display: none; }
@@ -1076,9 +1076,9 @@ body::after {
   .divider { background: #ddd; }
 }
 
-/* ═══════════════════════════════════════════════════════════════
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
    ANIMATIONS
-   ═══════════════════════════════════════════════════════════════ */
+   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 @keyframes fadeInUp {
   from { opacity: 0; transform: translateY(24px); }
   to { opacity: 1; transform: translateY(0); }
@@ -1102,9 +1102,9 @@ body::after {
 </head>
 <body>
 
-<!-- ═══════════════════════════════════════════════════════════════
+<!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
      SIDEBAR NAVIGATION
-     ═══════════════════════════════════════════════════════════════ -->
+     â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
 <div class="page-wrapper">
 <aside class="sidebar" id="sidebar">
   <div class="sidebar-brand">
@@ -1113,7 +1113,7 @@ body::after {
       <span>Facilities Network</span>
     </div>
     <div style="margin-top: 12px;">
-      <a href="../index.html" style="display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px; border: 1px dashed var(--border-accent); border-radius: 4px; font-family: var(--font-mono); font-size: 10px; font-weight: 600; text-transform: uppercase; color: var(--accent); text-decoration: none; letter-spacing: 1px; transition: all 0.2s; background: rgba(229, 138, 15, 0.03);" onmouseover="this.style.background='var(--accent-dim)';" onmouseout="this.style.background='rgba(229, 138, 15, 0.03)';">← Back to Portal</a>
+      <a href="../index.html" style="display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px; border: 1px dashed var(--border-accent); border-radius: 4px; font-family: var(--font-mono); font-size: 10px; font-weight: 600; text-transform: uppercase; color: var(--accent); text-decoration: none; letter-spacing: 1px; transition: all 0.2s; background: rgba(229, 138, 15, 0.03);" onmouseover="this.style.background='var(--accent-dim)';" onmouseout="this.style.background='rgba(229, 138, 15, 0.03)';">â† Back to Portal</a>
     </div>
   </div>
 
@@ -1136,26 +1136,26 @@ body::after {
   </nav>
 
   <div class="sidebar-footer">
-    <p>Confidential &amp; Proprietary<br>STEADYWRK Operations<br>Rev 4.0 — June 2026</p>
+    <p>Confidential &amp; Proprietary<br>STEADYWRK Operations<br>Rev 4.0 â€” June 2026</p>
   </div>
 </aside>
 
-<!-- ═══════════════════════════════════════════════════════════════
+<!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
      MOBILE NAV TOGGLE
-     ═══════════════════════════════════════════════════════════════ -->
-<button class="mobile-nav-toggle" id="navToggle" aria-label="Toggle navigation">☰</button>
+     â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+<button class="mobile-nav-toggle" id="navToggle" aria-label="Toggle navigation">â˜°</button>
 
-<!-- ═══════════════════════════════════════════════════════════════
+<!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
      MAIN CONTENT
-     ═══════════════════════════════════════════════════════════════ -->
+     â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
 <main class="main-content">
 
   <!-- DOCUMENT HEADER -->
   <header class="doc-header">
     <div class="header-badges">
-      <span class="badge badge--internal">⚙ Internal Operations Document</span>
-      <span class="badge badge--confidential">🔒 Confidential</span>
-      <span class="badge badge--version">v4.0 — June 2026</span>
+      <span class="badge badge--internal">âš™ Internal Operations Document</span>
+      <span class="badge badge--confidential">ðŸ”’ Confidential</span>
+      <span class="badge badge--version">v4.0 â€” June 2026</span>
     </div>
     <h1 class="header-title"><span class="accent">STEADYWRK</span><br>Dispatcher Package</h1>
     <p class="header-subtitle">New Dispatcher Onboarding &amp; Operations Manual</p>
@@ -1164,17 +1164,42 @@ body::after {
   <!-- HERO QUOTE -->
   <div class="hero-quote">
     <blockquote>
-      Your <em>speed</em> determines our revenue. Your <em>discipline</em> determines your growth. This is your weapon — <em>use it.</em>
+      Your <em>speed</em> determines our revenue. Your <em>discipline</em> determines your growth. This is your weapon â€” <em>use it.</em>
     </blockquote>
   </div>
 
-  <!-- ═══════════════════════════════════════════════════════════
+  <section class="section-card" id="section-certification">
+    <div class="section-header">
+      <span class="section-number">SCOA</span>
+      <h2 class="section-title">IGNITE FOUNDATION <span class="dim">— The Credential Path</span></h2>
+    </div>
+
+    <p class="lead">This manual is not separate from certification. It is the practical operating spine of <strong>IGNITE FOUNDATION / أساسيات الحقبة الذكية</strong>, STEADYWRK's Tier 1 Core program for front-line dispatchers, coordinators, technicians, and field-service operators.</p>
+
+    <div class="terminal">
+      <div class="terminal-bar">
+        <span class="terminal-dot"></span>
+        <span class="terminal-dot"></span>
+        <span class="terminal-dot"></span>
+        <span class="terminal-title">Certification Signal</span>
+      </div>
+      <div class="terminal-body"><span class="hl">6 weeks</span> → <span class="hl-bright">2 sessions / week</span> → <span class="hl-bright">Aqaba + Amman</span> → <span class="hl-green">20 seats / cohort</span> → <span class="hl">SCOA</span></div>
+    </div>
+
+    <p>The habits in this package map directly to the STEADYWRK Certified Operations Associate: operational English, ticket logic, AI copilot verification, war-room discipline, digital tools, local-market awareness, and professional conduct.</p>
+
+    <div class="goal-badge">
+      <span class="goal-icon">S</span>
+      <span class="goal-text">STEADYWRK Certified Operations Associate<span>Sealed, serialized, and verifiable at steadywrk.app/verify. Earned through clean calls, clean updates, clean proof, and calm escalation.</span></span>
+    </div>
+  </section>
+<!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
        SECTION 1: THE MODEL
-       ═══════════════════════════════════════════════════════════ -->
+       â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
   <section class="section-card" id="section-1">
     <div class="section-header">
       <span class="section-number">01</span>
-      <h2 class="section-title">The Model <span class="dim">— How We Make Money</span></h2>
+      <h2 class="section-title">The Model <span class="dim">â€” How We Make Money</span></h2>
     </div>
 
     <p class="lead">STEADYWRK wins facilities work orders for major commercial properties nationwide and subcontracts them to local, independent, owner-operator technicians. <strong>You own your queue end to end.</strong></p>
@@ -1186,20 +1211,20 @@ body::after {
         <span class="terminal-dot"></span>
         <span class="terminal-title">Revenue Pipeline</span>
       </div>
-      <div class="terminal-body"><span class="hl">GET WO</span> → <span class="hl-bright">Call Local Techs</span> → <span class="hl-bright">Vet</span> → <span class="hl-bright">Secure One</span> → <span class="hl-bright">Coordinate Visit</span> → <span class="hl-green">Photos + Completion</span> → <span class="hl-green">Invoice</span> → <span class="hl">$ PAID</span></div>
+      <div class="terminal-body"><span class="hl">GET WO</span> â†’ <span class="hl-bright">Call Local Techs</span> â†’ <span class="hl-bright">Vet</span> â†’ <span class="hl-bright">Secure One</span> â†’ <span class="hl-bright">Coordinate Visit</span> â†’ <span class="hl-green">Photos + Completion</span> â†’ <span class="hl-green">Invoice</span> â†’ <span class="hl">$ PAID</span></div>
     </div>
 
     <p>The spread between what the job pays and what the tech costs is our margin. The faster you secure a good tech, the faster we earn.</p>
 
     <div class="goal-badge">
-      <span class="goal-icon">🎯</span>
+      <span class="goal-icon">ðŸŽ¯</span>
       <span class="goal-text">3+ Jobs Closed Daily<span>Minimum throughput target per dispatcher</span></span>
     </div>
   </section>
 
-  <!-- ═══════════════════════════════════════════════════════════
+  <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
        SECTION 2: YOUR DAILY LOOP
-       ═══════════════════════════════════════════════════════════ -->
+       â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
   <section class="section-card" id="section-2">
     <div class="section-header">
       <span class="section-number">02</span>
@@ -1207,18 +1232,18 @@ body::after {
     </div>
 
     <ol class="step-list">
-      <li>A work order drops in your Slack channel <span class="field-tag">#d-you</span> — already formatted.</li>
+      <li>A work order drops in your Slack channel <span class="field-tag">#d-you</span> â€” already formatted.</li>
       <li><strong>Build your call list immediately</strong> using Yelp, Google, and BBB. Sourcing is 90% of the job. <em>You do NOT get ready leads.</em></li>
       <li>Call the techs you source. <strong>Vet. Secure one.</strong> Lock a time + price.</li>
       <li>Send the <strong>Tech Brief</strong> (see Section 7) once approved. Coordinate.</li>
-      <li>Drive it to completion → photos → invoice → <strong>paid.</strong></li>
+      <li>Drive it to completion â†’ photos â†’ invoice â†’ <strong>paid.</strong></li>
       <li>Report status in your channel so the board tracks you.</li>
     </ol>
   </section>
 
-  <!-- ═══════════════════════════════════════════════════════════
+  <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
        SECTION 3: READING A WORK ORDER
-       ═══════════════════════════════════════════════════════════ -->
+       â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
   <section class="section-card" id="section-3">
     <div class="section-header">
       <span class="section-number">03</span>
@@ -1234,38 +1259,38 @@ body::after {
         <span class="terminal-dot"></span>
         <span class="terminal-title">Work Order Template</span>
       </div>
-      <div class="terminal-body"><span class="hl">📋 NEW WORK ORDER</span>   [ | <span class="hl-red">🚨 SUPER EMERGENCY</span> ]
+      <div class="terminal-body"><span class="hl">ðŸ“‹ NEW WORK ORDER</span>   [ | <span class="hl-red">ðŸš¨ SUPER EMERGENCY</span> ]
 <span class="hl-bright">JOB-260612-7018</span>
-<span class="hl-dim">&lt;store / site&gt;</span> — <span class="hl-dim">&lt;street&gt;</span>
+<span class="hl-dim">&lt;store / site&gt;</span> â€” <span class="hl-dim">&lt;street&gt;</span>
 <span class="hl-dim">&lt;city&gt;</span>, <span class="hl-dim">&lt;state&gt;</span>
 
 <span class="hl">Trade:</span> <span class="hl-dim">&lt;trade&gt;</span>     <span class="hl">Scope:</span> <span class="hl-dim">&lt;what to do&gt;</span>     <span class="hl">NTE:</span> <span class="hl-green">$&lt;price cap&gt;</span>     <span class="hl">Urgency:</span> <span class="hl-red">&lt;date&gt;</span>
 
-<span class="hl-dim">Notes: before + after photos required · Sign-Off Sheet · 30-min ETA call · no on-site payment</span>
+<span class="hl-dim">Notes: before + after photos required Â· Sign-Off Sheet Â· 30-min ETA call Â· no on-site payment</span>
 
-<span class="hl">📞 Call list:</span> <span class="hl-dim">[None / Sourcing Required]</span></div>
+<span class="hl">ðŸ“ž Call list:</span> <span class="hl-dim">[None / Sourcing Required]</span></div>
     </div>
 
     <ul class="bullet-list">
-      <li><span class="field-tag">NTE</span> = <strong>"Not To Exceed"</strong> — the most we can spend. Your tech's price must come in under NTE.</li>
+      <li><span class="field-tag">NTE</span> = <strong>"Not To Exceed"</strong> â€” the most we can spend. Your tech's price must come in under NTE.</li>
       <li><span class="field-tag">Urgency</span> = when it must be done. <strong>Overdue/today = drop everything.</strong></li>
       <li><span class="field-tag">Call list</span> = Empty by default. <strong>Sourcing is 100% your responsibility.</strong> If a call list is ever attached, it is strictly a historical backup list.</li>
     </ul>
   </section>
 
-  <!-- ═══════════════════════════════════════════════════════════
-       SECTION 4: THE CALL — YOUR SCRIPT
-       ═══════════════════════════════════════════════════════════ -->
+  <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+       SECTION 4: THE CALL â€” YOUR SCRIPT
+       â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
   <section class="section-card" id="section-4">
     <div class="section-header">
       <span class="section-number">04</span>
-      <h2 class="section-title">The Call <span class="dim">— Your Script</span></h2>
+      <h2 class="section-title">The Call <span class="dim">â€” Your Script</span></h2>
     </div>
 
     <p class="lead" style="margin-bottom: 28px;"><strong>Memorize the rhythm, not the exact words.</strong></p>
 
     <div class="script-block">
-      <span class="script-label">① The Local Opening</span>
+      <span class="script-label">â‘  The Local Opening</span>
       <p class="script-text">"Hey, good morning/afternoon, I'm <span class="bracket">[Name]</span>. Looking for a <span class="bracket">[trade]</span> in <span class="bracket">[city]</span>?"</p>
     </div>
 
@@ -1276,22 +1301,22 @@ body::after {
     </ul>
 
     <div class="script-block">
-      <span class="script-label">② The Quick Pitch</span>
-      <p class="script-text">"Cool. Quick one — <span class="bracket">[scope of work, 5–7 words]</span>. Can you help?"</p>
+      <span class="script-label">â‘¡ The Quick Pitch</span>
+      <p class="script-text">"Cool. Quick one â€” <span class="bracket">[scope of work, 5â€“7 words]</span>. Can you help?"</p>
     </div>
 
     <div class="script-block">
-      <span class="script-label">③ Fast Qualification</span>
-      <p class="script-text">"When can you go — anything today?"<br>"Free estimate on site, right?"<br>If yes: "Perfect, sending the address. Good number?"</p>
+      <span class="script-label">â‘¢ Fast Qualification</span>
+      <p class="script-text">"When can you go â€” anything today?"<br>"Free estimate on site, right?"<br>If yes: "Perfect, sending the address. Good number?"</p>
     </div>
 
     <div class="script-block">
-      <span class="script-label">④ Locking &amp; Rules</span>
-      <p class="script-text">"One last thing — you work independent, correct?"<br>"Cool, I'll text a couple house rules — quick read before you head out, sites are picky. Thanks man, text me anytime."</p>
+      <span class="script-label">â‘£ Locking &amp; Rules</span>
+      <p class="script-text">"One last thing â€” you work independent, correct?"<br>"Cool, I'll text a couple house rules â€” quick read before you head out, sites are picky. Thanks man, text me anytime."</p>
     </div>
 
     <div class="callout callout--danger" style="margin-top: 32px;">
-      <div class="callout-title">⛔ CRITICAL WARNINGS — OPSEC &amp; PRICING</div>
+      <div class="callout-title">â›” CRITICAL WARNINGS â€” OPSEC &amp; PRICING</div>
       <ol class="step-list" style="margin: 0;">
         <li><strong>NEVER</strong> name the client. Say <em>"We are STEADYWRK Facilities Network. We coordinate maintenance for this site."</em></li>
         <li><strong>NO</strong> payment talk on the phone. Let the texted brief handle it.</li>
@@ -1301,17 +1326,17 @@ body::after {
     </div>
   </section>
 
-  <!-- ═══════════════════════════════════════════════════════════
+  <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
        SECTION 5: VETTING STANDARDS
-       ═══════════════════════════════════════════════════════════ -->
+       â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
   <section class="section-card" id="section-5">
     <div class="section-header">
       <span class="section-number">05</span>
-      <h2 class="section-title">Vetting Standards <span class="dim">— Who's a YES</span></h2>
+      <h2 class="section-title">Vetting Standards <span class="dim">â€” Who's a YES</span></h2>
     </div>
 
     <div class="callout callout--success">
-      <div class="callout-title">✅ Green Light — Proceed</div>
+      <div class="callout-title">âœ… Green Light â€” Proceed</div>
       <ul class="bullet-list" style="margin: 0;">
         <li class="yes">Owner-operator or small independent</li>
         <li class="yes">Available in the required window</li>
@@ -1323,7 +1348,7 @@ body::after {
     </div>
 
     <div class="callout callout--danger" style="margin-top: 16px;">
-      <div class="callout-title">❌ Red Flag — Pass Immediately</div>
+      <div class="callout-title">âŒ Red Flag â€” Pass Immediately</div>
       <ul class="bullet-list" style="margin: 0;">
         <li class="no">Big franchise (Roto-Rooter, Mr. Rooter, etc.)</li>
         <li class="no">Can't make the time window</li>
@@ -1334,9 +1359,9 @@ body::after {
     </div>
   </section>
 
-  <!-- ═══════════════════════════════════════════════════════════
+  <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
        SECTION 6: SECURING THE TECH
-       ═══════════════════════════════════════════════════════════ -->
+       â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
   <section class="section-card" id="section-6">
     <div class="section-header">
       <span class="section-number">06</span>
@@ -1350,17 +1375,17 @@ body::after {
     </ol>
   </section>
 
-  <!-- ═══════════════════════════════════════════════════════════
-       SECTION 7: THE TECH BRIEF ★
-       ═══════════════════════════════════════════════════════════ -->
+  <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+       SECTION 7: THE TECH BRIEF â˜…
+       â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
   <section class="section-card section-card--highlight" id="section-7">
     <div class="section-header">
-      <span class="section-number">★</span>
-      <h2 class="section-title">The Tech Brief <span class="dim">— What You SEND the Technician</span></h2>
+      <span class="section-number">â˜…</span>
+      <h2 class="section-title">The Tech Brief <span class="dim">â€” What You SEND the Technician</span></h2>
     </div>
 
     <div class="callout callout--warning">
-      <div class="callout-title">⚠ Only send AFTER Team Leader approval</div>
+      <div class="callout-title">âš  Only send AFTER Team Leader approval</div>
       <p>Copy, fill the brackets, send by text message. Never send this before the tech is approved.</p>
     </div>
 
@@ -1371,83 +1396,83 @@ body::after {
         <span class="terminal-dot"></span>
         <span class="terminal-dot"></span>
         <span class="terminal-dot"></span>
-        <span class="terminal-title">Tech Brief — Template</span>
+        <span class="terminal-title">Tech Brief â€” Template</span>
       </div>
-      <div class="terminal-body">Hey <span class="hl">[Tech name]</span> — here are the job details, please confirm you got this. 👍
+      <div class="terminal-body">Hey <span class="hl">[Tech name]</span> â€” here are the job details, please confirm you got this. ðŸ‘
 
-<span class="hl">📍 JOB:</span> <span class="hl-bright">[JOB-######-####]</span>
-<span class="hl-dim">[Site / client type]</span> — <span class="hl-dim">[full address, city, state, zip]</span>
+<span class="hl">ðŸ“ JOB:</span> <span class="hl-bright">[JOB-######-####]</span>
+<span class="hl-dim">[Site / client type]</span> â€” <span class="hl-dim">[full address, city, state, zip]</span>
 
-<span class="hl">🔧 Trade:</span> <span class="hl-dim">[trade]</span>
-<span class="hl">📝 Scope:</span> <span class="hl-dim">[clear, simple description of the work]</span>
-<span class="hl">🕐 When:</span>  <span class="hl-dim">[date / arrival window]</span>
+<span class="hl">ðŸ”§ Trade:</span> <span class="hl-dim">[trade]</span>
+<span class="hl">ðŸ“ Scope:</span> <span class="hl-dim">[clear, simple description of the work]</span>
+<span class="hl">ðŸ• When:</span>  <span class="hl-dim">[date / arrival window]</span>
 
-<span class="hl-bright">━━━ BEFORE YOU GO ━━━</span>
-• Call me <span class="hl">30 minutes</span> before you arrive.
-• Do <span class="hl-red">NOT</span> start repairs until I approve your quote.
-• Text me the quote first:
-  summary · labor $ · materials (itemized) $ · subtotal $
+<span class="hl-bright">â”â”â” BEFORE YOU GO â”â”â”</span>
+â€¢ Call me <span class="hl">30 minutes</span> before you arrive.
+â€¢ Do <span class="hl-red">NOT</span> start repairs until I approve your quote.
+â€¢ Text me the quote first:
+  summary Â· labor $ Â· materials (itemized) $ Â· subtotal $
 
-<span class="hl-bright">━━━ ON SITE ━━━</span>
-• Take <span class="hl">[N]</span> BEFORE photos and <span class="hl">[N]</span> AFTER photos — <span class="hl-red">required</span>.
-• Complete the <span class="hl">Sign-Off Sheet</span>.
-• <span class="hl-red">No payment talk on site</span> — we handle payment.
-• Present yourself as part of our team.
+<span class="hl-bright">â”â”â” ON SITE â”â”â”</span>
+â€¢ Take <span class="hl">[N]</span> BEFORE photos and <span class="hl">[N]</span> AFTER photos â€” <span class="hl-red">required</span>.
+â€¢ Complete the <span class="hl">Sign-Off Sheet</span>.
+â€¢ <span class="hl-red">No payment talk on site</span> â€” we handle payment.
+â€¢ Present yourself as part of our team.
 
-<span class="hl-bright">━━━ AFTER ━━━</span>
-• Send all photos + a short work summary.
-• Send your <span class="hl">W-9</span> (text/email) so we can set up payment.
-• Payment processes <span class="hl-green">5–7 business days</span> after completion
+<span class="hl-bright">â”â”â” AFTER â”â”â”</span>
+â€¢ Send all photos + a short work summary.
+â€¢ Send your <span class="hl">W-9</span> (text/email) so we can set up payment.
+â€¢ Payment processes <span class="hl-green">5â€“7 business days</span> after completion
   once we have photos + summary.
 
-Reply "<span class="hl-green">confirmed</span>" with your ETA. Thanks! 🙏</div>
+Reply "<span class="hl-green">confirmed</span>" with your ETA. Thanks! ðŸ™</div>
     </div>
 
     <hr class="divider">
 
-    <span class="small-label">Filled Example — Live Job</span>
+    <span class="small-label">Filled Example â€” Live Job</span>
 
     <div class="terminal">
       <div class="terminal-bar">
         <span class="terminal-dot"></span>
         <span class="terminal-dot"></span>
         <span class="terminal-dot"></span>
-        <span class="terminal-title">Tech Brief — Filled Sample</span>
+        <span class="terminal-title">Tech Brief â€” Filled Sample</span>
       </div>
-      <div class="terminal-body">Hey <span class="hl">Mike</span> — here are the job details, please confirm you got this. 👍
+      <div class="terminal-body">Hey <span class="hl">Mike</span> â€” here are the job details, please confirm you got this. ðŸ‘
 
-<span class="hl">📍 JOB:</span> <span class="hl-bright">JOB-260612-7018</span>
-Commercial Retail — 142 Main St, Clinton, NY 13323
+<span class="hl">ðŸ“ JOB:</span> <span class="hl-bright">JOB-260612-7018</span>
+Commercial Retail â€” 142 Main St, Clinton, NY 13323
 
-<span class="hl">🔧 Trade:</span> Plumbing
-<span class="hl">📝 Scope:</span> Diagnose and repair leaking faucet in restroom
-<span class="hl">🕐 When:</span>  Today, arrive between 1:00 PM – 3:00 PM
+<span class="hl">ðŸ”§ Trade:</span> Plumbing
+<span class="hl">ðŸ“ Scope:</span> Diagnose and repair leaking faucet in restroom
+<span class="hl">ðŸ• When:</span>  Today, arrive between 1:00 PM â€“ 3:00 PM
 
-<span class="hl-bright">━━━ BEFORE YOU GO ━━━</span>
-• Call me <span class="hl">30 minutes</span> before you arrive.
-• Do <span class="hl-red">NOT</span> start repairs until I approve your quote.
-• Text me the quote first:
-  summary · labor $ · materials (itemized) $ · subtotal $
+<span class="hl-bright">â”â”â” BEFORE YOU GO â”â”â”</span>
+â€¢ Call me <span class="hl">30 minutes</span> before you arrive.
+â€¢ Do <span class="hl-red">NOT</span> start repairs until I approve your quote.
+â€¢ Text me the quote first:
+  summary Â· labor $ Â· materials (itemized) $ Â· subtotal $
 
-<span class="hl-bright">━━━ ON SITE ━━━</span>
-• Take <span class="hl">4</span> BEFORE photos and <span class="hl">4</span> AFTER photos — <span class="hl-red">required</span>.
-• Complete the <span class="hl">Sign-Off Sheet</span>.
-• <span class="hl-red">No payment talk on site</span> — we handle payment.
-• Present yourself as part of our team.
+<span class="hl-bright">â”â”â” ON SITE â”â”â”</span>
+â€¢ Take <span class="hl">4</span> BEFORE photos and <span class="hl">4</span> AFTER photos â€” <span class="hl-red">required</span>.
+â€¢ Complete the <span class="hl">Sign-Off Sheet</span>.
+â€¢ <span class="hl-red">No payment talk on site</span> â€” we handle payment.
+â€¢ Present yourself as part of our team.
 
-<span class="hl-bright">━━━ AFTER ━━━</span>
-• Send all photos + a short work summary.
-• Send your <span class="hl">W-9</span> (text/email) so we can set up payment.
-• Payment processes <span class="hl-green">5–7 business days</span> after completion
+<span class="hl-bright">â”â”â” AFTER â”â”â”</span>
+â€¢ Send all photos + a short work summary.
+â€¢ Send your <span class="hl">W-9</span> (text/email) so we can set up payment.
+â€¢ Payment processes <span class="hl-green">5â€“7 business days</span> after completion
   once we have photos + summary.
 
-Reply "<span class="hl-green">confirmed</span>" with your ETA. Thanks! 🙏</div>
+Reply "<span class="hl-green">confirmed</span>" with your ETA. Thanks! ðŸ™</div>
     </div>
   </section>
 
-  <!-- ═══════════════════════════════════════════════════════════
+  <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
        SECTION 8: REPORTING
-       ═══════════════════════════════════════════════════════════ -->
+       â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
   <section class="section-card" id="section-8">
     <div class="section-header">
       <span class="section-number">08</span>
@@ -1472,9 +1497,9 @@ Reply "<span class="hl-green">confirmed</span>" with your ETA. Thanks! 🙏</div
     </div>
   </section>
 
-  <!-- ═══════════════════════════════════════════════════════════
+  <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
        SECTION 9: WHERE TECHS COME FROM
-       ═══════════════════════════════════════════════════════════ -->
+       â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
   <section class="section-card" id="section-9">
     <div class="section-header">
       <span class="section-number">09</span>
@@ -1484,7 +1509,7 @@ Reply "<span class="hl-green">confirmed</span>" with your ETA. Thanks! 🙏</div
     <ol class="source-list">
       <li>
         <span class="source-name">Yelp</span>
-        <span class="source-desc">Search by trade, filter 4.0★+, select "Open Now."</span>
+        <span class="source-desc">Search by trade, filter 4.0â˜…+, select "Open Now."</span>
       </li>
       <li>
         <span class="source-name">Google Maps</span>
@@ -1496,7 +1521,7 @@ Reply "<span class="hl-green">confirmed</span>" with your ETA. Thanks! 🙏</div
       </li>
       <li>
         <span class="source-name">Craigslist</span>
-        <span class="source-desc">Skilled Trades section — independent operators posting services.</span>
+        <span class="source-desc">Skilled Trades section â€” independent operators posting services.</span>
       </li>
       <li>
         <span class="source-name">Facebook</span>
@@ -1505,14 +1530,14 @@ Reply "<span class="hl-green">confirmed</span>" with your ETA. Thanks! 🙏</div
     </ol>
 
     <div class="callout callout--warning" style="margin-top: 20px;">
-      <div class="callout-title">⚡ Rule of Thumb</div>
-      <p style="margin: 0;">Always favor <strong>owner-operators</strong>. Never call the big franchises — they won't work under our model and they'll waste your time.</p>
+      <div class="callout-title">âš¡ Rule of Thumb</div>
+      <p style="margin: 0;">Always favor <strong>owner-operators</strong>. Never call the big franchises â€” they won't work under our model and they'll waste your time.</p>
     </div>
   </section>
 
-  <!-- ═══════════════════════════════════════════════════════════
+  <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
        SECTION 10: HOW YOU'RE SCORED
-       ═══════════════════════════════════════════════════════════ -->
+       â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
   <section class="section-card" id="section-10">
     <div class="section-header">
       <span class="section-number">10</span>
@@ -1530,7 +1555,7 @@ Reply "<span class="hl-green">confirmed</span>" with your ETA. Thanks! 🙏</div
       <tbody>
         <tr>
           <td><strong>Throughput</strong></td>
-          <td>Techs secured · Jobs completed · Speed to secure</td>
+          <td>Techs secured Â· Jobs completed Â· Speed to secure</td>
           <td><span class="field-tag">3+ / day</span></td>
         </tr>
         <tr>
@@ -1540,20 +1565,20 @@ Reply "<span class="hl-green">confirmed</span>" with your ETA. Thanks! 🙏</div
         </tr>
         <tr>
           <td><strong>Growth</strong></td>
-          <td>Hit the standard consistently → you move up</td>
+          <td>Hit the standard consistently â†’ you move up</td>
           <td><span class="field-tag">Promotion</span></td>
         </tr>
       </tbody>
     </table>
   </section>
 
-  <!-- ═══════════════════════════════════════════════════════════
+  <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
        SECTION 11: OPSEC & OPERATIONS STANDARDS
-       ═══════════════════════════════════════════════════════════ -->
+       â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
   <section class="section-card section-card--danger" id="section-11">
     <div class="section-header">
       <span class="section-number" style="background: var(--danger-dim); border-color: rgba(229,62,62,0.3); color: var(--danger);">11</span>
-      <h2 class="section-title">OPSEC &amp; Operations Standards <span class="dim">— Non-Negotiable</span></h2>
+      <h2 class="section-title">OPSEC &amp; Operations Standards <span class="dim">â€” Non-Negotiable</span></h2>
     </div>
 
     <table class="data-table">
@@ -1588,13 +1613,13 @@ Reply "<span class="hl-green">confirmed</span>" with your ETA. Thanks! 🙏</div
     </table>
 
     <div class="callout callout--danger" style="margin-top: 24px;">
-      <div class="callout-title">🔒 These rules protect the entire operation. Violations are not coached — they're terminal.</div>
+      <div class="callout-title">ðŸ”’ These rules protect the entire operation. Violations are not coached â€” they're terminal.</div>
     </div>
   </section>
 
-  <!-- ═══════════════════════════════════════════════════════════
+  <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
        SECTION 12: ONE-PAGE CHEAT SHEET
-       ═══════════════════════════════════════════════════════════ -->
+       â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
   <section class="section-card section-card--highlight" id="section-12">
     <div class="section-header">
       <span class="section-number">12</span>
@@ -1603,35 +1628,35 @@ Reply "<span class="hl-green">confirmed</span>" with your ETA. Thanks! 🙏</div
 
     <div class="cheat-grid">
       <div class="cheat-item">
-        <div class="cheat-label">📞 Call</div>
-        <p>Looking for a <strong>[trade]</strong> in <strong>[city]</strong> → Vet → Rules → Close</p>
+        <div class="cheat-label">ðŸ“ž Call</div>
+        <p>Looking for a <strong>[trade]</strong> in <strong>[city]</strong> â†’ Vet â†’ Rules â†’ Close</p>
       </div>
       <div class="cheat-item">
-        <div class="cheat-label">🚫 Don't</div>
+        <div class="cheat-label">ðŸš« Don't</div>
         <p>Send the address until the tech is <strong>approved</strong> by Team Leader</p>
       </div>
       <div class="cheat-item">
-        <div class="cheat-label">🔒 Secure</div>
-        <p>Get approval → Send Tech Brief → <span class="field-tag">secured JOB-#### &lt;tech&gt; &lt;time&gt;</span></p>
+        <div class="cheat-label">ðŸ”’ Secure</div>
+        <p>Get approval â†’ Send Tech Brief â†’ <span class="field-tag">secured JOB-#### &lt;tech&gt; &lt;time&gt;</span></p>
       </div>
       <div class="cheat-item">
-        <div class="cheat-label">🎯 Goal</div>
-        <p><strong>3+ closed/day.</strong> NTE = ceiling (aim 30–50% below). Photos always.</p>
+        <div class="cheat-label">ðŸŽ¯ Goal</div>
+        <p><strong>3+ closed/day.</strong> NTE = ceiling (aim 30â€“50% below). Photos always.</p>
       </div>
       <div class="cheat-item">
-        <div class="cheat-label">🎤 Mic</div>
+        <div class="cheat-label">ðŸŽ¤ Mic</div>
         <p>Unmuted during training huddles. Always.</p>
       </div>
       <div class="cheat-item">
-        <div class="cheat-label">🔍 Source</div>
+        <div class="cheat-label">ðŸ” Source</div>
         <p>Self-source always. No pre-built call lists. You are the list.</p>
       </div>
     </div>
   </section>
 
-  <!-- ═══════════════════════════════════════════════════════════
+  <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
        SECTION 13: DAY-1 CHECKLIST
-       ═══════════════════════════════════════════════════════════ -->
+       â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
   <section class="section-card" id="section-13">
     <div class="section-header">
       <span class="section-number">13</span>
@@ -1639,45 +1664,45 @@ Reply "<span class="hl-green">confirmed</span>" with your ETA. Thanks! 🙏</div
     </div>
 
     <ul class="checklist">
-      <li>Join your <span class="field-tag">#d-you</span> channel · Read this package + run the deck.</li>
-      <li>Open your queue — pick the <strong>most urgent WO</strong>.</li>
-      <li>Dial the call list · Vet · Secure your first tech.</li>
-      <li>Get approval → Send the Tech Brief.</li>
-      <li>Reply <span class="field-tag">secured …</span> · Keep status updated.</li>
+      <li>Join your <span class="field-tag">#d-you</span> channel Â· Read this package + run the deck.</li>
+      <li>Open your queue â€” pick the <strong>most urgent WO</strong>.</li>
+      <li>Dial the call list Â· Vet Â· Secure your first tech.</li>
+      <li>Get approval â†’ Send the Tech Brief.</li>
+      <li>Reply <span class="field-tag">secured â€¦</span> Â· Keep status updated.</li>
       <li><strong>Close 1 before lunch. 3 by end of day.</strong></li>
     </ul>
   </section>
 
-  <!-- ═══════════════════════════════════════════════════════════
+  <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
        CLOSING CTA
-       ═══════════════════════════════════════════════════════════ -->
+       â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
   <div class="footer-cta">
-    <p>Welcome to the team. Now go — read your queue, dial the list, secure your first tech.<br><span class="accent">Dominate. Deliver.</span></p>
+    <p>Welcome to the team. Now go â€” read your queue, dial the list, secure your first tech.<br><span class="accent">Dominate. Deliver.</span></p>
   </div>
 
-  <!-- ═══════════════════════════════════════════════════════════
+  <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
        FOOTER
-       ═══════════════════════════════════════════════════════════ -->
+       â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
   <footer class="doc-footer">
     <div class="footer-logo">STEADYWRK</div>
     <p class="footer-text">
-      Confidential &amp; Proprietary — STEADYWRK Facilities Network<br>
+      Confidential &amp; Proprietary â€” STEADYWRK Facilities Network<br>
       Unauthorized distribution is prohibited<br>
-      Internal Operations Document · Rev 4.0 · June 2026
+      Internal Operations Document Â· Rev 4.0 Â· June 2026
     </p>
   </footer>
 
 </main>
 </div>
 
-<!-- ═══════════════════════════════════════════════════════════════
-     JAVASCRIPT — Scroll Animations, Nav, Mobile Toggle
-     ═══════════════════════════════════════════════════════════════ -->
+<!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+     JAVASCRIPT â€” Scroll Animations, Nav, Mobile Toggle
+     â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
 <script>
 (function() {
   'use strict';
 
-  // ── Scroll reveal for section cards ──────────────────────────
+  // â”€â”€ Scroll reveal for section cards â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -1691,7 +1716,7 @@ Reply "<span class="hl-green">confirmed</span>" with your ETA. Thanks! 🙏</div
     observer.observe(card);
   });
 
-  // ── Active nav link on scroll ────────────────────────────────
+  // â”€â”€ Active nav link on scroll â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   const sections = document.querySelectorAll('.section-card[id]');
   const navLinks = document.querySelectorAll('.sidebar nav a');
 
@@ -1715,13 +1740,13 @@ Reply "<span class="hl-green">confirmed</span>" with your ETA. Thanks! 🙏</div
   window.addEventListener('scroll', updateActiveNav, { passive: true });
   updateActiveNav();
 
-  // ── Mobile nav toggle ────────────────────────────────────────
+  // â”€â”€ Mobile nav toggle â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   const sidebar = document.getElementById('sidebar');
   const toggle = document.getElementById('navToggle');
 
   toggle.addEventListener('click', () => {
     sidebar.classList.toggle('open');
-    toggle.textContent = sidebar.classList.contains('open') ? '✕' : '☰';
+    toggle.textContent = sidebar.classList.contains('open') ? 'âœ•' : 'â˜°';
   });
 
   // Close sidebar when clicking a nav link on mobile
@@ -1729,12 +1754,12 @@ Reply "<span class="hl-green">confirmed</span>" with your ETA. Thanks! 🙏</div
     link.addEventListener('click', () => {
       if (window.innerWidth <= 1100) {
         sidebar.classList.remove('open');
-        toggle.textContent = '☰';
+        toggle.textContent = 'â˜°';
       }
     });
   });
 
-  // ── Smooth scroll for nav links ──────────────────────────────
+  // â”€â”€ Smooth scroll for nav links â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   navLinks.forEach(link => {
     link.addEventListener('click', (e) => {
       e.preventDefault();
@@ -1746,7 +1771,7 @@ Reply "<span class="hl-green">confirmed</span>" with your ETA. Thanks! 🙏</div
     });
   });
 
-  // ── Subtle parallax on hero quote ────────────────────────────
+  // â”€â”€ Subtle parallax on hero quote â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   const heroQuote = document.querySelector('.hero-quote');
   window.addEventListener('scroll', () => {
     if (heroQuote) {
