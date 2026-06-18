@@ -3,244 +3,348 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Presenter Notes - STEADYWRK Dispatch + SCOA</title>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <title>STEADYWRK Dispatch + SCOA - Trainer Script</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #090909;
-      --panel: #141411;
-      --border: rgba(255,255,255,0.12);
+      --bg: #080909;
+      --panel: #131411;
+      --panel-2: #191a16;
+      --line: rgba(229, 138, 15, 0.34);
       --amber: #e58a0f;
       --green: #2dc28a;
       --blue: #61a8ff;
-      --text: #f0eee8;
-      --muted: #aaa69b;
+      --text: #f4f1e8;
+      --muted: #b2aa9b;
+      --dim: #746f64;
       --mono: "JetBrains Mono", monospace;
-      --body: "Inter", sans-serif;
       --display: "Outfit", sans-serif;
+      --body: "Inter", sans-serif;
     }
-
     * { box-sizing: border-box; }
     body {
       margin: 0;
-      background: var(--bg);
+      background:
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px),
+        var(--bg);
+      background-size: 42px 42px;
       color: var(--text);
       font-family: var(--body);
-      padding: 22px;
+      line-height: 1.62;
     }
-
     header {
       position: sticky;
       top: 0;
-      z-index: 5;
-      background: rgba(9,9,9,0.94);
-      border-bottom: 1px solid var(--border);
-      padding: 0 0 14px;
-      margin-bottom: 18px;
-      backdrop-filter: blur(14px);
+      z-index: 10;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      background: rgba(8, 9, 9, 0.92);
+      backdrop-filter: blur(16px);
+      padding: 18px 22px;
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
     }
-
-    h1 {
-      font: 800 28px var(--display);
-      text-transform: uppercase;
-      margin: 0 0 8px;
+    .brand {
+      display: grid;
+      gap: 2px;
+    }
+    .brand b {
+      font: 800 18px var(--display);
       letter-spacing: 0;
     }
-
-    .sub {
+    .brand span {
       color: var(--muted);
-      font-size: 14px;
-      line-height: 1.5;
-    }
-
-    .note {
-      border: 1px solid var(--border);
-      background: var(--panel);
-      border-radius: 8px;
-      padding: 18px;
-      margin-bottom: 16px;
-    }
-
-    .meta {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-bottom: 12px;
       font: 700 11px var(--mono);
       text-transform: uppercase;
     }
-
-    .tag {
-      border: 1px solid rgba(229,138,15,0.35);
-      background: rgba(229,138,15,0.13);
-      color: var(--amber);
-      border-radius: 999px;
-      padding: 5px 8px;
-    }
-
-    .tag.green {
-      border-color: rgba(45,194,138,0.35);
-      color: var(--green);
-      background: rgba(45,194,138,0.1);
-    }
-
-    h2 {
-      font: 800 22px var(--display);
-      text-transform: uppercase;
-      margin: 0 0 10px;
-      letter-spacing: 0;
-    }
-
-    h3 {
-      font: 700 13px var(--mono);
-      color: var(--amber);
-      text-transform: uppercase;
-      margin: 18px 0 7px;
-    }
-
-    p, li {
+    .actions { display: flex; gap: 10px; flex-wrap: wrap; }
+    a, button {
+      border: 1px solid var(--line);
+      background: rgba(229, 138, 15, 0.1);
       color: var(--text);
-      line-height: 1.58;
-      font-size: 15px;
+      border-radius: 8px;
+      padding: 10px 13px;
+      font: 700 11px var(--mono);
+      text-decoration: none;
+      text-transform: uppercase;
+      cursor: pointer;
     }
-
-    p {
-      margin: 0 0 10px;
+    main {
+      width: min(1120px, calc(100% - 32px));
+      margin: 26px auto 80px;
+      display: grid;
+      gap: 18px;
     }
-
-    ul {
-      margin: 0;
-      padding-left: 20px;
+    .opener, .slide {
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 8px;
+      background: linear-gradient(135deg, rgba(25,26,22,0.96), rgba(12,13,12,0.96));
+      box-shadow: 0 22px 80px rgba(0,0,0,0.32);
+      overflow: hidden;
     }
-
-    .say {
-      background: rgba(0,0,0,0.45);
-      border-left: 3px solid var(--amber);
-      padding: 12px 14px;
-      margin-top: 8px;
+    .opener { padding: 24px; }
+    h1, h2, h3 { margin: 0; font-family: var(--display); line-height: 1.05; letter-spacing: 0; }
+    h1 { font-size: clamp(30px, 4vw, 56px); text-transform: uppercase; }
+    h1 span, .accent { color: var(--amber); }
+    .opener p { max-width: 920px; color: var(--muted); font-size: 17px; margin: 14px 0 0; }
+    .slide-head {
+      display: grid;
+      grid-template-columns: 92px 1fr;
+      gap: 18px;
+      align-items: stretch;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.035);
+    }
+    .num {
+      display: grid;
+      place-items: center;
+      color: var(--amber);
+      font: 800 26px var(--display);
+      border-right: 1px solid rgba(255,255,255,0.1);
+    }
+    .title { padding: 18px 18px 18px 0; }
+    .title h2 { font-size: clamp(22px, 2.5vw, 34px); text-transform: uppercase; }
+    .title p {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font: 700 11px var(--mono);
+      text-transform: uppercase;
+    }
+    .script {
+      padding: 22px;
+      display: grid;
+      gap: 16px;
+    }
+    .read {
+      border-left: 4px solid var(--amber);
+      padding: 18px 20px;
+      background: rgba(229, 138, 15, 0.08);
       border-radius: 0 8px 8px 0;
+      color: var(--text);
+      font-size: clamp(18px, 2vw, 23px);
+      line-height: 1.48;
     }
-
+    .read b { color: var(--amber); }
+    .cue-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+    .cue {
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.035);
+      border-radius: 8px;
+      padding: 12px;
+      min-height: 96px;
+    }
+    .cue b {
+      display: block;
+      color: var(--green);
+      font: 700 10px var(--mono);
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .cue span {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.4;
+    }
+    .closing {
+      border-color: rgba(45, 194, 138, 0.34);
+      background: rgba(45, 194, 138, 0.08);
+    }
     .arabic {
       direction: rtl;
       text-align: right;
-      border: 1px solid rgba(45,194,138,0.3);
-      background: rgba(45,194,138,0.1);
-      border-radius: 8px;
-      padding: 12px;
-      margin-top: 10px;
+      font-size: 21px;
+      line-height: 1.75;
+    }
+    @media (max-width: 760px) {
+      header { position: relative; align-items: flex-start; flex-direction: column; }
+      .slide-head { grid-template-columns: 1fr; }
+      .num { justify-content: start; padding: 14px 18px; border-right: 0; border-bottom: 1px solid rgba(255,255,255,0.1); }
+      .title { padding: 18px; }
+      .cue-grid { grid-template-columns: 1fr; }
+    }
+    @media print {
+      header, .actions { display: none; }
+      body { background: #fff; color: #111; }
+      main { width: 100%; margin: 0; }
+      .opener, .slide { box-shadow: none; break-inside: avoid; border-color: #ccc; background: #fff; }
+      .read, .cue { background: #fff; color: #111; }
+      .title p, .cue span, .opener p { color: #333; }
     }
   </style>
 </head>
 <body>
   <header>
-    <h1>STEADYWRK Presenter Notes</h1>
-    <div class="sub">Use this on your private screen. The trainee sees the deck; you drive the psychology: dispatch is the live operating lab for IGNITE FOUNDATION and the SCOA credential.</div>
+    <div class="brand">
+      <b>STEADYWRK Trainer Script</b>
+      <span>Read this aloud. Deck on trainee screen. Script on your screen.</span>
+    </div>
+    <div class="actions">
+      <a href="dispatch-training.html">Open Deck</a>
+      <button onclick="window.print()">Print</button>
+    </div>
   </header>
-  <main id="notes"></main>
 
-  <script>
-    const notes = [
-      {
-        title: "You Are Not Taking Orders",
-        skill: "Professional conduct + operational posture",
-        intent: "Start with identity and status. They should feel they are entering a serious room, not joining a temporary call-center task.",
-        say: "Welcome to STEADYWRK. This is not a school exercise and it is not random dialing. Today you are stepping into field-service operations. Real money, real facilities, real technicians, and real documentation. If you work cleanly, you do not just finish a shift - you build evidence toward becoming a certified operations associate.",
-        reinforce: ["Tie the certificate to behavior, not attendance.", "Say that every clean update and every good call is evidence.", "Do not oversell. Make it feel earned."]
-      },
-      {
-        title: "AI Is On The Floor Already",
-        skill: "AI copilot fluency",
-        intent: "Make the certification feel modern and valuable. They are not competing with AI; they are learning how to operate with it responsibly.",
-        say: "The market has changed. AI can draft notes, summarize scopes, and help structure a call plan. But AI does not know whether a plumber actually answered, whether the store is flooding, or whether the quote is real. Your job is to use the tool and verify the truth before it costs the operation.",
-        reinforce: ["AI drafts. Operators decide.", "Field truth beats generated text.", "This is one of the core IGNITE skills."]
-      },
-      {
-        title: "Work Order -> Tech -> Margin",
-        skill: "Dispatch fundamentals + NTE discipline",
-        intent: "Make the money model concrete without making them reckless. NTE is a ceiling, not a target.",
-        say: "A work order comes in with a maximum budget. We secure a local technician for less than that amount and manage the job through completion. That spread is margin. If you are slow, vague, or weak on pricing, the margin disappears. The certificate means you understand operations economics, not just phone etiquette.",
-        reinforce: ["NTE is the ceiling.", "Aim below NTE.", "Proof is what turns activity into paid work."]
-      },
-      {
-        title: "Read The Work Order Like A Map",
-        skill: "Ticket logic + SLA triage",
-        intent: "Train them to read a WO as a system object: ID, scope, priority, due time, evidence requirements.",
-        say: "The job number is your join key. Every call, text, photo, update, and invoice has to stay attached to that job number. If you lose the job number, you lose the thread. Read the city, trade, scope, NTE, due date, and proof requirements before you call.",
-        reinforce: ["Emergency and overdue move first.", "Translate scope into a short call pitch.", "Documentation must be transferable to the next operator."]
-      },
-      {
-        title: "You Are The Lead Engine",
-        skill: "Self-sourcing + local market mapping",
-        intent: "Correct the dependency mindset. The trainee should feel pride in sourcing, not see it as grunt work.",
-        say: "This is the core skill. We do not hand you a warm list and ask you to read it. You build the list. Yelp, Google Maps, BBB, Facebook groups, local directories - you find owner-operators who can move. If we give backup leads, that is a safety net. Your job is sourcing.",
-        reinforce: ["Sourcing is 90 percent of dispatch.", "Reject franchises and toll-free call centers fast.", "This connects to the Aqaba and Amman market: operators who can find capacity are valuable everywhere."]
-      },
-      {
-        title: "Sound Local. Sound Useful.",
-        skill: "Operational English",
-        intent: "Give them a precise opening and explain why it works psychologically.",
-        say: "Do not start like a robocall. Do not over-explain. Your opening is short: 'Hey, good morning, I am Karim. Looking for a plumber in Utica?' It sounds local, direct, and useful. Then pitch the scope in one breath and ask if they can help today.",
-        reinforce: ["Use city only.", "Do not say the state unless asked.", "Warm but fast beats polite but slow."]
-      },
-      {
-        title: "Secure Interest Before House Rules",
-        skill: "Vendor control + service-risk prevention",
-        intent: "Stop trainees from dumping policy too early and losing techs before qualification.",
-        say: "First secure interest. Are they available? Can they do a free estimate? Are they independent? Once they are interested, you send the controlled brief. Do not debate PayPal, Zelle, same-day cash, or payment terms on the first call. The brief handles rules after the tech is already engaged.",
-        reinforce: ["No repairs before approved quote.", "No payment talk on site.", "Photos before and after."]
-      },
-      {
-        title: "Silence Is Operational Debt",
-        skill: "War-room discipline + handoffs",
-        intent: "Create pressure around visibility. Silence should feel unprofessional.",
-        say: "If I have to ask what is happening, the system is already losing visibility. Every 30 minutes you update: job number, action taken, next step. Your mic stays unmuted in live huddle because coaching happens in real time. Callback discipline matters because warm leads go cold fast.",
-        reinforce: ["Updates must be specific.", "Open mic is coaching infrastructure.", "Shift handoff must be readable by someone else."]
-      },
-      {
-        title: "Use AI. Do Not Obey AI.",
-        skill: "Hallucination control",
-        intent: "Make them excited about AI while making verification non-negotiable.",
-        say: "AI can help you write a checklist, shorten a scope, or summarize a thread. But AI can also hallucinate. In operations, a hallucination can send a tech to the wrong address or approve the wrong scope. So you prompt clearly, verify against records, and escalate uncertainty.",
-        reinforce: ["Do not copy AI blindly.", "Check against work order and call notes.", "Escalate contradictions."]
-      },
-      {
-        title: "No Proof. No Pay.",
-        skill: "Evidence control + digital tools",
-        intent: "Make proof feel like professional power, not annoying paperwork.",
-        say: "Completion is not 'the tech said done.' Completion is before photos, after photos, quote, summary, signed sheet when required, and a clean thread. That proof is how STEADYWRK bills, how the technician gets paid, and how the operation protects itself.",
-        reinforce: ["Photos must show the issue and the fix.", "Sign-off matters.", "One clean thread per WO."]
-      },
-      {
-        title: "IGNITE FOUNDATION Feeds The Room",
-        skill: "Program bridge + credential motivation",
-        intent: "Now name the program directly. It should feel like the natural formalization of everything they just learned.",
-        say: "What you are learning today is the practical spine of IGNITE FOUNDATION: أساسيات الحقبة الذكية. Six weeks, two sessions per week, Aqaba and Amman, twenty seats per cohort. It covers operational English, dispatch fundamentals, AI copilot fluency, war-room discipline, digital tools, and the local operations market.",
-        reinforce: ["Graduates receive SCOA.", "SCOA is sealed, serialized, and verifiable at steadywrk.app/verify.", "This is legitimacy, not decoration."],
-        arabic: "الأماكن محدودة بعشرين مقعداً لكل دورة - لأن التدريب الحقيقي يحتاج حضوراً حقيقياً."
-      },
-      {
-        title: "Now Run The Live Scenario",
-        skill: "Capstone simulation + instructor debrief",
-        intent: "End by converting energy into action. The deck should launch the capstone immediately.",
-        say: "Now we run it. You receive a work order. You build a local call list. You qualify a technician. You post a clean update. You use AI only as a copilot. You produce a proof trail another operator can pick up without calling you. That is the standard.",
-        reinforce: ["Rep 1: source 10 leads.", "Rep 2: qualify one tech.", "Rep 3: update the thread and prepare the handoff.", "Peer review and instructor debrief finish the loop."]
-      }
-    ];
+  <main>
+    <section class="opener">
+      <h1>Literal Script: <span>Dispatch + SCOA</span></h1>
+      <p>Use this as the talk track. Do not explain the certification as a separate sales pitch. Tie it to the behavior on every slide: clean calls, clean proof, AI judgment, local market discipline, and calm escalation. The promise is simple: this training is the operating spine of IGNITE FOUNDATION, and SCOA is the proof they can belong in the decision room.</p>
+    </section>
 
-    document.getElementById("notes").innerHTML = notes.map((n, i) => `
-      <section class="note">
-        <div class="meta"><span class="tag">Slide ${String(i + 1).padStart(2, "0")}</span><span class="tag green">${n.skill}</span></div>
-        <h2>${n.title}</h2>
-        <h3>Psychological intent</h3>
-        <p>${n.intent}</p>
-        <h3>Say this</h3>
-        <div class="say"><p>${n.say}</p></div>
-        ${n.arabic ? `<div class="arabic">${n.arabic}</div>` : ""}
-        <h3>Reinforce</h3>
-        <ul>${n.reinforce.map(item => `<li>${item}</li>`).join("")}</ul>
-      </section>
-    `).join("");
-  </script>
+    <section class="slide">
+      <div class="slide-head"><div class="num">01</div><div class="title"><h2>You Are Not Taking Orders</h2><p>Identity, status, and why SCOA matters</p></div></div>
+      <div class="script">
+        <div class="read">"Welcome to STEADYWRK Dispatch Academy. Today is not about memorizing buttons. Today is about becoming the person in the room who keeps the operation alive. A weak dispatcher waits for instructions. A trained dispatcher reads the situation, protects the client, protects the technician, protects the margin, and leaves a clean record behind. That is why this training connects directly to <b>IGNITE FOUNDATION</b> and the <b>STEADYWRK Certified Operations Associate, SCOA</b>. The certificate is not decoration. It says: I can operate under pressure, I can communicate professionally, I can use AI without being fooled by it, and I can be trusted around real work orders."</div>
+        <div class="cue-grid">
+          <div class="cue"><b>Ask</b><span>"What changes when you stop seeing yourself as the person taking orders?"</span></div>
+          <div class="cue"><b>Push</b><span>Make them say: decisions, records, escalation, money, client trust.</span></div>
+          <div class="cue"><b>Cert tie</b><span>SCOA proves operational posture, not attendance.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="slide-head"><div class="num">02</div><div class="title"><h2>AI Is On The Floor Already</h2><p>Use AI, verify AI, never obey AI blindly</p></div></div>
+      <div class="script">
+        <div class="read">"AI is already inside operations. It can summarize a work order, draft a message, classify urgency, and help you think faster. But here is the rule: AI can assist the operator; it cannot replace the operator's judgment. If AI gives you a wrong address, a fake policy, a bad priority, or a confident hallucination, the client does not blame the AI. The operation feels your mistake. In IGNITE FOUNDATION, AI copilot fluency means you know how to prompt, how to verify, and how to catch the hallucination before it costs a job. SCOA tells an employer: this person can use modern tools without becoming reckless."</div>
+        <div class="cue-grid">
+          <div class="cue"><b>Ask</b><span>"What must you verify before using an AI answer?"</span></div>
+          <div class="cue"><b>Push</b><span>Location, scope, NTE, SLA, client instruction, technician status.</span></div>
+          <div class="cue"><b>Cert tie</b><span>AI fluency is a core SCOA competency.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="slide-head"><div class="num">03</div><div class="title"><h2>Work Order -> Tech -> Margin</h2><p>The business model in one chain</p></div></div>
+      <div class="script">
+        <div class="read">"Every work order has a chain. Client need becomes a ticket. Ticket becomes a technician. Technician becomes proof. Proof becomes payment. If one link is weak, money leaks out of the operation. So when you dispatch, you are not just assigning a person to a place. You are protecting the commercial chain. IGNITE FOUNDATION teaches ticket logic, priority triage, SLA calendars, and documentation because those are the habits that keep work from turning into chaos. SCOA is the credential that says you understand the chain from request to revenue."</div>
+        <div class="cue-grid">
+          <div class="cue"><b>Ask</b><span>"Where does margin get lost?"</span></div>
+          <div class="cue"><b>Push</b><span>Wrong tech, late ETA, weak notes, missing photos, bad escalation.</span></div>
+          <div class="cue"><b>Cert tie</b><span>SCOA equals ticket logic plus money awareness.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="slide-head"><div class="num">04</div><div class="title"><h2>Read The Work Order Like A Map</h2><p>Scope, SLA, NTE, risk, proof</p></div></div>
+      <div class="script">
+        <div class="read">"Before you call anyone, you read the work order like a map. You are looking for five things: where the site is, what the scope actually says, how urgent it is, what the NTE allows, and what proof will be needed to close the job. Do not skim. Skimming is how dispatchers create emergencies for themselves. In SCOA terms, this is zero-loss documentation. You are learning to see the job before the job sees you. When you can read a ticket properly, you stop sounding like an amateur and start sounding like an operations person."</div>
+        <div class="cue-grid">
+          <div class="cue"><b>Ask</b><span>"What are the five things we identify before calling?"</span></div>
+          <div class="cue"><b>Push</b><span>Site, scope, urgency/SLA, NTE, proof.</span></div>
+          <div class="cue"><b>Cert tie</b><span>Work-order reading feeds the SCOA capstone simulation.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="slide-head"><div class="num">05</div><div class="title"><h2>You Are The Lead Engine</h2><p>Self-sourcing is not optional</p></div></div>
+      <div class="script">
+        <div class="read">"A dispatcher who only waits for an existing vendor list is limited. At STEADYWRK, you also learn to source. You learn how to find independent local contractors, avoid weak franchise noise, check area codes, read signals of credibility, and build a lead list that can actually answer the job. This is one of the reasons the training is valuable beyond one shift. In Aqaba, Amman, hospitality, construction, and field-service operations, people need operators who can find solutions, not just report problems. SCOA says you can move from ticket to market to technician with discipline."</div>
+        <div class="cue-grid">
+          <div class="cue"><b>Ask</b><span>"What makes a lead usable?"</span></div>
+          <div class="cue"><b>Push</b><span>Local number, relevant trade, clear availability, professional response.</span></div>
+          <div class="cue"><b>Cert tie</b><span>Local market mapping is part of IGNITE FOUNDATION.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="slide-head"><div class="num">06</div><div class="title"><h2>Sound Local. Sound Useful.</h2><p>Operational English and call confidence</p></div></div>
+      <div class="script">
+        <div class="read">"When you call a technician, your voice decides whether they trust the job. You do not sound vague. You sound local, useful, and specific. Say the city. Say the trade. Say the problem. Say the urgency. Say payment or approval constraints cleanly. Operational English is not fancy English. It is job-site English: leak, lockout, breaker, access, ETA, before photos, after photos, invoice, approval. IGNITE FOUNDATION trains this because language is power in operations. SCOA proves you can communicate in the language of the work, not just in casual conversation."</div>
+        <div class="cue-grid">
+          <div class="cue"><b>Ask</b><span>"Give me a bad opening line. Now make it operational."</span></div>
+          <div class="cue"><b>Push</b><span>Specific beats polite-but-empty.</span></div>
+          <div class="cue"><b>Cert tie</b><span>Operational English is one of the clearest SCOA signals.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="slide-head"><div class="num">07</div><div class="title"><h2>Secure Interest Before House Rules</h2><p>Control the call sequence</p></div></div>
+      <div class="script">
+        <div class="read">"Here is the call sequence: first, secure interest. Then qualify. Then give house rules. If you start with rules, you sound like friction. If you start with the job, you sound like opportunity. The psychology matters. You are not begging a technician. You are presenting a real job clearly and then checking whether they meet the standard. This is professional conduct. This is the difference between chaos sourcing and controlled sourcing. In SCOA, we care about whether you can hold the standard while still moving fast."</div>
+        <div class="cue-grid">
+          <div class="cue"><b>Ask</b><span>"Why do we not start with all the rules?"</span></div>
+          <div class="cue"><b>Push</b><span>Because interest must exist before compliance can happen.</span></div>
+          <div class="cue"><b>Cert tie</b><span>Vendor control and professional conduct are SCOA behaviors.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="slide-head"><div class="num">08</div><div class="title"><h2>Silence Is Operational Debt</h2><p>Updates, handoffs, escalation chains</p></div></div>
+      <div class="script">
+        <div class="read">"In operations, silence is not neutral. Silence creates debt. If nobody knows the ETA, the ticket gets heavier. If nobody knows the blocker, the manager loses time. If nobody knows what happened on the last call, the next dispatcher repeats work. War-room discipline means we leave clean updates, clear next steps, and no mystery for the next person. That is why IGNITE FOUNDATION trains handoffs and escalation chains. SCOA says: this person does not disappear under pressure. This person creates visibility."</div>
+        <div class="cue-grid">
+          <div class="cue"><b>Ask</b><span>"What should every update contain?"</span></div>
+          <div class="cue"><b>Push</b><span>Status, ETA, blocker, owner, next action, timestamp.</span></div>
+          <div class="cue"><b>Cert tie</b><span>War-room discipline is a core SCOA standard.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="slide-head"><div class="num">09</div><div class="title"><h2>Use AI. Do Not Obey AI.</h2><p>Prompt, verify, decide</p></div></div>
+      <div class="script">
+        <div class="read">"Now we come back to AI because this is the era you are entering. A strong dispatcher can ask AI to summarize a messy ticket, draft a technician call opening, or produce a checklist. But then the dispatcher verifies against the actual work order. The formula is prompt, verify, decide. Never prompt, copy, send. That is how mistakes become official. SCOA is designed for the intelligent era: it proves you can work with AI copilots and still remain the accountable human in the loop."</div>
+        <div class="cue-grid">
+          <div class="cue"><b>Ask</b><span>"What is the formula?"</span></div>
+          <div class="cue"><b>Push</b><span>Prompt. Verify. Decide.</span></div>
+          <div class="cue"><b>Cert tie</b><span>AI judgment is what makes the credential modern.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="slide-head"><div class="num">10</div><div class="title"><h2>No Proof. No Pay.</h2><p>Evidence standards and closeout discipline</p></div></div>
+      <div class="script">
+        <div class="read">"The job is not done because someone says it is done. The job is done when the proof is clean enough for the client, the invoice, and the record. Before photos. After photos. Arrival time. Completion note. Materials if relevant. Approval if needed. Invoice if required. This is not bureaucracy. This is how payment becomes possible. Digital tools in operations are not just apps; they are evidence systems. SCOA tells employers that you understand proof discipline and that you will not leave money trapped inside a sloppy closeout."</div>
+        <div class="cue-grid">
+          <div class="cue"><b>Ask</b><span>"What proof closes a job cleanly?"</span></div>
+          <div class="cue"><b>Push</b><span>Photos, notes, timestamps, approval, invoice, client requirements.</span></div>
+          <div class="cue"><b>Cert tie</b><span>Evidence control is a SCOA competency.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="slide-head"><div class="num">11</div><div class="title"><h2>IGNITE FOUNDATION Feeds The Room</h2><p>Certification path, scarcity, legitimacy</p></div></div>
+      <div class="script">
+        <div class="read">"Now zoom out. What you are learning today is the practical spine of <b>IGNITE FOUNDATION</b>, or <b>أساسيات الحقبة الذكية</b>. It is six weeks, two sessions per week, in Aqaba and Amman, with twenty seats per cohort. It is built for front-line dispatchers, coordinators, technicians, hotel operations staff, and anyone entering field-service operations while AI copilots are already on the floor. The outcome is the <b>STEADYWRK Certified Operations Associate</b>. SCOA is sealed, serialized, and verifiable at <b>steadywrk.app/verify</b>. The message is simple: you do not just want a job. You want legitimacy. You want to belong in the room where decisions get made."</div>
+        <div class="read arabic">"دورة أساسيات الحقبة الذكية هي بوابتك إلى سوق عمل لا ينتظر. ستتعلّم كيف تُدير غرفة العمليات بدقّة، وكيف تتعاون مع أدوات الذكاء الاصطناعي دون أن تثق بها عمياً، وكيف تتحدث لغة العمليات بثقة واحترافية. الأماكن محدودة بعشرين مقعداً لكل دورة لأن التدريب الحقيقي يحتاج حضوراً حقيقياً."</div>
+        <div class="cue-grid">
+          <div class="cue"><b>Ask</b><span>"What does SCOA prove besides attendance?"</span></div>
+          <div class="cue"><b>Push</b><span>Operational behavior, judgment, documentation, English, AI fluency.</span></div>
+          <div class="cue"><b>Cert tie</b><span>This is the direct program pitch. Slow down here.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="slide-head"><div class="num">12</div><div class="title"><h2>Now Run The Live Scenario</h2><p>Capstone behavior under pressure</p></div></div>
+      <div class="script">
+        <div class="read">"Now we stop talking about dispatch and we run it. You will receive a live scenario. Your job is to read the work order, identify the risk, choose the sourcing angle, create the call opening, decide what you would verify with AI, and write the update that protects the next person on shift. This is how SCOA is earned: not by nodding, but by operating. Stay calm. Be specific. Leave proof. Escalate cleanly. If you can do that, you are no longer just taking orders. You are becoming an operations associate."</div>
+        <div class="cue-grid">
+          <div class="cue"><b>Run</b><span>Give them 3 minutes to read, 4 minutes to source/call-plan, 3 minutes to write update.</span></div>
+          <div class="cue"><b>Score</b><span>Ticket read, call quality, AI verification, proof, escalation, handoff.</span></div>
+          <div class="cue"><b>Close</b><span>"This is the standard. This is what the certificate represents."</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="opener closing">
+      <h1>Closing Line</h1>
+      <p>"STEADYWRK is not training you to sound busy. We are training you to create operational control. IGNITE FOUNDATION gives you the system. SCOA gives you the proof. The work begins with the next ticket."</p>
+    </section>
+  </main>
 </body>
 </html>
